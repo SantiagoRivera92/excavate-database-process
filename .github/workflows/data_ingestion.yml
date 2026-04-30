@@ -8,6 +8,7 @@ on:
 jobs:
   ingest:
     runs-on: ubuntu-latest
+    environment: Excavate
     
     steps:
     - name: Checkout repository
