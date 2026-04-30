@@ -1,0 +1,672 @@
+{
+    "Accesscode Talker":[
+        {"art_id":1, "url":"AccesscodeTalker-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"AccesscodeTalker-OW.png"}
+    ],
+    "Acid Trap Hole": [
+        {"art_id":1, "url":"AcidTrapHole-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"AcidTrapHole-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Aleister the Invoker": [
+        {"art_id":1, "url":"AleistertheInvoker-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"AleistertheInvoker-OW.png"}
+    ],
+    "Aluber the Jester of Despia":[
+        {"art_id":1, "url":"AlubertheJesterofDespia-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"AlubertheJesterofDespia-OW-2.png"}
+    ],
+    "Apollousa, Bow of the Goddess": [
+        {"art_id":1, "url":"ApollousaBowoftheGoddess-MADU-JP-VG-artwork.png"},
+        {"art_id":2, "url":"ApollousaBowoftheGoddess-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Arcana Knight Joker": [
+        {"art_id":1, "url":"ArcanaKnightJoker-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ArcanaKnightJoker-CA-2.png"}
+    ],
+    "Arrivalrivals": [
+        {"art_id":1, "url":"Arrivalrivals-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Arrivalrivals-MADU-JP-VG-artwork.png"}
+    ],
+    "Ash Blossom & Joyous Spring": [
+        {"art_id":1, "url":"AshBlossomJoyousSpring-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"AshBlossomJoyousSpring-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Black Rose Dragon": [
+        {"art_id":1, "url":"BlackRoseDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"BlackRoseDragon-CA-2.png"}
+    ],
+    "Blazing Cartesia, the Virtuous":[
+        {"art_id":1, "url":"BlazingCartesiatheVirtuous-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"BlazingCartesiatheVirtuous-OW.png"}
+    ],
+    "Blue-Eyes Chaos MAX Dragon":[
+        {"art_id":1, "url":"BlueEyesChaosMAXDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"BlueEyesChaosMAXDragon-CA-2.png"}
+    ],
+    "Blue-Eyes White Dragon": [
+        {"art_id":1, "url":"BlueEyesWhiteDragon-MADU-EN-VG-artwork-2.png"},
+        {"art_id":2, "url":"BlueEyesWhiteDragon-TF05-JP-VG-2-artwork.png"},
+        {"art_id":3, "url":"BlueEyesWhiteDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":4, "url":"BlueEyesWhiteDragon-TF05-JP-VG-4-artwork.png"},
+        {"art_id":5, "url":"BlueEyesWhiteDragon-TF05-JP-VG-5-artwork.png"},
+        {"art_id":6, "url":"BlueEyesWhiteDragon-OP1-Artwork.png"},
+        {"art_id":8, "url":"BlueEyesWhiteDragon-OW-5.png"},
+        {"art_id":9, "url":"BlueEyesWhiteDragon-OW-4.png"},
+        {"art_id":10, "url":"BlueEyesWhiteDragon-OW-6.png"},
+        {"art_id":11, "url":"BlueEyesWhiteDragon-DAR.png"}
+    ],
+    "Borreload Dragon": [
+        {"art_id":1, "url":"BorreloadDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"BorreloadDragon-OW-2.png"}
+    ],
+    "Borrelsword Dragon": [
+        {"art_id":1, "url":"BorrelswordDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"BorrelswordDragon-EN-CA-2.png"}
+    ],
+    "Buster Blader": [
+        {"art_id":1, "url":"BusterBlader-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"BusterBlader-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Called by the Grave":[
+        {"art_id":1, "url":"CalledbytheGrave-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"CalledbytheGrave-OW.png"}
+    ],
+    "Call of the Haunted": [
+        {"art_id":1, "url":"CalloftheHaunted-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"CalloftheHaunted-MADU-JP-VG-artwork.png"}
+    ],
+    "Celtic Guardian": [
+        {"art_id":1, "url":"CelticGuardian-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"CelticGuardian-TF05-JP-VG-2-artwork.png"},
+        {"art_id":3, "url":"CelticGuardian-TF05-JP-VG-3-artwork.png"}
+    ],
+    "Chaos Dragon Levianeer": [
+        {"art_id":1, "url":"ChaosDragonLevianeer-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ChaosDragonLevianeer-OW-2.png"}
+    ],
+    "Clear Wing Synchro Dragon": [
+        {"art_id":1, "url":"ClearWingSynchroDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ClearWingSynchroDragon-OW-2.png"}
+    ],
+    "Crush Card Virus": [
+        {"art_id":1, "url":"CrushCardVirus-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"CrushCardVirus-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Cyber Dragon": [
+        {"art_id":1, "url":"CyberDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"CyberDragon-TF05-JP-VG-artwork-2.png"}
+    ],
+    "Cyber Dragon Infinity": [
+        {"art_id":1, "url":"CyberDragonInfinity-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"CyberDragonInfinity-OW-2.png"}
+    ],
+    "Cyber End Dragon": [
+        {"art_id":1, "url":"CyberEndDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"CyberEndDragon-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Danger! Bigfoot!": [
+        {"art_id":1, "url":"DangerBigfoot-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DangerBigfoot-OW.png"}
+    ],
+    "Dark Magician": [
+        {"art_id":1, "url":"DarkMagician-TF05-JP-VG-artwork.png"},
+        {"art_id":2, "url":"DarkMagician-TF05-JP-VG-2-artwork.png"},
+        {"art_id":3, "url":"DarkMagician-TF05-JP-VG-3-artwork.png"},
+        {"art_id":4, "url":"DarkMagician-MADU-EN-VG-artwork.png"},
+        {"art_id":5, "url":"DarkMagician-TF05-JP-VG-5-artwork.png"},
+        {"art_id":6, "url":"DarkMagician-MADU-EN-VG-artwork-2.png"},
+        {"art_id":7, "url":"DarkMagician-OW-3.png"},
+        {"art_id":8, "url":"DarkMagician-OW-4.png"},
+        {"art_id":9, "url":"DarkMagician-DULI-EN-VG-artwork-6.png"},
+        {"art_id":10, "url":"DarkMagician-OW-5.png"}
+    ],
+    "Dark Magician Girl": [
+        {"art_id":1, "url":"DarkMagicianGirl-TF05-JP-VG-artwork.png"},
+        {"art_id":2, "url":"DarkMagicianGirl-TF05-JP-VG-2-artwork.png"},
+        {"art_id":3, "url":"DarkMagicianGirl-TF05-JP-VG-3-artwork.png"},
+        {"art_id":4, "url":"DarkMagicianGirl-TF05-JP-VG-4-artwork.png"},
+        {"art_id":5, "url":"DarkMagicianGirl-JP-CA-5.png"},
+        {"art_id":6, "url":"DarkMagicianGirl-OW-4.png"},
+        {"art_id":8, "url":"DarkMagicianGirl-OW-7.png"}
+    ],
+    "Dark Magician Girl the Dragon Knight": [
+        {"art_id":1, "url":"DarkMagicianGirltheDragonKnight-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DarkMagicianGirltheDragonKnight-OW.png"}
+    ],
+    "Dark Paladin": [
+        {"art_id":1, "url":"DarkPaladin-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DarkPaladin-TF05-JP-VG-3-artwork.png"},
+        {"art_id":3, "url":"DarkPaladin-TF05-JP-VG-artwork.png"},
+        {"art_id":4, "url":"DarkPaladin-DAR.png"}
+    ],
+    "Dark Rebellion Xyz Dragon": [
+        {"art_id":1, "url":"DarkRebellionXyzDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DarkRebellionXyzDragon-OW-2.png"}
+    ],
+    "Dark Ruler Ha Des": [
+        {"art_id":1, "url":"DarkRulerHaDes-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DarkRulerHaDes-MADU-JP-VG-artwork.png"}
+    ],
+    "Decode Talker": [
+        {"art_id":1, "url":"DecodeTalker-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DecodeTalker-OW.png"}
+    ],
+    "Destiny HERO - Plasma": [
+        {"art_id":1, "url":"DestinyHEROPlasma-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DestinyHEROPlasma-OW-2.png"}
+    ],
+    "Diabellstar the Black Witch":[
+        {"art_id":1, "url":"DiabellstartheBlackWitch-MADU-JP-VG-artwork.png"},
+        {"art_id":2, "url":"DiabellstartheBlackWitch-OW-2.png"}
+    ],
+    "Divine Arsenal AA-ZEUS - Sky Thunder":[
+        {"art_id":1, "url":"DivineArsenalAAZEUSSkyThunder-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DivineArsenalAAZEUSSkyThunder-OW-2.png"}
+    ],
+    "Dragonmaid Hospitality": [
+        {"art_id":1, "url":"DragonmaidHospitality-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DragonmaidHospitality-OW-2.png"}
+    ],
+    "Droll & Lock Bird": [
+        {"art_id":1, "url":"DrollLockBird-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"DrollLockBird-OW.png"}
+    ],
+    "Edge Imp Sabres": [
+        {"art_id":1, "url":"EdgeImpSabres-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"EdgeImpSabres-MADU-JP-VG-artwork.png"}
+    ],
+    "Effect Veiler":[
+        {"art_id":1, "url":"EffectVeiler-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"EffectVeiler-OW-2.png"}
+    ],
+    "El Shaddoll Construct": [
+        {"art_id":1, "url":"ElShaddollConstruct-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ElShaddollConstruct-MADU-EN-VG-artwork-2.png"}
+    ],
+    "El Shaddoll Winda": [
+        {"art_id":1, "url":"ElShaddollWinda-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ElShaddollWinda-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Eldlich the Golden Lord": [
+        {"art_id":1, "url":"EldlichtheGoldenLord-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"EldlichtheGoldenLord-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Elemental HERO Avian": [
+        {"art_id":1, "url":"ElementalHEROAvian-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ElementalHEROAvian-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Elemental HERO Burstinatrix": [
+        {"art_id":1, "url":"ElementalHEROBurstinatrix-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ElementalHEROBurstinatrix-TF04-EN-VG-2-artwork.png"}
+    ],
+    "Elemental HERO Neos": [
+        {"art_id":1, "url":"ElementalHERONeos-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ElementalHERONeos-OW-2.png"},
+        {"art_id":3, "url":"ElementalHERONeos-DAR.png"}
+    ],
+    "Elemental HERO Sparkman": [
+        {"art_id":1, "url":"ElementalHEROSparkman-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ElementalHEROSparkman-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Elemental HERO Stratos": [
+        {"art_id":1, "url":"ElementalHEROStratos-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ElementalHEROStratos-OW.png"}
+    ],
+    "Exodia the Forbidden One": [
+        {"art_id":1, "url":"ExodiatheForbiddenOne-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ExodiatheForbiddenOne-MADU-JP-VG-artwork.png"}
+    ],
+    "Fabled Lurrie": [
+        {"art_id":1, "url":"FabledLurrie-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FabledLurrie-OW-2.png"}
+    ],
+    "Fallen of Albaz":[
+        {"art_id":1, "url":"FallenofAlbaz-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FallenofAlbaz-OW-2.png"}
+    ],
+    "Familiar-Possessed - Aussa": [
+        {"art_id":1, "url":"FamiliarPossessedAussa-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FamiliarPossessedAussa-OW.png"}
+    ],
+    "Familiar-Possessed - Eria": [
+        {"art_id":1, "url":"FamiliarPossessedEria-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FamiliarPossessedEria-OW.png"}
+    ],
+    "Familiar-Possessed - Hiita": [
+        {"art_id":1, "url":"FamiliarPossessedHiita-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FamiliarPossessedHiita-OW.png"}
+    ],
+    "Familiar-Possessed - Lyna": [
+        {"art_id":1, "url":"FamiliarPossessedLyna-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FamiliarPossessedLyna-OW.png"}
+    ],
+    "Familiar-Possessed - Wynn": [
+        {"art_id":1, "url":"FamiliarPossessedWynn-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FamiliarPossessedWynn-OW.png"}
+    ],
+    "Fantastical Dragon Phantazmay": [
+        {"art_id":1, "url":"FantasticalDragonPhantazmay-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FantasticalDragonPhantazmay-CA-2.png"}
+    ],
+    "Firewall Dragon": [
+        {"art_id":1, "url":"FirewallDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FirewallDragon-OW-2.png"},
+        {"art_id":3, "url":"FirewallDragon-OW-3.png"}
+    ],
+    "Five-Headed Dragon": [
+        {"art_id":1, "url":"FiveHeadedDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FiveHeadedDragon-OW-2.png"}
+    ],
+    "Flame Swordsman": [
+        {"art_id":1, "url":"FlameSwordsman-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FlameSwordsman-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Foolish Burial": [
+        {"art_id":1, "url":"FoolishBurial-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FoolishBurial-MADU-JP-VG-artwork.png"}
+    ],
+    "Frightfur Leo": [
+        {"art_id":1, "url":"FrightfurLeo-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"FrightfurLeo-MADU-JP-VG-artwork.png"}
+    ],
+    "Gaia The Fierce Knight": [
+        {"art_id":1, "url":"GaiaTheFierceKnight-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GaiaTheFierceKnight-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Galaxy-Eyes Photon Dragon":[
+        {"art_id":1, "url":"GalaxyEyesPhotonDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GalaxyEyesPhotonDragon-OW-2.png"},
+        {"art_id":3, "url":"GalaxyEyesPhotonDragon-DAR.png"}
+    ],
+    "Gearfried the Iron Knight":[
+        {"art_id":1, "url":"GearfriedTheIronKnight-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GearfriedTheIronKnight-DAR.png"}
+    ],
+    "Gem-Knight Fusion":[
+        {"art_id":1, "url": "GemKnightFusion-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url": "GemKnightFusion-OW.png"}
+    ],
+    "Genex Ally Birdman": [
+        {"art_id":1, "url":"GenexAllyBirdman-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GenexAllyBirdman-OW.png"}
+    ],
+    "Ghost Belle & Haunted Mansion": [
+        {"art_id":1, "url":"GhostBelleHauntedMansion-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GhostBelleHauntedMansion-OW-2.png"}
+    ],
+    "Ghost Mourner & Moonlit Chill": [
+        {"art_id":1, "url":"GhostMournerMoonlitChill-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GhostMournerMoonlitChill-OW-2.png"}
+    ],
+    "Ghost Ogre & Snow Rabbit": [
+        {"art_id":1, "url":"GhostOgreSnowRabbit-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GhostOgreSnowRabbit-OW-2.png"}
+    ],
+    "Ghost Reaper & Winter Cherries": [
+        {"art_id":1, "url":"GhostReaperWinterCherries-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GhostReaperWinterCherries-OW-2.png"}
+    ],
+    "Ghost Sister & Spooky Dogwood": [
+        {"art_id":1, "url":"GhostSisterSpookyDogwood-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GhostSisterSpookyDogwood-OW-2.png"}
+    ],
+    "Gorz the Emissary of Darkness":[
+        {"art_id":1, "url":"GorzTheEmissaryOfDarkness-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GorzTheEmissaryOfDarkness-DAR.png"}
+    ],
+    "Gouki The Great Ogre": [
+        {"art_id":1, "url":"GoukiTheGreatOgre-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GoukiTheGreatOgre-CA-2.png"}
+    ],
+    "Gyakutenno Megami": [
+        {"art_id":1, "url":"GyakutennoMegami-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"GyakutennoMegami-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Harpie Channeler": [
+        {"art_id":1, "url":"HarpieChanneler-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"HarpieChanneler-MADU-JP-VG-artwork.png"}
+    ],
+    "Harpie Conductor": [
+        {"art_id":1, "url":"HarpieConductor-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"HarpieConductor-MADU-JP-VG-artwork.png"}
+    ],
+    "Harpie Dancer": [
+        {"art_id":1, "url":"HarpieDancer-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"HarpieDancer-MADU-JP-VG-artwork.png"}
+    ],
+    "Harpie Queen": [
+        {"art_id":1, "url":"HarpieQueen-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"HarpieQueen-MADU-JP-VG-artwork.png"}
+    ],
+    "Harpie's Feather Duster": [
+        {"art_id":1, "url":"HarpiesFeatherDuster-EN-CA.png"},
+        {"art_id":2, "url":"HarpiesFeatherDuster-MADU-EN-VG-artwork.png"},
+        {"art_id":3, "url":"HarpiesFeatherDuster-OW-2.png"}
+    ],
+    "Harpie's Feather Rest": [
+        {"art_id":1, "url":"HarpiesFeatherRest-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"HarpiesFeatherRest-MADU-JP-VG-artwork.png"}
+    ],
+    "Honest":[
+        {"art_id":1, "url":"Honest-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Honest-DAR.png"}
+    ],
+    "I:P Masquerena": [
+        {"art_id":1, "url":"IPMasquerena-MADU-JP-VG-artwork.png"},
+        {"art_id":2, "url":"IPMasquerena-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Invocation": [
+        {"art_id":1, "url":"Invocation-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Invocation-OW.png"}
+    ],
+    "Invoked Mechaba": [
+        {"art_id":1, "url":"InvokedMechaba-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"InvokedMechaba-OW.png"}
+    ],
+    "Jinzo": [
+        {"art_id":1, "url":"Jinzo-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Jinzo-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Junk Warrior": [
+        {"art_id":1, "url":"JunkWarrior-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"JunkWarrior-MADU-EN-VG-artwork-2.png"},
+        {"art_id":3, "url":"JunkWarrior-DAR.png"}
+    ],
+    "Jurrac Meteor":[
+        {"art_id":1, "url":"JurracMeteor-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"JurracMeteor-OW-2"}
+    ],
+    "Knightmare Unicorn": [
+        {"art_id":1, "url":"KnightmareUnicorn-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"KnightmareUnicorn-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Kunai with Chain": [
+        {"art_id":1, "url":"KunaiwithChain-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"KunaiwithChain-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Kuriboh": [
+        {"art_id":1, "url":"Kuriboh-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Kuriboh-TF05-JP-VG-3-artwork.png"}
+    ],
+    "La Jinn the Mystical Genie of the Lamp": [
+        {"art_id":1, "url":"LaJinntheMysticalGenieoftheLamp-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"LaJinntheMysticalGenieoftheLamp-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Launcher Spider": [
+        {"art_id":1, "url":"LauncherSpider-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"LauncherSpider-TF05-JP-VG-artwork-2.png"}
+    ],
+    "Left Arm of the Forbidden One": [
+        {"art_id":1, "url":"LeftArmoftheForbiddenOne-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"LeftArmoftheForbiddenOne-MADU-JP-VG-artwork.png"}
+    ],
+    "Left Leg of the Forbidden One": [
+        {"art_id":1, "url":"LeftLegoftheForbiddenOne-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"LeftLegoftheForbiddenOne-MADU-JP-VG-artwork.png"}
+    ],
+    "Lesser Fiend": [
+        {"art_id":1, "url":"LesserFiend-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"LesserFiend-MADU-JP-VG-artwork.png"}
+    ],
+    "Lightning Storm":[
+        {"art_id":1, "url":"LightningStorm-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"LightningStorm-OW-2.png"}
+    ],
+    "Limiter Removal": [
+        {"art_id":1, "url":"LimiterRemoval-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"LimiterRemoval-OW-2.png"}
+    ],
+    "Magicians of Bonds and Unity": [
+        {"art_id":1, "url":"MagiciansofBondsandUnity-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"MagiciansofBondsandUnity-CA-2.png"},
+        {"art_id":3, "url":"MagiciansofBondsandUnity-OW-3.png"},
+        {"art_id":4, "url":"MagiciansofBondsandUnity-CA-4.png"}
+    ],
+    "Metalmorph": [
+        {"art_id":1, "url":"Metalmorph-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Metalmorph-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Millennium Shield": [
+        {"art_id":1, "url":"MillenniumShield-TF05-JP-VG-artwork.png"},
+        {"art_id":2, "url":"MillenniumShield-MADU-EN-VG-artwork.png"}
+    ],
+    "Monster Reborn": [
+        {"art_id":1, "url":"MonsterReborn-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"MonsterReborn-MADU-JP-VG-artwork.png"}
+    ],
+    "Nekroz of Trishula":[
+        {"art_id":1, "url":"NekrozOfTrishula-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"NekrozofTrishula-OW-2.png"}
+    ],
+    "Nibiru, the Primal Being":[
+        {"art_id":1, "url":"NibiruthePrimalBeing-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"NibiruthePrimalBeing-OW-2.png"}
+    ],
+    "Number 34: Terror-Byte": [
+        {"art_id":1, "url":"Number34TerrorByte-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Number34TerrorByte-TF06-JP-VG-2-artwork.png"}
+    ],
+    "Number 39: Utopia": [
+        {"art_id":1, "url":"Number39Utopia-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Number39Utopia-OW-2.png"},
+        {"art_id":3, "url":"Number39Utopia-OW-3.png"}
+    ],
+    "Obelisk the Tormentor": [
+        {"art_id":1, "url":"ObelisktheTormentor-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ObelisktheTormentor-TF05-JP-VG-artwork-2.png"},
+        {"art_id":3, "url":"ObelisktheTormentor-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Odd-Eyes Pendulum Dragon": [
+        {"art_id":1, "url":"OddEyesPendulumDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"OddEyesPendulumDragon-CA-2.png"},
+        {"art_id":3, "url":"OddEyesPendulumDragon-OW-3.png"}
+    ],
+    "Ojama Trio":[
+        {"art_id":1, "url": "OjamaTrio-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url": "OjamaTrio-DAR.png"}
+    ],
+    "One for One": [
+        {"art_id":1, "url":"OneforOne-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"OneforOne-OW-2.png"}
+    ],
+    "Panther Warrior": [
+        {"art_id":1, "url":"PantherWarrior-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"PantherWarrior-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Parasite Paracide": [
+        {"art_id":1, "url":"ParasiteParacide-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ParasiteParacide-MADU-JP-VG-artwork.png"}
+    ],
+    "Pendulum Machine": [
+        {"art_id":1, "url":"PendulumMachine-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"PendulumMachine-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Polymerization": [        
+        {"art_id":1, "url":"Polymerization-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Polymerization-TF04-EN-VG-artwork-2.png"},
+        {"art_id":3, "url":"Polymerization-OW-3.png"}
+    ],
+    "Pot of Extravagance":[
+        {"art_id":1, "url":"PotofExtravagance-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"PotofExtravagance-OW-2.png"}
+    ],
+    "Raigeki": [
+        {"art_id":1,"url":"Raigeki-MADU-EN-VG-artwork.png"},
+        {"art_id":2,"url":"Raigeki-OW-2.png"}
+    ],
+    "Red-Eyes Black Dragon": [
+        {"art_id":1,"url":"RedEyesBlackDragon-TF05-JP-VG-artwork.png"},
+        {"art_id":3,"url":"RedEyesBlackDragon-TF05-JP-VG-3-artwork.png"},
+        {"art_id":4,"url":"RedEyesBlackDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":5,"url":"RedEyesBlackDragon-TF05-JP-VG-5-artwork.png"},
+        {"art_id":6,"url":"RedEyesBlackDragon-OW-3.png"},
+        {"art_id":7,"url":"RedEyesBlackDragon-OW-4.png"},
+        {"art_id":8,"url":"RedEyesBlackDragon-OW-5.png"}
+    ],
+    "Red-Eyes Black Metal Dragon": [
+        {"art_id":1, "url":"RedEyesBlackMetalDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"RedEyesBlackMetalDragon-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Red-Eyes Darkness Metal Dragon": [
+        {"art_id":1, "url":"RedEyesDarknessMetalDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"RedEyesDarknessMetalDragon-OW.png"}
+    ],
+    "Rescue Cat": [
+        {"art_id":1, "url":"RescueCat-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"RescueCat-CA-2.png"}
+    ],
+    "Right Arm of the Forbidden One": [
+        {"art_id":1, "url":"RightArmoftheForbiddenOne-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"RightArmoftheForbiddenOne-MADU-JP-VG-artwork.png"}
+    ],
+    "Right Leg of the Forbidden One": [
+        {"art_id":1, "url":"RightLegoftheForbiddenOne-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"RightLegoftheForbiddenOne-MADU-JP-VG-artwork.png"}
+    ],
+    "Ring of Destruction": [
+        {"art_id":1, "url":"RingofDestruction-MADU-JP-VG-artwork.png"},
+        {"art_id":2, "url":"RingofDestruction-MADU-EN-VG-artwork.png"}
+    ],
+    "Ritual Beast Ulti-Cannahawk": [
+        {"art_id":1, "url":"RitualBeastUltiCannahawk-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"RitualBeastUltiCannahawk-OW.png"}
+    ],
+    "Salamangreat Heatleo": [
+        {"art_id":1, "url":"SalamangreatHeatleo-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SalamangreatHeatleo-OW-2.png"}
+    ],
+    "Skill Drain": [
+        {"art_id":1, "url":"SkillDrain-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkillDrain-MADU-JP-VG-artwork.png"}
+    ],
+    "Skull Servant":[
+        {"art_id":1, "url":"SkullServant-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkullServant-DAR.png"}
+    ],
+    "Sky Striker Ace - Hayate":[
+        {"art_id":1, "url":"SkyStrikerAceHayate-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkyStrikerAceHayate-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Sky Striker Ace - Kagari": [
+        {"art_id":1, "url":"SkyStrikerAceKagari-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkyStrikerAceKagari-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Sky Striker Ace - Raye": [
+        {"art_id":1, "url":"SkyStrikerAceRaye-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkyStrikerAceRaye-OW-2.png"},
+        {"art_id":3, "url":"SkyStrikerAceRaye-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Sky Striker Ace - Roze": [
+        {"art_id":1, "url":"SkyStrikerAceRoze-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkyStrikerAceRoze-OW-2.png"}
+    ],
+    "Sky Striker Ace - Shizuku": [
+        {"art_id":1, "url":"SkyStrikerAceShizuku-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkyStrikerAceShizuku-OW-2.png"}
+    ],
+    "Sky Striker Mobilize - Engage!": [
+        {"art_id":1, "url":"SkyStrikerMobilizeEngage-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SkyStrikerMobilizeEngage-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Slifer the Sky Dragon": [
+        {"art_id":1, "url":"SlifertheSkyDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SlifertheSkyDragon-Artwork-2.png"},
+        {"art_id":3, "url":"SlifertheSkyDragon-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Solemn Judgment": [
+        {"art_id":1, "url":"SolemnJudgment-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SolemnJudgment-MADU-JP-VG-artwork.png"}
+    ],
+    "Soul Drain": [
+        {"art_id":1, "url":"SoulDrain-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SoulDrain-MADU-JP-VG-artwork.png"}
+    ],
+    "Stardust Dragon": [
+        {"art_id":1, "url":"StardustDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"StardustDragon-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Starving Venom Fusion Dragon": [
+        {"art_id":1, "url":"StarvingVenomFusionDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"StarvingVenomFusionDragon-OW-2.png"}
+    ],
+    "Summoned Skull": [
+        {"art_id":1, "url":"SummonedSkull-MADU-EN-VG-artwork.png"},
+        {"art_id":3, "url":"SummonedSkull-TF05-JP-VG-3-artwork.png"},
+        {"art_id":4, "url":"SummonedSkull-TF05-JP-VG-4-artwork.png"}
+    ],
+    "Super Rejuvenation": [
+        {"art_id":1, "url":"SuperRejuvenation-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SuperRejuvenation-MADU-JP-VG-artwork.png"}
+    ],
+    "Superdreadnought Rail Cannon Gustav Max": [
+        {"art_id":1, "url":"SuperdreadnoughtRailCannonGustavMax-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SuperdreadnoughtRailCannonGustavMax-MADU-JP-VG-artwork.png"}
+    ],
+    "Superdreadnought Rail Cannon Juggernaut Liebe": [
+        {"art_id":1, "url":"SuperdreadnoughtRailCannonJuggernautLiebe-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"SuperdreadnoughtRailCannonJuggernautLiebe-OW-2.png"}
+    ],
+    "The Winged Dragon of Ra": [
+        {"art_id":1, "url":"TheWingedDragonofRa-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"TheWingedDragonofRa-TF05-JP-VG-artwork-2.png"},
+        {"art_id":3, "url":"TheWingedDragonofRa-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Thousand Dragon": [
+        {"art_id":1, "url":"ThousandDragon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ThousandDragon-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Tiger Axe": [
+        {"art_id":1, "url":"TigerAxe-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"TigerAxe-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Toon World": [
+        {"art_id":1, "url":"ToonWorld-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ToonWorld-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Tour Guide From the Underworld": [
+        {"art_id":1, "url":"TourGuideFromtheUnderworld-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"TourGuideFromtheUnderworld-OW.png"}
+    ],
+    "Tragedy": [
+        {"art_id":1, "url":"Tragedy-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Tragedy-MADU-JP-VG-artwork.png"}
+    ],
+    "Tuning": [
+        {"art_id":1, "url":"Tuning-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"Tuning-MADU-EN-VG-artwork-2.png"}
+    ],
+    "Viser Des": [
+        {"art_id":1, "url":"ViserDes-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"ViserDes-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Void Imagination": [
+        {"art_id":1, "url":"VoidImagination-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"VoidImagination-CA-2.png"}
+    ],
+    "Vorse Raider": [
+        {"art_id":1, "url":"VorseRaider-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"VorseRaider-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Widespread Ruin": [
+        {"art_id":1, "url":"WidespreadRuin-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"WidespreadRuin-TF05-JP-VG-2-artwork.png"}
+    ],
+    "Winged Kuriboh": [
+        {"art_id":1, "url":"WingedKuriboh-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"WingedKuriboh-TF05-JP-VG-2-artwork.png"}
+    ],
+    "X-Head Cannon": [
+        {"art_id":1, "url":"XHeadCannon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"XHeadCannon-MADU-JP-VG-artwork.png"}
+    ],
+    "XY-Dragon Cannon": [
+        {"art_id":1, "url":"XYDragonCannon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"XYDragonCannon-MADU-JP-VG-artwork.png"}
+    ],
+    "XYZ-Dragon Cannon": [
+        {"art_id":1, "url":"XYZDragonCannon-MADU-EN-VG-artwork.png"},
+        {"art_id":2, "url":"XYZDragonCannon-TF04-EN-VG-artwork-2.png"},
+        {"art_id":3, "url":"XYZDragonCannon-TF04-EN-VG-artwork-3.png"},
+        {"art_id":4, "url":"XYZDragonCannon-MADU-JP-VG-artwork.png"}
+    ]
+}

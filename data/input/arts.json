@@ -1,0 +1,2723 @@
+{
+    "Accesscode Talker": [
+        {
+            "prints": [
+                "RA04-EN079"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Acid Trap Hole": [
+        {
+            "prints": [
+                "MIL1-EN044"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Aleister the Invoker": [
+        {
+            "prints": [
+                "RA04-EN024"
+            ],
+            "art_ids": [
+                1
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN016",
+                "RA04-EN024",
+                "RA04-EN278"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Aluber the Jester of Despia": [
+        {
+            "prints": [
+                "RA04-EN038"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Apollousa, Bow of the Goddess": [
+        {
+            "prints": [
+                "MAGO-EN041",
+                "MAMA-EN075",
+                "RA02-EN040"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Arcana Knight Joker": [
+        {
+            "prints": [
+                "SDMY-EN042"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Arrivalrivals": [
+        {
+            "prints": [
+                "LART-EN027"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Ash Blossom & Joyous Spring": [
+        {
+            "prints": [
+                "DUDE-EN003",
+                "RA04-EN025"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN011"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Black Rose Dragon": [
+        {
+            "prints": [
+                "MGED-EN026"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN057"
+            ],
+            "art_ids": [
+                2
+            ],
+            "rarities": [
+                "QCScR"
+            ]
+        },
+        {
+            "prints":[
+                "RA04-EN057"
+            ],
+            "art_ids": [
+                1
+            ],
+            "rarities": [
+                "SR", "UR", "ScR", "UtR", "CR", "PlScR"
+            ]
+        }
+    ],
+    "Blazing Cartesia, the Virtuous": [
+        {
+            "prints": [
+                "RA04-EN041"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Blue-Eyes Chaos MAX Dragon": [
+        {
+            "prints": [
+                "RA04-EN051"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Blue-Eyes White Dragon": [
+        {
+            "prints": [
+                "LCKC-EN001"
+            ],
+            "art_ids": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "suffix": [
+                "-B",
+                "",
+                "-D",
+                "-C"
+            ]
+        },
+        {
+            "prints": [
+                "2020-EN001",
+                "BPT-003",
+                "BPT-009",
+                "CT14-EN002",
+                "DL09-EN001",
+                "DLG1-EN002",
+                "KACB-EN001",
+                "LDK2-ENK01",
+                "LDS2-EN001",
+                "LED3-EN006",
+                "LOB-001",
+                "LOB-EN001",
+                "LOB-A001",
+                "LOB-E001",
+                "MAMA-EN104",
+                "RA03-EN079",
+                "MGED-EN001",
+                "SKE-001",
+                "FL1-001",
+                "LDK2-ENK01",
+                "FL1-EN001",
+                "RP01-EN001",
+                "SDWD-EN001",
+                "SBC2-ENB02"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "DB1-EN098",
+                "DT01-EN001",
+                "DTP1-EN001",
+                "DTP1-EN001",
+                "GLD5-EN001",
+                "HAC1-EN001",
+                "KC01-EN004",
+                "LC01-EN004",
+                "PGL2-EN080",
+                "SBCB-EN087",
+                "SDBE-EN001",
+                "SDDC-EN004",
+                "SS02-ENA01",
+                "STP1-EN004",
+                "YSKR-EN001",
+                "PCK-001",
+                "PCK-E001",
+                "SDWD-EN002"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "DPBC-EN016",
+                "JMP-EN001",
+                "KC01-EN000",
+                "SDKS-EN009",
+                "JMP-001"
+            ],
+            "art_ids": [
+                4
+            ]
+        },
+        {
+            "prints": [
+                "YAP1-EN001"
+            ],
+            "art_ids": [
+                5
+            ]
+        },
+        {
+            "prints": [
+                "JMPS-EN002",
+                "JUMP-EN068"
+            ],
+            "art_ids": [
+                6
+            ]
+        },
+        {
+            "prints": [
+                "MVP1-EN055",
+                "MVP1-ENG55",
+                "MVP1-ENGV4",
+                "MVP1-ENS55",
+                "MVP1-ENSV4",
+                "MVP1-ENSE4",
+                "SDWD-EN003"
+            ],
+            "art_ids": [
+                8
+            ]
+        },
+        {
+            "prints": [
+                "MP22-EN266"
+            ],
+            "art_ids": [
+                9
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN108"
+            ],
+            "art_ids": [
+                8
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN108"
+            ],
+            "art_ids": [
+                9
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ],
+            "suffix": [
+                "-AA",
+                "-AA2"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN002"
+            ],
+            "art_ids": [
+                10
+            ]
+        },
+        {
+            "prints": [
+                "BLMM-EN001"
+            ],
+            "art_ids": [
+                11
+            ]
+        }
+    ],
+    "Borreload Dragon": [
+        {
+            "prints": [
+                "DUPO-EN074",
+                "MP24-EN048"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Borrelsword Dragon": [
+        {
+            "prints": [
+                "BLC1-EN023",
+                "MAGO-EN039"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Buster Blader": [
+        {
+            "prints": [
+                "YAP1-EN006"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Called by the Grave": [
+        {
+            "prints": [
+                "RA04-EN092"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Call of the Haunted": [
+        {
+            "prints": [
+                "LART-EN009"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Celtic Guardian": [
+        {
+            "prints": [
+                "MIL1-EN026"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "YAP1-EN004"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Chaos Dragon Levianeer": [
+        {
+            "prints": [
+                "DUOV-EN058"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN017"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Clear Wing Synchro Dragon": [
+        {
+            "prints": [
+                "LEDD-ENC29"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Crush Card Virus": [
+        {
+            "prints": [
+                "DPKB-EN039",
+                "MIL1-EN047",
+                "SDKS-EN031"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "LCKC-EN046"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "prefix": [
+                "",
+                "-B"
+            ]
+        }
+    ],
+    "Cyber Dragon": [
+        {
+            "prints": [
+                "SDCR-EN003"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-Alt"
+            ]
+        },
+        {
+            "prints": [
+                "BLC1-EN021",
+                "DP04-EN001",
+                "LCGX-EN176",
+                "OP16-EN001",
+                "RA03-EN155",
+                "RYMP-EN059",
+                "SGX3-ENI28",
+                "SGX3-ENI28"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Cyber Dragon Infinity": [
+        {
+            "prints": [
+                "DUOV-EN059"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN068"
+            ],
+            "art_ids": [
+                1
+            ],
+            "rarities": [
+                "SR",
+                "UR",
+                "ScR",
+                "PlScR",
+                "CR",
+                "UtR"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN068"
+            ],
+            "art_ids": [
+                2
+            ],
+            "rarities": [
+                "QCScR"
+            ],
+            "suffix": [
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN033"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Cyber End Dragon": [
+        {
+            "prints": [
+                "LCGX-EN182",
+                "STON-ENSE1",
+                "RYMP-EN060"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Danger! Bigfoot!": [
+        {
+            "prints": [
+                "MGED-EN018",
+                "RA03-EN019"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Dark Magician": [
+        {
+            "prints": [
+                "RA04-EN106"
+            ],
+            "art_ids": [
+                3
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ],
+            "suffix": [
+                "-AA",
+                ""
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN106"
+            ],
+            "art_ids": [
+                7
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ],
+            "suffix": [
+                "-AA2",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN106"
+            ],
+            "art_ids": [
+                6
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ],
+            "suffix": [
+                "-AA3",
+                "-AA2"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN106"
+            ],
+            "art_ids": [
+                8
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ],
+            "suffix": [
+                "-AA4",
+                "-AA3"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN106"
+            ],
+            "art_ids": [
+                9
+            ],
+            "rarities": [
+                "QCScR",
+                "PlScR"
+            ],
+            "suffix": [
+                "-AA5",
+                "-AAA"
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN001"
+            ],
+            "art_ids": [
+                10
+            ]
+        },
+        {
+            "prints": [
+                "DLG1-EN004",
+                "BPT-007",
+                "DL11-EN001",
+                "DPBC-EN008",
+                "LOB-005",
+                "LOB-EN005",
+                "LOB-A005",
+                "LOB-E003",
+                "MGED-EN002",
+                "RA03-EN080",
+                "RA03-EN080",
+                "YGLD-ENC09",
+                "FL1-EN002",
+                "SYE-001",
+                "2021-EN001",
+                "RP01-EN003"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "SBC1-ENG01",
+                "SBC1-ENG10",
+                "YGLD-ENB02"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "LC01-EN005"
+            ],
+            "art_ids": [
+                4
+            ],
+            "rarities": [
+                "QCScR"
+            ],
+            "suffix": [
+                "-German"
+            ]
+        },
+        {
+            "prints": [
+                "DB1-EN102",
+                "DPYG-EN001",
+                "DT01-EN002",
+                "DTP1-EN002",
+                "DTP1-EN002",
+                "HAC1-EN002",
+                "LC01-EN005",
+                "LCYW-EN001",
+                "LEDD-ENA01",
+                "PCY-004",
+                "PCY-E004",
+                "SD6-EN003",
+                "SBCB-EN001",
+                "SS01-ENA01",
+                "SS04-ENA01",
+                "STP1-EN001",
+                "YSYR-EN001"
+            ],
+            "art_ids": [
+                4
+            ]
+        },
+        {
+            "prints": [
+                "JMPS-EN003",
+                "JUMP-EN049"
+            ],
+            "art_ids": [
+                5
+            ]
+        },
+        {
+            "prints": [
+                "CT14-EN001",
+                "SDMY-EN010",
+                "STAX-EN005",
+                "YUCB-EN001",
+                "SBC2-ENA12"
+            ],
+            "art_ids": [
+                6
+            ]
+        },
+        {
+            "prints": [
+                "MVP1-ENSE3",
+                "MVP1-EN054",
+                "MVP1-ENG54",
+                "MVP1-ENGV3",
+                "MVP1-ENSV3",
+                "MVP1-ENS54"
+            ],
+            "art_ids": [
+                7
+            ]
+        },
+        {
+            "prints": [
+                "DUPO-EN101"
+            ],
+            "art_ids": [
+                8
+            ]
+        },
+        {
+            "prints": [
+                "25TH-EN001"
+            ],
+            "art_ids": [
+                9
+            ]
+        }
+    ],
+    "Dark Magician Girl": [
+        {
+            "prints": [
+                "RA03-EN123"
+            ],
+            "art_ids": [
+                2,
+                5,
+                6
+            ],
+            "suffix": [
+                "",
+                "-2",
+                "-3"
+            ]
+        },
+        {
+            "prints": [
+                "YGLD-ENC10",
+                "CT2-EN004"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "DPBC-EN009",
+                "DPYG-EN008",
+                "LDS3-EN082",
+                "LED6-EN000",
+                "DT06-EN064",
+                "YGLD-ENB03",
+                "SBC2-ENA13"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "LART-EN019",
+                "LART-EN035"
+            ],
+            "art_ids": [
+                4
+            ]
+        },
+        {
+            "prints": [
+                "MVP1-EN056",
+                "MVP1-ENG56",
+                "MVP1-ENS56"
+            ],
+            "art_ids": [
+                5
+            ]
+        },
+        {
+            "prints": [
+                "MP22-EN268"
+            ],
+            "art_ids": [
+                6
+            ]
+        },
+        {
+            "prints": [
+                "MP24-EN053"
+            ],
+            "art_ids": [
+                8
+            ]
+        }
+    ],
+    "Dark Magician Girl the Dragon Knight": [
+        {
+            "prints": [
+                "DLCS-EN006"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Dark Paladin": [
+        {
+            "prints": [
+                "DPYG-EN016",
+                "SDMY-EN043",
+                "YGLD-ENC41"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MIL1-EN041",
+                "MFC-105",
+                "DMG-001"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "BLMM-EN008"
+            ],
+            "art_ids": [
+                4
+            ]
+        }
+    ],
+    "Dark Rebellion Xyz Dragon": [
+        {
+            "prints": [
+                "LEDD-ENC32"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Dark Ruler Ha Des": [
+        {
+            "prints": [
+                "LART-EN010"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Decode Talker": [
+        {
+            "prints": [
+                "DUPO-EN106"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Destiny HERO - Plasma": [
+        {
+            "prints": [
+                "MGED-EN007"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Diabellstar the Black Witch": [
+        {
+            "prints": [
+                "RA04-EN047"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Divine Arsenal AA-ZEUS - Sky Thunder": [
+        {
+            "prints": [
+                "RA04-EN070"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Dragonmaid Hospitality": [
+        {
+            "prints": [
+                "RA03-EN068"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ],
+            "rarities": [
+                "QCScR"
+            ]
+        }
+    ],
+    "Droll & Lock Bird": [
+        {
+            "prints": [
+                "RA02-EN006"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN006"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Edge Imp Sabres": [
+        {
+            "prints": [
+                "LART-EN015"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Effect Veiler": [
+        {
+            "prints": [
+                "RA04-EN004"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "El Shaddoll Construct": [
+        {
+            "prints": [
+                "MP21-EN247",
+                "SDSH-EN046"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "RA04-EN229"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "rarities": [
+                "PlScR",
+                "QCScR"
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "El Shaddoll Winda": [
+        {
+            "prints": [
+                "SDSH-EN047"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Eldlich the Golden Lord": [
+        {
+            "prints": [
+                "LART-EN066",
+                "MGED-EN024"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "RA01-EN019"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Elemental HERO Avian": [
+        {
+            "prints": [
+                "LCGX-EN002",
+                "RYMP-EN001"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Elemental HERO Burstinatrix": [
+        {
+            "prints": [
+                "LCGX-EN004",
+                "RYMP-EN002",
+                "MDP2-EN003"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Elemental HERO Neos": [
+        {
+            "prints": [
+                "DUPO-EN102"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "BLMM-EN003"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Elemental HERO Sparkman": [
+        {
+            "prints": [
+                "LCGX-EN007",
+                "RYMP-EN003",
+                "YSD-ENS01"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Elemental HERO Stratos": [
+        {
+            "prints": [
+                "BLC1-EN022",
+                "MAGO-EN004"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Exodia the Forbidden One": [
+        {
+            "prints": [
+                "LART-EN004"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Fabled Lurrie": [
+        {
+            "prints": [
+                "BLMM-EN104"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Fallen of Albaz":[
+        {
+            "prints": [
+                "RA04-EN034"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Familiar-Possessed - Aussa": [
+        {
+            "prints": [
+                "SDCH-EN037"
+            ],
+            "art_ids": [
+                2
+            ],
+            "rarities": [
+                "UR"
+            ]
+        }
+    ],
+    "Familiar-Possessed - Eria": [
+        {
+            "prints": [
+                "SDCH-EN038"
+            ],
+            "art_ids": [
+                2
+            ],
+            "rarities": [
+                "UR"
+            ]
+        }
+    ],
+    "Familiar-Possessed - Hiita": [
+        {
+            "prints": [
+                "SDCH-EN039"
+            ],
+            "art_ids": [
+                2
+            ],
+            "rarities": [
+                "UR"
+            ]
+        }
+    ],
+    "Familiar-Possessed - Lyna": [
+        {
+            "prints": [
+                "MGED-EN013"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Familiar-Possessed - Wynn": [
+        {
+            "prints": [
+                "SDCH-EN040"
+            ],
+            "art_ids": [
+                2
+            ],
+            "rarities": [
+                "UR"
+            ]
+        }
+    ],
+    "Fantastical Dragon Phantazmay": [
+        {
+            "prints": [
+                "MAGO-EN018",
+                "RA02-EN013"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Firewall Dragon": [
+        {
+            "prints": [
+                "DUPO-EN072"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "GFTP-EN131"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "MGED-EN141"
+            ],
+            "art_ids": [
+                1,
+                2,
+                3
+            ],
+            "suffix": [
+                "",
+                "-AA",
+                "-AA2"
+            ]
+        }
+    ],
+    "Five-Headed Dragon": [
+        {
+            "prints": [
+                "BLHR-EN000"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Flame Swordsman": [
+        {
+            "prints": [
+                "MIL1-EN038"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Foolish Burial": [
+        {
+            "prints": [
+                "LART-EN016"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Frightfur Leo": [
+        {
+            "prints": [
+                "LART-EN025"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Gaia The Fierce Knight": [
+        {
+            "prints": [
+                "MIL1-EN025"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Galaxy-Eyes Photon Dragon": [
+        {
+            "prints": [
+                "RA04-EN008"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "BLMM-EN007"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Gearfried the Iron Knight": [
+        {
+            "prints": [
+                "BLMM-EN004"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Gem-Knight Fusion": [
+        {
+            "prints": [
+                "BLMM-EN160"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Genex Ally Birdman": [
+        {
+            "prints": [
+                "BLTR-EN058"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Ghost Belle & Haunted Mansion": [
+        {
+            "prints": [
+                "MAGO-EN012"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "DUDE-EN004"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Ghost Mourner & Moonlit Chill": [
+        {
+            "prints": [
+                "MGED-EN023"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "RA02-EN015"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Ghost Ogre & Snow Rabbit": [
+        {
+            "prints": [
+                "DUDE-EN001",
+                "RA02-EN009"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN009"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Ghost Reaper & Winter Cherries": [
+        {
+            "prints": [
+                "RA03-EN014"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "rarities": [
+                "QCScR"
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "DUDE-EN002",
+                "RA03-EN014"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN009"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Ghost Sister & Spooky Dogwood": [
+        {
+            "prints": [
+                "RA03-EN020"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "rarities": [
+                "QCScR"
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "DUDE-EN005",
+                "RA03-EN020"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN013"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Gorz the Emissary of Darkness": [
+        {
+            "prints": [
+                "BLMM-EN005"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Gouki The Great Ogre": [
+        {
+            "prints": [
+                "DUPO-EN073"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Gyakutenno Megami": [
+        {
+            "prints": [
+                "YAP1-EN005"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Harpie Channeler": [
+        {
+            "prints": [
+                "LART-EN022"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Harpie Conductor": [
+        {
+            "prints": [
+                "LART-EN026"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Harpie Dancer": [
+        {
+            "prints": [
+                "LART-EN023"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Harpie Queen": [
+        {
+            "prints": [
+                "LART-EN021"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Harpie's Feather Duster": [
+        {
+            "prints": [
+                "EGO1-EN022",
+                "EGS1-EN022",
+                "LCJW-EN099",
+                "LCYW-EN149",
+                "MAGO-EN042",
+                "OP24-EN003",
+                "SDBT-EN026",
+                "WC4-E003",
+                "SDD-003"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MP24-EN058"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Harpie's Feather Rest": [
+        {
+            "prints": [
+                "LART-EN029"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Honest": [
+        {
+            "prints": [
+                "BLMM-EN006"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "I:P Masquerena": [
+        {
+            "prints": [
+                "MGED-EN035"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        },
+        {
+            "prints": [
+                "RA02-EN042"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Invocation": [
+        {
+            "prints": [
+                "MP24-EN060"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Invoked Mechaba": [
+        {
+            "prints": [
+                "MP24-EN059"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Jinzo": [
+        {
+            "prints": [
+                "YAP1-EN007"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Junk Warrior": [
+        {
+            "prints": [
+                "MZMI-EN000"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "BLMM-EN009"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Jurrac Meteor": [
+        {
+            "prints": [
+                "BLMM-EN150"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Knightmare Unicorn": [
+        {
+            "prints": [
+                "MGED-EN034",
+                "RA01-EN043"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Kunai with Chain": [
+        {
+            "prints": [
+                "MIL1-EN048",
+                "SBC1-ENB19"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Kuriboh": [
+        {
+            "prints": [
+                "BROL-EN062",
+                "DPBC-EN015",
+                "MIL1-EN034",
+                "CP02-EN006",
+                "PCY-E005",
+                "PCY-005"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "La Jinn the Mystical Genie of the Lamp": [
+        {
+            "prints": [
+                "DPKB-EN005",
+                "MDP2-EN007",
+                "MIL1-EN029"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Launcher Spider": [
+        {
+            "prints": [
+                "MIL1-EN030"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Left Arm of the Forbidden One": [
+        {
+            "prints": [
+                "LART-EN005"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Left Leg of the Forbidden One": [
+        {
+            "prints": [
+                "LART-EN003"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Lesser Fiend": [
+        {
+            "prints": [
+                "LART-EN008"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Lightning Storm": [
+        {
+            "prints": [
+                "RA04-EN094"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Limiter Removal": [
+        {
+            "prints": [
+                "MP24-EN057"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Magicians of Bonds and Unity": [
+        {
+            "prints": [
+                "AGOV-EN000"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "PHNI-EN000"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "LEDE-EN000"
+            ],
+            "art_ids": [
+                4
+            ]
+        }
+    ],
+    "Metalmorph": [
+        {
+            "prints": [
+                "MIL1-EN045",
+                "PP01-EN014"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Millennium Shield": [
+        {
+            "prints": [
+                "LCYW-EN159",
+                "YS14-EN004",
+                "GLD4-EN001"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Monster Reborn": [
+        {
+            "prints": [
+                "KC01-EN037",
+                "LART-EN001"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Nekroz of Trishula": [
+        {
+            "prints": [
+                "BLMM-EN132"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Number 34: Terror-Byte": [
+        {
+            "prints": [
+                "PRC1-ENV02"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Number 39: Utopia": [
+        {
+            "prints": [
+                "DUPO-EN104"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "BROL-EN059"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Obelisk the Tormentor": [
+        {
+            "prints": [
+                "BP01-EN021",
+                "GLD4-EN030",
+                "JMPS-EN004",
+                "JUMP-EN037",
+                "TN19-EN007"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MVP1-ENSV5",
+                "MVPC-EN001",
+                "RA03-EN230"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Odd-Eyes Pendulum Dragon": [
+        {
+            "prints": [
+                "LEDD-ENC01"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "DUPO-EN105"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Ojama Trio": [
+        {
+            "prints": [
+                "BLMM-EN010"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "One for One": [
+        {
+            "prints": [
+                "RA03-EN056"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Panther Warrior": [
+        {
+            "prints": [
+                "MIL1-EN036"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Parasite Paracide": [
+        {
+            "prints": [
+                "LART-EN043"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Pendulum Machine": [
+        {
+            "prints": [
+                "MIL1-EN033"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Polymerization": [
+        {
+            "prints": [
+                "DPYG-EN020",
+                "DT04-EN043",
+                "FUEN-EN049",
+                "HAC1-EN022",
+                "SL00-EN099"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "RA03-EN051"
+            ],
+            "art_ids": [
+                2,
+                3
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Pot of Extravagance": [
+        {
+            "prints": [
+                "RA04-EN093"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Raigeki": [
+        {
+            "prints": [
+                "MP24-EN056"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Red-Eyes Black Dragon": [
+        {
+            "prints": [
+                "2022-EN001",
+                "DPBC-EN021",
+                "LC01-EN006",
+                "JMP-002",
+                "JMP-EN002"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "LC01-EN006"
+            ],
+            "art_ids": [
+                3
+            ],
+            "rarities": [
+                "QCScR"
+            ],
+            "suffix": [
+                "-German"
+            ]
+        },
+        {
+            "prints": [
+                "DB1-EN126",
+                "DT01-EN003",
+                "DTP1-EN003",
+                "HAC1-EN003",
+                "LCJW-EN003",
+                "LDK2-ENJ01",
+                "LDS1-EN001",
+                "MAMA-EN105",
+                "SBCB-EN167",
+                "SDDC-EN005",
+                "SGX3-ENB02",
+                "SS02-ENB01",
+                "STP1-EN007",
+                "PCJ-EN001",
+                "SD1-EN002"
+            ],
+            "art_ids": [
+                4
+            ]
+        },
+        {
+            "prints": [
+                "YAP1-EN002"
+            ],
+            "art_ids": [
+                5
+            ]
+        },
+        {
+            "prints": [
+                "MGED-EN003",
+                "RA03-EN081"
+            ],
+            "art_ids": [
+                6
+            ]
+        },
+        {
+            "prints": [
+                "MP22-EN267"
+            ],
+            "art_ids": [
+                7
+            ]
+        },
+        {
+            "prints": [
+                "MP24-EN054"
+            ],
+            "art_ids": [
+                8
+            ]
+        }
+    ],
+    "Red-Eyes Black Metal Dragon": [
+        {
+            "prints": [
+                "MIL1-EN035",
+                "PP01-EN015"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Red-Eyes Darkness Metal Dragon": [
+        {
+            "prints": [
+                "LDS1-EN004"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MGED-EN009"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Rescue Cat": [
+        {
+            "prints": [
+                "MGED-EN006",
+                "RA02-EN001"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Right Arm of the Forbidden One": [
+        {
+            "prints": [
+                "LART-EN006"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Right Leg of the Forbidden One": [
+        {
+            "prints": [
+                "LART-EN002"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Ring of Destruction": [
+        {
+            "prints": [
+                "KC01-EN055",
+                "LART-EN007"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Ritual Beast Ulti-Cannahawk": [
+        {
+            "prints": [
+                "BLTR-EN085"
+            ],
+            "art_ids": [
+                2
+            ],
+            "suffix": [
+                "-AA"
+            ]
+        }
+    ],
+    "Salamangreat Heatleo": [
+        {
+            "prints": [
+                "SDSB-EN040"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Skill Drain": [
+        {
+            "prints": [
+                "LART-EN012"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Skull Servant": [
+        {
+            "prints": [
+                "BLMM-EN002"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Sky Striker Ace - Hayate": [
+        {
+            "prints": [
+                "RA04-EN073"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Sky Striker Ace - Kagari": [
+        {
+            "prints": [
+                "DUOV-EN060"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN038"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Sky Striker Ace - Raye": [
+        {
+            "prints": [
+                "BLTR-EN116"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Sky Striker Ace - Roze": [
+        {
+            "prints": [
+                "BLTR-EN117"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Sky Striker Ace - Shizuku": [
+        {
+            "prints": [
+                "RA03-EN043"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "rarities": [
+                "QCScR"
+            ]
+        }
+    ],
+    "Sky Striker Mobilize - Engage!": [
+        {
+            "prints": [
+                "BLMR-EN091"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Slifer the Sky Dragon": [
+        {
+            "prints": [
+                "JMPS-EN005",
+                "JUMP-EN061",
+                "TN19-EN008"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MVP1-EN057",
+                "MVP1-ENG57",
+                "MVP1-ENS57",
+                "MVP1-ENSV6",
+                "RA03-EN244"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Solemn Judgment": [
+        {
+            "prints": [
+                "LART-EN014"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Soul Drain": [
+        {
+            "prints": [
+                "LART-EN011"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Stardust Dragon": [
+        {
+            "prints": [
+                "DUPO-EN103"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Starving Venom Fusion Dragon": [
+        {
+            "prints": [
+                "LEDD-ENC25"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Summoned Skull": [
+        {
+            "prints": [
+                "DPYG-EN002",
+                "MIL1-EN028"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "YAP1-EN003"
+            ],
+            "art_ids": [
+                4
+            ]
+        }
+    ],
+    "Super Rejuvenation": [
+        {
+            "prints": [
+                "LART-EN013"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Superdreadnought Rail Cannon Gustav Max": [
+        {
+            "prints": [
+                "LART-EN018"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Superdreadnought Rail Cannon Juggernaut Liebe": [
+        {
+            "prints": [
+                "RA03-EN041"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "rarities": [
+                "QCScR"
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "The Winged Dragon of Ra": [
+        {
+            "prints": [
+                "LED7-EN000"
+            ],
+            "art_ids": [
+                1
+            ],
+            "rarities": [
+                "GR"
+            ]
+        },
+        {
+            "prints": [
+                "JMPS-EN006",
+                "JUMP-EN045",
+                "ORCS-ENSE2",
+                "TN19-EN009"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "LED7-EN000"
+            ],
+            "art_ids": [
+                3
+            ],
+            "rarities": [
+                "UR"
+            ]
+        },
+        {
+            "prints": [
+                "RA03-EN137"
+            ],
+            "art_ids": [
+                3
+            ]
+        }
+    ],
+    "Thousand Dragon": [
+        {
+            "prints": [
+                "MIL1-EN039"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Tiger Axe": [
+        {
+            "prints": [
+                "MIL1-EN031"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Toon World": [
+        {
+            "prints": [
+                "GLD4-EN036",
+                "LDS1-EN068",
+                "MIL1-EN042"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Tour Guide From the Underworld": [
+        {
+            "prints": [
+                "DUOV-EN057",
+                "RA04-EN157"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "MAGO-EN007"
+            ],
+            "art_ids": [
+                1,
+                2
+            ],
+            "suffix": [
+                "",
+                "-AA"
+            ]
+        }
+    ],
+    "Tragedy": [
+        {
+            "prints": [
+                "LART-EN030"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Tuning": [
+        {
+            "prints": [
+                "MP24-EN055"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Viser Des": [
+        {
+            "prints": [
+                "MIL1-EN037",
+                "SDMA-EN003"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Void Imagination": [
+        {
+            "prints": [
+                "BLTR-EN102"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Vorse Raider": [
+        {
+            "prints": [
+                "DPKB-EN008",
+                "LCKC-EN003",
+                "MIL1-EN032"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Widespread Ruin": [
+        {
+            "prints": [
+                "MIL1-EN046",
+                "SBC1-END20"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "Winged Kuriboh": [
+        {
+            "prints": [
+                "AC19-EN021",
+                "MP24-EN017",
+                "GX1-EN002",
+                "DL12-EN008"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "X-Head Cannon": [
+        {
+            "prints": [
+                "KC01-EN013"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "XY-Dragon Cannon": [
+        {
+            "prints": [
+                "KC01-EN035"
+            ],
+            "art_ids": [
+                2
+            ]
+        }
+    ],
+    "XYZ-Dragon Cannon": [
+        {
+            "prints": [
+                "SBCB-EN084",
+                "LCKC-EN061",
+                "MP24-EN011",
+                "SDKS-EN042"
+            ],
+            "art_ids": [
+                2
+            ]
+        },
+        {
+            "prints": [
+                "DPKB-EN025",
+                "MIL1-EN040"
+            ],
+            "art_ids": [
+                3
+            ]
+        },
+        {
+            "prints": [
+                "KC01-EN034"
+            ],
+            "art_ids": [
+                4
+            ]
+        }
+    ]
+}
