@@ -438,7 +438,8 @@ RARITY_ORDER = {
     "Millennium Super Rare": 54,
     "Millennium Ultra Rare": 55,
     "Millennium Secret Rare": 56,
-    "Millennium Gold Rare": 57
+    "Millennium Gold Rare": 57,
+    "Grand Master Rare": 58
 }
 
 # Time Wizard-excluded sets
