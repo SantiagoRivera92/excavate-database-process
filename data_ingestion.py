@@ -7,7 +7,7 @@ import argparse
 import requests
 import boto3
 from PIL import Image
-from pymongo import MongoClient
+from pymongo import MongoClient, ReplaceOne
 from meta_dump import dump_all
 from mediawiki_api import get_card_gallery
 import re
@@ -383,47 +383,81 @@ SPECIAL_CASES = {
 
 RARITY_ORDER = {
     "Common": 1,
+    "C": 1,
     "Rare": 2,
+    "R": 2,
     "Super Rare": 3,
+    "SR": 3,
     "Ultra Rare": 4,
+    "UR": 4,
     "Secret Rare": 5,
+    "ScR": 5,
     "Prismatic Secret Rare": 6,
+    "PScR": 6,
     "Platinum Secret Rare": 7,
+    "PlScR": 7,
     "Ultimate Rare": 8,
+    "UtR": 8,
     "Collector's Rare": 9,
+    "CR": 9,
     "Quarter Century Secret Rare": 10,
+    "QCScR": 10,
     "Starlight Rare": 11,
+    "StR": 11,
     "Ghost Rare": 12,
+    "GR": 12,
     "Duel Terminal Normal Parallel Rare": 13,
+    "DNPR": 13,
     "Duel Terminal Normal Rare Parallel Rare": 14,
+    "DNRPR": 14,
     "Duel Terminal Rare Parallel Rare": 15,
+    "DRPR": 15,
     "Duel Terminal Super Parallel Rare": 16,
+    "DSPR": 16,
     "Duel Terminal Ultra Parallel Rare": 17,
+    "DUPR": 17,
     "Duel Terminal Secret Parallel Rare": 18,
-    "10000 Secret Rare": 19, 
+    "DScPR": 18,
+    "10000 Secret Rare": 19,
+    "10000ScR": 19,
     "Extra Secret Rare": 20,
+    "EScR": 20,
     "Ghost/Gold Rare": 21,
+    "GGR": 21,
     "Gold Rare": 22,
+    "GUR": 22,
     "Gold Secret Rare": 23,
+    "GScR": 23,
     "Mosaic Rare": 24,
+    "MSR": 24,
     "Normal Parallel Rare": 25,
+    "NPR": 25,
     "Platinum Rare": 26,
+    "PlR": 26,
     "Premium Gold Rare": 27,
-    "Shatterfoil Rare": 28, 
+    "PGR": 27,
+    "Shatterfoil Rare": 28,
+    "SHR": 28,
     "Short Print": 29,
+    "SP": 29,
     "Starfoil Rare": 30,
+    "SFR": 30,
     "Super Parallel Rare": 31,
+    "SPR": 31,
     "Super Short Print": 32,
+    "SSP": 32,
     "Ultra Parallel Rare": 33,
+    "UPR": 33,
     "Ultra Rare (Pharaoh's Rare)": 34,
     "Ultra Secret Rare": 35,
+    "UScR": 35,
     "Normal Rare": 36,
     "20th Secret Rare": 37,
     "Secret Rare (Special Blue Version)": 38,
     "Secret Rare (Special Red Version)": 39,
     "Ultra Rare (Special Purple Version)": 40,
     "Ultra Rare (Special Blue Version)": 41,
-    "Ultra Rare (Special Red Version": 42,
+    "Ultra Rare (Special Red Version)": 42,
     "Holographic Rare": 43,
     "Rare Parallel Rare": 44,
     "Secret Parallel Rare": 45,
@@ -431,15 +465,23 @@ RARITY_ORDER = {
     "Extra Secret Parallel Rare": 47,
     "Kaiba Corporation Common": 48,
     "Kaiba Corporation Rare": 49,
-    "Kaiba Corproration Super Rare": 50,
+    "Kaiba Corporation Super Rare": 50,
+    "UtRPR": 50,
     "Kaiba Corporation Ultra Rare": 51,
+    "UtRScR": 51,
     "Kaiba Corporation Secret Rare": 52,
     "Millennium Rare": 53,
+    "MR": 53,
     "Millennium Super Rare": 54,
+    "MScR": 54,
     "Millennium Ultra Rare": 55,
+    "MUR": 55,
     "Millennium Secret Rare": 56,
+    "MScR": 56,
     "Millennium Gold Rare": 57,
-    "Grand Master Rare": 58
+    "MGR": 57,
+    "Grand Master Rare": 58,
+    "GMR": 58,
 }
 
 # Time Wizard-excluded sets
@@ -1373,7 +1415,7 @@ def process_all_cards(raw_dataset, loaded_data, s3_webp_files):
 
 
 def update_databases(processed_data, db_collections):
-    """Updates MongoDB databases with processed card data."""
+    """Updates MongoDB databases with processed card data using bulk operations."""
     if not UPDATE_DATABASE or not db_collections:
         print("Database update skipped.")
         return
@@ -1382,14 +1424,19 @@ def update_databases(processed_data, db_collections):
     spellbook_dev_db = db_collections.get("spellbook_dev_db")
     spellbook_prod_db = db_collections.get("spellbook_prod_db")
 
+    # Build bulk operations
+    dev_ops = []
+    prod_ops = []
     for card_data in processed_data:
         if "image_url" not in card_data or card_data["image_url"] is None:
             continue  # Skip cards without image URLs
-        card_name_en = card_data.get("name",{}).get("en", "UnknownCard")
-        konami_id = card_data.get("_id", "UnknownID")
-        print(f"Updating DB for: {card_name_en} (Konami ID: {konami_id})")
-        spellbook_dev_db.replace_one({"_id": konami_id}, card_data, upsert=True)
-        spellbook_prod_db.replace_one({"_id": konami_id}, card_data, upsert=True)
+        konami_id = card_data.get("_id")
+        dev_ops.append(pymongo.ReplaceOne({"_id": konami_id}, card_data, upsert=True))
+        prod_ops.append(pymongo.ReplaceOne({"_id": konami_id}, card_data, upsert=True))
+    
+    if dev_ops:
+        spellbook_dev_db.bulk_write(dev_ops, ordered=False)
+        spellbook_prod_db.bulk_write(prod_ops, ordered=False)
     print("MongoDB update complete.")
 
 
@@ -1420,121 +1467,105 @@ def cleanup_temp_files():
 
 def add_tcgplayer_ids(processed_data, db_collections):
     prices_db = db_collections.get("spellbook_prod_prices_db")
-    prices = list(prices_db.find({}, { "prices": 0}))
+    prices = list(prices_db.find({}, { "prices": 0 }))
+    
+    # Build indexed dictionary for O(1) lookups: key = (name_lower, set_number, rarity, alt_art, is_25th)
+    prices_index = {}
+    for p in prices:
+        key = (p.get("name", "").lower(), p.get("set_number", ""), p.get("rarity", ""), p.get("alt_art", False), p.get("25th_anniversary", False))
+        if key not in prices_index:
+            prices_index[key] = []
+        prices_index[key].append(p)
+    
     for card in processed_data:
         name = card["name"]["en"].replace("★", " ").replace("☆", " ").replace("Ü", "U").replace("é", "e").replace("ú", "u").replace("ä", "a"). replace("<", "").replace(">", "")
+        name_lower = name.lower()
+        name_aliases = NAME_ALIASES.get(name, [])
+        
         for language in TCG_LANGUAGES:
-            if language in card["sets"]:
-                for printing in card["sets"][language]:
-                    original_set_number = printing["set_number"]
-                    set_number = printing["set_number"]
-                    set_number_parts = set_number.split("-", 1)
-                    if len(set_number_parts[0]) == 3:
-                        for old_code, new_code in SET_NUMBER_PRICE_EQUIVALENCE.items():
-                            if old_code in set_number:
-                                set_number = set_number.replace(old_code, new_code)
-                    else:
-                        for lg in ["-DE", "-FR", "-IT", "-SP", "-PT"]:
-                            set_number = set_number.replace(lg, "-EN")
-                    rarity = RARITY_PRICE_EQUIVALENCE.get(printing["rarity"], printing["rarity"])
-                    if "RA0" in set_number:
-                        rarity = RARITY_COLLECTION_RARITY_EQUIVALENCES.get(rarity, rarity)
-                    if "HAC1" in set_number:
-                        rarity = HIDDEN_ARSENAL_CHAPTER_1_EQUIVALENCES.get(rarity, rarity)
-                    for codename in ["PCK-", "DDS-", "PCY-", "DOR-", "WC4-", "TSC-"]:
-                        if codename in set_number:
-                            rarity = SECRET_RARE_PROMO_EQUIVALENCES.get(rarity, rarity)
+            if language not in card["sets"]:
+                continue
+            for printing in card["sets"][language]:
+                original_set_number = printing["set_number"]
+                set_number = printing["set_number"]
+                set_number_parts = set_number.split("-", 1)
+                if len(set_number_parts[0]) == 3:
+                    for old_code, new_code in SET_NUMBER_PRICE_EQUIVALENCE.items():
+                        if old_code in set_number:
+                            set_number = set_number.replace(old_code, new_code)
+                else:
+                    for lg in ["-DE", "-FR", "-IT", "-SP", "-PT"]:
+                        set_number = set_number.replace(lg, "-EN")
+                rarity = RARITY_PRICE_EQUIVALENCE.get(printing["rarity"], printing["rarity"])
+                if "RA0" in set_number:
+                    rarity = RARITY_COLLECTION_RARITY_EQUIVALENCES.get(rarity, rarity)
+                if "HAC1" in set_number:
+                    rarity = HIDDEN_ARSENAL_CHAPTER_1_EQUIVALENCES.get(rarity, rarity)
+                for codename in ["PCK-", "DDS-", "PCY-", "DOR-", "WC4-", "TSC-"]:
+                    if codename in set_number:
+                        rarity = SECRET_RARE_PROMO_EQUIVALENCES.get(rarity, rarity)
+                        break
+                if set_number in PROMOS:
+                    rarity = "Promo"
+                
+                is_alt_art = printing.get("art_id", 1) > 1
+                if "MIL1" in set_number:
+                    is_alt_art = False
+                if set_number in WRONG_ALT_ARTS:
+                    is_alt_art = False
+                if set_number == "BLC1-EN039":
+                    is_alt_art = True
+                
+                is_25th = "25th Anniversary Edition" in printing.get("set_name", "")
+                
+                # Try exact match first
+                price_entries = prices_index.get((name_lower, set_number, rarity, is_alt_art, is_25th), [])
+                
+                # Try with name aliases
+                if len(price_entries) == 0 and name_aliases:
+                    for alias in name_aliases:
+                        price_entries = prices_index.get((alias.lower(), set_number, rarity, is_alt_art, is_25th), [])
+                        if price_entries:
                             break
-                    if set_number in PROMOS:
-                        rarity = "Promo"
-                    price_entries = [
-                        p for p in prices
-                        if p.get("set_number") == set_number and p.get("rarity") == rarity and p.get("name").lower() == name.lower()
-                    ]
-                    if len(price_entries) == 0:
-                        if name in NAME_ALIASES:
-                            name_alias = NAME_ALIASES[name]
-                            price_entries = [
-                                p for p in prices
-                                if p.get("set_number") == set_number and p.get("rarity") == rarity and p.get("name") in name_alias
-                            ]
-                        else:
-                            set_number_no_last3 = set_number[:-3]
-                            price_entries = [
-                                p for p in prices
-                                if set_number_no_last3 in p.get("set_number") and p.get("rarity") == rarity and p.get("name").lower() == name.lower()
-                            ]
-                    if len(price_entries) == 0:
-                        # Likely rarity mismatch
-                        price_entries = [
-                            p for p in prices
-                            if p.get("set_number") == set_number and p.get("name").lower() == name.lower()
-                        ]
-                    if len(price_entries) == 0:
-                        # Fucking Dark Assailant man
-                        if name in NAME_ALIASES:
-                            name_alias = NAME_ALIASES[name]
-                            set_number_no_last3 = set_number[:-3]
-                            price_entries = [
-                                p for p in prices
-                                if set_number_no_last3 in p.get("set_number") and p.get("rarity") == rarity and p.get("name") in name_alias
-                            ]
-
-                    is_alt_art = printing.get("art_id", 1) > 1
-                    if "MIL1" in set_number:
-                        is_alt_art = False
-                    if set_number in WRONG_ALT_ARTS:
-                        is_alt_art = False
-                    if set_number == "BLC1-EN039":
-                        is_alt_art = True
-                    if len(price_entries) > 1:
-                        if is_alt_art:
-                            price_entries = [
-                                p for p in price_entries
-                                if p.get("alt_art", False) is True
-                            ]
-                        else:
-                            price_entries = [
-                                p for p in price_entries
-                                if p.get("alt_art", False) is False
-                            ]
-                    is_25th = "25th Anniversary Edition" in printing.get("set_name")
-                    if len(price_entries) > 1:
-                        if is_25th:
-                            price_entries = [
-                                p for p in price_entries
-                                if p.get("25th_anniversary", False) is True
-                            ]
-                        else:
-                            price_entries = [
-                                p for p in price_entries
-                                if p.get("25th_anniversary", False) is False
-                            ]
-                    if len(price_entries) > 1:
-                        printing["tcgplayer_id"] = price_entries[0].get("product_id")
-                    elif len(price_entries) == 1:
-                        printing["tcgplayer_id"] = price_entries[0].get("product_id")
-                    elif set_number in SPECIAL_CASES:
-                        special_case = SPECIAL_CASES[set_number]
-                        special_entry = next(
-                            (entry for entry in special_case if entry["rarity"] == rarity and entry["art_id"] == printing.get("art_id")),
-                            None
-                        )
-                        if special_entry:
-                            printing["tcgplayer_id"] = special_entry.get("tcgplayer_id")
-                        else:
-                            printing["tcgplayer_id"] = None
+                
+                # Try with set number without last 3 chars
+                if len(price_entries) == 0:
+                    set_number_no_last3 = set_number[:-3]
+                    price_entries = [p for p in prices if set_number_no_last3 in p.get("set_number", "") and p.get("rarity") == rarity and p.get("name", "").lower() == name_lower]
+                
+                # Try rarity mismatch
+                if len(price_entries) == 0:
+                    price_entries = prices_index.get((name_lower, set_number, "", is_alt_art, is_25th), [])
+                    if not price_entries and name_aliases:
+                        for alias in name_aliases:
+                            price_entries = prices_index.get((alias.lower(), set_number, "", is_alt_art, is_25th), [])
+                            if price_entries:
+                                break
+                
+                # Handle special cases
+                if len(price_entries) == 0 and set_number in SPECIAL_CASES:
+                    special_case = SPECIAL_CASES[set_number]
+                    special_entry = next(
+                        (entry for entry in special_case if entry["rarity"] == rarity and entry["art_id"] == printing.get("art_id")),
+                        None
+                    )
+                    if special_entry:
+                        printing["tcgplayer_id"] = special_entry.get("tcgplayer_id")
                     else:
-                        ignored_set = False
-                        if not ("OP" in set_number and "-PT" in original_set_number):
-                            for ex_set in SETS_NOT_IN_TCGPLAYER:
-                                if ex_set in set_number:
-                                    ignored_set = True
-                                    break
-                            if not ignored_set:
-                                print("No price entry found for", name, "in", language, "with rarity", rarity, "and set number", set_number)
                         printing["tcgplayer_id"] = None
-    
+                elif len(price_entries) > 0:
+                    printing["tcgplayer_id"] = price_entries[0].get("product_id")
+                else:
+                    ignored_set = False
+                    if not ("OP" in set_number and "-PT" in original_set_number):
+                        for ex_set in SETS_NOT_IN_TCGPLAYER:
+                            if ex_set in set_number:
+                                ignored_set = True
+                                break
+                        if not ignored_set:
+                            print("No price entry found for", name, "in", language, "with rarity", rarity, "and set number", set_number)
+                    printing["tcgplayer_id"] = None
+        
         card["tcgplayer_ids"] = []
         for lang in TCG_LANGUAGES:
             if lang in card["sets"]:
