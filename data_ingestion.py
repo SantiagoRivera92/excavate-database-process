@@ -525,8 +525,8 @@ def fetch_currently_pointed_cards(mongo_databases):
         return pointed_cards_list
         
     except Exception as e:
-        print("Error fetching currently pointed cards from MongoDB")
-        raise SystemExit("Failed to fetch critical data from MongoDB") from e
+        print("Error fetching currently pointed cards from MongoDB, returning empty list")
+        return []
 
 def get_earliest_tcg_date(card_data):
     if "sets" not in card_data or "en" not in card_data["sets"] or len(card_data["sets"]["en"]) == 0: 
