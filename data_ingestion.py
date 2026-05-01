@@ -1,6 +1,7 @@
 import os
 import json
 import shutil
+import time
 from datetime import datetime
 from pathlib import Path
 import argparse
@@ -12,12 +13,38 @@ from meta_dump import dump_all
 from mediawiki_api import get_card_gallery
 import re
 
+
+def time_function(func):
+    """Decorator to measure execution time of a function."""
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        elapsed = time.time() - start
+        print(f"  [TIMING] {func.__name__}: {elapsed:.3f}s")
+        return result
+    return wrapper
+
+
+class StepTimer:
+    """Context manager to time code blocks."""
+    def __init__(self, step_name):
+        self.step_name = step_name
+        self.start = None
+    
+    def __enter__(self):
+        self.start = time.time()
+        return self
+    
+    def __exit__(self, *args):
+        elapsed = time.time() - self.start
+        print(f"  [TIMING] {self.step_name}: {elapsed:.3f}s")
+
 BASE_DIR = Path(__file__).parent.resolve()
 
 # URLs
 DATASET_URL = "https://dawnbrandbots.github.io/yaml-yugi/cards.json"
 SETS_URL = "https://yugioh-proxy.santirivera92.workers.dev/cardsets"
-ADVANCED_BANLIST_URL = "https://raw.githubusercontent.com/SantiagoRivera92/TimeWizard/refs/heads/main/banlists/2025-10-24.json"
+ADVANCED_BANLIST_URL = "https://raw.githubusercontent.com/SantiagoRivera92/TimeWizard/refs/heads/main/banlists/2026-02-02.json"
 
 # MongoDB URI
 MONGO_URI = os.getenv("MONGO_URI")
@@ -137,116 +164,7 @@ CARD_ID_EQUIVALENCES = [
     ["The Winged Dragon of Ra - Immortal Phoenix", 10000090],
 ]
 
-SET_NUMBER_PRICE_EQUIVALENCE = {
-    "SDJ-G": "SDJ-",
-    "BIJ-S": "SDJ-",
-    "MRD-G": "MRD-E",
-    "PMT-S": "MRD-E",
-    "DDJ-F": "SDJ-",
-    "MRD-F0": "MRD-E0",
-    "MRD-F1": "MRD-E1",
-    "PMT-I": "MRD-E",
-    "MIJ-I": "SDJ-",
-    "DIJ-P": "SDJ-",
-    "PMT-P": "MRD-E",
-    "PMT-": "MRD-",
-    "MRD-E0": "MRD-0",
-    "MRD-E1": "MRD-1",
-    "LOD-0": "LOD-EN0",
-    "PSV-E0": "PSV-0",
-    "PSV-G": "PSV-",
-    "SDP-F": "PSV-",
-    "SDF-I": "PSV-",
-    "SRL-G": "SRL-",
-    "SDH-S": "SRL-",
-    "MDM-F": "SRL-",
-    "SDM-I": "SRL-",
-    "MRL-E": "MRL-",
-    "LON-G": "LON-E",
-    "LDC-F": "LON-E",
-    "LDI-F": "LON-E",
-    "LDI-I": "LON-E",
-    "LON-E0": "LON-0",
-    "LOB-A0": "LOB-E0",
-    "LOB-G0": "LOB-E0",
-    "LDD-S0": "LOB-E0",
-    "LDD-F0": "LOB-E0",
-    "LDD-C0": "LOB-E0",
-    "LDD-I0": "LOB-E0",
-    "LDB-P0": "LOB-E0",
-    "LOB-E0": "LOB-0",
-    "LOB-A1": "LOB-E1",
-    "LOB-G1": "LOB-E1",
-    "LDD-S1": "LOB-E1",
-    "LDD-F1": "LOB-E1",
-    "LDD-C1": "LOB-E1",
-    "LDD-I1": "LOB-E1",
-    "LDB-P1": "LOB-E1",
-    "LOB-E1": "LOB-1",
-    "SDY-E": "SDY-",
-    "SDY-A": "SDY-",
-    "SDY-G": "SDY-",
-    "BIY-S": "SDY-",
-    "DDY-F": "SDY-",
-    "DDY-C": "SDY-",
-    "MIY-I": "SDY-",
-    "DIY-P": "SDY-",
-    "SDK-E": "SDK-",
-    "SDK-A": "SDK-",
-    "SDK-G": "SDK-",
-    "BIK-S": "SDK-",
-    "DDK-F": "SDK-",
-    "DDK-C": "SDK-",
-    "MIK-I": "SDK-",
-    "DIK-P": "SDK-",
-    "SDP-G": "SDP-",
-    "BIP-S": "SDP-",
-    "DDP-F": "SDP-",
-    "MIP-I": "SDP-",
-    "DIP-P": "SDP-",
-    "PCK-E": "PCK-",
-    "PCK-G": "PCK-",
-    "PCK-S": "PCK-",
-    "PCK-F": "PCK-",
-    "PCK-I": "PCK-",
-    "PCY-E": "PCY-",
-    "PCY-G": "PCY-",
-    "PCY-S": "PCY-",
-    "PCY-F": "PCY-",
-    "PCY-I": "PCY-",
-    "TP1-E": "TP1-",
-    "TP1-G": "TP1-",
-    "TP1-S": "TP1-",
-    "TP1-F": "TP1-",
-    "TP1-I": "TP1-",
-    "TP2-E": "TP2-",
-    "TP2-G": "TP2-",
-    "TP2-S": "TP2-",
-    "TP2-F": "TP2-",
-    "TP2-I": "TP2-",
-    "DOR-E": "DOR-",
-    "DOR-G": "DOR-",
-    "DOR-F": "DOR-",
-    "DOR-I": "DOR-",
-    "DOR-S": "DOR-",
-    "TSC-G": "TSC-",
-    "TSC-F": "TSC-",
-    "TSC-I": "TSC-",
-    "WC4-S": "WC4-",
-    "WC4-G": "WC4-",
-    "WC4-F": "WC4-",
-    "WC4-I": "WC4-",
-    "-FR": "-EN",
-    "-SP": "-EN",
-    "-IT": "-EN",
-    "-DE": "-EN",
-    "-PT": "-EN",
-    "AST-EN": "AST-",
-    "SYE-EN": "SYE-",
-    "SKE-EN": "SKE-",
-    "JMP-EN001": "JMP-001",
-    "JMP-EN002": "JMP-002",
-}
+
 
 NAME_ALIASES = {
     "Amazoness Archer": ["Amazon Archer"],
@@ -306,12 +224,6 @@ NAME_ALIASES = {
     "Wattkid": ["Oscillo Hero #2"]
 }
 
-SETS_NOT_IN_TCGPLAYER = [
-    "DL1-", "DL2-", "2025-", "2020-", "YGMU", "MF03-", "WGRT", "AC14", "AC11", 
-    "YS15-ENY", "YS15-END", "YDB1", "SRL-1", "MRL-1", "TFK-", "WQ11-", "YMM-",
-    "ROD-", "TSC-", "WC4-", "DOR-", "BNZ-", "2021-", "2022-", "2023-", "DL11-", "SL00-"
-]
-
 WRONG_ALT_ARTS = [
     "MAMA-EN075", "SDMY-EN042", "LART-EN027", "DUDE-EN003", 
     "SDWD-EN001", "SDWD-EN002", "SDWD-EN003", "SDCR-EN003", 
@@ -323,12 +235,6 @@ WRONG_ALT_ARTS = [
     "YGLD-ENB02", "YGLD-ENB02", "MAMA-EN105", "LDS1-EN001",
     "LDK2-ENJ01", "LEDD-ENA01", "RP01-EN003", "LOB-003",
     "LDS3-EN082", "YGLD-ENB03", "YGLD-ENC10", "LC01-EN005" ]
-
-RARITY_PRICE_EQUIVALENCE = {
-    "Short Print": "Common",
-    "Super Short Print": "Common",
-    "Collectors Rare": "Collector's Rare"
-}
 
 RARITY_COLLECTION_RARITY_EQUIVALENCES = {
     "Collector's Rare": "Prismatic Collector's Rare",
@@ -350,35 +256,6 @@ SECRET_RARE_PROMO_SETS = [
 
 PROMOS = {
     "21CC-EN001"
-}
-
-SPECIAL_CASES = {
-    "RA04-EN106":[
-        {"art_id": 3, "rarity": "Platinum Secret Rare", "tcgplayer_id": 627267},
-        {"art_id": 6, "rarity": "Platinum Secret Rare", "tcgplayer_id": 627268},
-        {"art_id": 7, "rarity": "Platinum Secret Rare", "tcgplayer_id": 627269},
-        {"art_id": 8, "rarity": "Platinum Secret Rare", "tcgplayer_id": 627270},
-        {"art_id": 9, "rarity": "Platinum Secret Rare", "tcgplayer_id": 627271},
-        {"art_id": 3, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 627272},
-        {"art_id": 6, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 627273},
-        {"art_id": 7, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 627274},
-        {"art_id": 8, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 627275},
-        {"art_id": 9, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 627276}
-    ],
-    "RA04-EN108":[
-        {"art_id": 8, "rarity": "Platinum Secret Rare", "tcgplayer_id": 627281},
-        {"art_id": 9, "rarity": "Platinum Secret Rare", "tcgplayer_id": 627282},
-        {"art_id": 8, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 627283},
-        {"art_id": 9, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 627284},
-    ],
-    "RA03-EN123":[
-        {"art_id": 2, "rarity": "Platinum Secret Rare", "tcgplayer_id": 593848},
-        {"art_id": 5, "rarity": "Platinum Secret Rare", "tcgplayer_id": 592812},
-        {"art_id": 6, "rarity": "Platinum Secret Rare", "tcgplayer_id": 593847},
-        {"art_id": 2, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 593850},
-        {"art_id": 5, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 592813},
-        {"art_id": 6, "rarity": "Quarter Century Secret Rare", "tcgplayer_id": 593849},
-    ]
 }
 
 RARITY_ORDER = {
@@ -751,7 +628,6 @@ def get_mongo_databases():
         return {
             "spellbook_dev_db": mongo_client["Cards"].Cards,
             "spellbook_prod_db": mongo_client["Cards"].Cards,
-            "spellbook_prod_prices_db": mongo_client["Cards"].Prices
         }
     except KeyError as e:
         raise SystemExit(f"MongoDB URI not found in config: {e}") from e
@@ -764,43 +640,74 @@ def load_initial_data(mongo_databases):
     """Loads all necessary initial data from files and APIs."""
     data = {}
     print("Loading initial data...")
-    data["artworks_map"] = load_json_file(ARTS_PATH)
-    data["artwork_urls_map"] = load_json_file(ARTWORKS_PATH)
-    data["formats_list"] = load_json_file(FORMATS_DATA_PATH)
-    data["sets_without_date_list"] = load_json_file(CARD_SETS_DATA_PATH)
-
-    data["tcg_banlists_map"] = {}
-    for file_path in BANLIST_FOLDER.glob("*.json"):
-        data["tcg_banlists_map"][file_path.stem] = load_json_file(file_path)
     
-    data["md_banlists_map"] = {} # New: For Master Duel banlists
-    if MD_BANLIST_FOLDER.exists(): # Check if the folder exists
-        for file_path in MD_BANLIST_FOLDER.glob("*.json"):
-            data["md_banlists_map"][file_path.stem] = load_json_file(file_path)
-    else:
-        print(f"Warning: Master Duel banlist folder not found at {MD_BANLIST_FOLDER}. Skipping MD banlist loading.")
+    with StepTimer("load_artworks_map"):
+        data["artworks_map"] = load_json_file(ARTS_PATH)
+    with StepTimer("load_artwork_urls_map"):
+        data["artwork_urls_map"] = load_json_file(ARTWORKS_PATH)
+    with StepTimer("load_formats_list"):
+        data["formats_list"] = load_json_file(FORMATS_DATA_PATH)
+    with StepTimer("load_sets_without_date_list"):
+        data["sets_without_date_list"] = load_json_file(CARD_SETS_DATA_PATH)
+        # Build lookup dictionaries for O(1) access
+        data["sets_without_date_by_name"] = {s["name"]: s for s in data["sets_without_date_list"]}
 
+    with StepTimer("load_tcg_banlists"):
+        data["tcg_banlists_map"] = {}
+        for file_path in BANLIST_FOLDER.glob("*.json"):
+            banlist = load_json_file(file_path)
+            # Convert lists to sets for O(1) lookups
+            data["tcg_banlists_map"][file_path.stem] = {
+                "forbidden": set(banlist.get("forbidden", [])),
+                "limited": set(banlist.get("limited", [])),
+                "semilimited": set(banlist.get("semilimited", [])),
+                "unlimited": set(banlist.get("unlimited", []))
+            }
+    
+    with StepTimer("load_md_banlists"):
+        data["md_banlists_map"] = {} # New: For Master Duel banlists
+        if MD_BANLIST_FOLDER.exists(): # Check if the folder exists
+            for file_path in MD_BANLIST_FOLDER.glob("*.json"):
+                banlist = load_json_file(file_path)
+                # Convert lists to sets for O(1) lookups
+                data["md_banlists_map"][file_path.stem] = {
+                    "forbidden": set(banlist.get("forbidden", [])),
+                    "limited": set(banlist.get("limited", [])),
+                    "semilimited": set(banlist.get("semilimited", [])),
+                    "unlimited": set(banlist.get("unlimited", []))
+                }
+        else:
+            print(f"Warning: Master Duel banlist folder not found at {MD_BANLIST_FOLDER}. Skipping MD banlist loading.")
 
     if UPDATE_VIDEOGAME_DATA: # This flag is False in user's new script, so this block might not run
         print("Dumping DL and MD cards...")
         dump_all() 
-    data["md_cards_list"] = load_json_file(MD_CARDS_PATH) 
-    data["dl_cards_list"] = load_json_file(DL_CARDS_PATH)
+    with StepTimer("load_md_cards_list"):
+        data["md_cards_list"] = load_json_file(MD_CARDS_PATH) 
+    with StepTimer("load_dl_cards_list"):
+        data["dl_cards_list"] = load_json_file(DL_CARDS_PATH)
 
     print("Fetching data from APIs...")
-    data["raw_sets_list"] = fetch_json_from_url(SETS_URL)
-    data["advanced_banlist_data"] = fetch_json_from_url(ADVANCED_BANLIST_URL)
-    data["genesys_points"] = fetch_genesys_points_json()
-    data["currently_pointed_cards"] = fetch_currently_pointed_cards(mongo_databases)
+    with StepTimer("fetch_raw_sets_list"):
+        data["raw_sets_list"] = fetch_json_from_url(SETS_URL)
+        # Build lookup dictionary for O(1) access by set_name
+        data["raw_sets_by_name"] = {s["set_name"]: s for s in data["raw_sets_list"]}
+    with StepTimer("fetch_advanced_banlist"):
+        data["advanced_banlist_data"] = fetch_json_from_url(ADVANCED_BANLIST_URL)
+    with StepTimer("fetch_genesys_points"):
+        data["genesys_points"] = fetch_genesys_points_json()
+    with StepTimer("fetch_currently_pointed"):
+        data["currently_pointed_cards"] = fetch_currently_pointed_cards(mongo_databases)
 
-    data["filtered_sets_by_format"] = {
-        fmt["name"]: [
-            s for s in data["raw_sets_list"]
-            if "tcg_date" in s and s["tcg_date"] and 
-                datetime.strptime(s["tcg_date"], "%Y-%m-%d") < datetime.strptime(fmt["date"], "%Y-%m-%d")
-        ]
-        for fmt in data["formats_list"] if "date" in fmt and fmt["date"] 
-    }
+    with StepTimer("build_filtered_sets"):
+        data["filtered_sets_by_format"] = {
+            fmt["name"]: [
+                s for s in data["raw_sets_list"]
+                if "tcg_date" in s and s["tcg_date"] and 
+                    datetime.strptime(s["tcg_date"], "%Y-%m-%d") < datetime.strptime(fmt["date"], "%Y-%m-%d")
+            ]
+            for fmt in data["formats_list"] if "date" in fmt and fmt["date"] 
+        }
     print("Initial data loaded.")
     return data
 
@@ -864,8 +771,8 @@ def process_card_sets(raw_card_sets, card_name_en, loaded_data):
     """Processes and transforms card set information, including alternate artworks."""
     transformed_sets_by_lang = {lang: [] for lang in SUPPORTED_LANGUAGES}
     artworks_map = loaded_data.get("artworks_map", {})
-    raw_sets_list = loaded_data.get("raw_sets_list", [])
-    sets_without_date_list = loaded_data.get("sets_without_date_list", [])
+    raw_sets_by_name = loaded_data.get("raw_sets_by_name", {})
+    sets_without_date_by_name = loaded_data.get("sets_without_date_by_name", {})
 
     for lang in SUPPORTED_LANGUAGES:
         if lang not in raw_card_sets:
@@ -889,16 +796,12 @@ def process_card_sets(raw_card_sets, card_name_en, loaded_data):
 
                 set_name = printing["set_name"]
 
+                # O(1) lookup instead of O(n) scan
                 print_date = "9999-12-31"
-                for rs in raw_sets_list:
-                    if set_name == rs.get("set_name"):
-                        print_date = rs.get("tcg_date")
-                        break
-                if print_date == "9999-12-31":
-                    for swd in sets_without_date_list:
-                        if set_name == swd.get("name"):
-                            print_date = swd.get("date")
-                            break
+                if set_name in raw_sets_by_name:
+                    print_date = raw_sets_by_name[set_name].get("tcg_date", "9999-12-31")
+                if print_date == "9999-12-31" and set_name in sets_without_date_by_name:
+                    print_date = sets_without_date_by_name[set_name].get("date", "9999-12-31")
 
                 if card_name_en in artworks_map:
                     card_artworks_data = artworks_map[card_name_en]
@@ -1228,13 +1131,13 @@ def add_banlist_history(transformed_card, loaded_data):
 
     for banlist_date_str, banlist_content in tcg_banlists_map.items():
         status_code = -1
-        if card_name_en in banlist_content.get("forbidden", []):
+        if card_name_en in banlist_content.get("forbidden", set()):
             status_code = 0
-        elif card_name_en in banlist_content.get("limited", []):
+        elif card_name_en in banlist_content.get("limited", set()):
             status_code = 1
-        elif card_name_en in banlist_content.get("semilimited", []):
+        elif card_name_en in banlist_content.get("semilimited", set()):
             status_code = 2
-        elif card_name_en in banlist_content.get("unlimited", []):
+        elif card_name_en in banlist_content.get("unlimited", set()):
             status_code = 3
         else:
             if earliest_tcg_print_date and earliest_tcg_print_date <= banlist_date_str:
@@ -1262,11 +1165,11 @@ def add_md_banlist_history(transformed_card, loaded_data):
     for banlist_date_str, banlist_content in md_banlists_map.items():
         status_code = -1
 
-        if card_name_en in banlist_content.get("forbidden", []):
+        if card_name_en in banlist_content.get("forbidden", set()):
             status_code = 0
-        elif card_name_en in banlist_content.get("limited", []):
+        elif card_name_en in banlist_content.get("limited", set()):
             status_code = 1
-        elif card_name_en in banlist_content.get("semilimited", []):
+        elif card_name_en in banlist_content.get("semilimited", set()):
             status_code = 2
         else:
             if md_release_date and md_release_date <= banlist_date_str:
@@ -1319,9 +1222,10 @@ def process_single_card(raw_card_data, loaded_data, s3_webp_files):
     if "pendulum_effect" in raw_card_data:
         transformed_card["pendulum_effect"] = get_localized_value(raw_card_data, "pendulum_effect")
 
-    raw_sets = raw_card_data.get("sets", {})
-    processed_sets = process_card_sets(raw_sets, card_name_en, loaded_data)
-    transformed_card["sets"] = processed_sets
+    with StepTimer("process_card_sets"):
+        raw_sets = raw_card_data.get("sets", {})
+        processed_sets = process_card_sets(raw_sets, card_name_en, loaded_data)
+        transformed_card["sets"] = processed_sets
 
     gallery_card_name = card_name_en
     if transformed_card.get("card_id") == ARKANA_DM_ID:
@@ -1331,23 +1235,30 @@ def process_single_card(raw_card_data, loaded_data, s3_webp_files):
 
     assign_genesys_points(transformed_card, loaded_data["genesys_points"])
 
-    gallery_info = get_card_gallery(card_name=gallery_card_name, use_cache=USE_CACHE)
-    assign_image_urls_from_gallery(transformed_card, gallery_info, s3_webp_files)
+    with StepTimer("get_card_gallery"):
+        gallery_info = get_card_gallery(card_name=gallery_card_name, use_cache=USE_CACHE)
+    with StepTimer("assign_image_urls_from_gallery"):
+        assign_image_urls_from_gallery(transformed_card, gallery_info, s3_webp_files)
 
-    update_card_statuses(transformed_card, loaded_data, raw_card_data.get("limit_regulation", {}))
-    add_videogame_data(transformed_card, loaded_data)
+    with StepTimer("update_card_statuses"):
+        update_card_statuses(transformed_card, loaded_data, raw_card_data.get("limit_regulation", {}))
+    with StepTimer("add_videogame_data"):
+        add_videogame_data(transformed_card, loaded_data)
 
     if card_name_en in loaded_data.get("artwork_urls_map", {}):
         transformed_card["artwork_urls"] = loaded_data["artwork_urls_map"][card_name_en]
 
-    for lang_prints_key in list(transformed_card.get("sets", {}).keys()):
-        lang_prints = transformed_card["sets"][lang_prints_key]
-        for printing in lang_prints:
-            if printing.get("image_url"):
-                printing["file"] = printing["image_url"].split("/")[-1]
+    with StepTimer("assign_files"):
+        for lang_prints_key in list(transformed_card.get("sets", {}).keys()):
+            lang_prints = transformed_card["sets"][lang_prints_key]
+            for printing in lang_prints:
+                if printing.get("image_url"):
+                    printing["file"] = printing["image_url"].split("/")[-1]
     
-    add_banlist_history(transformed_card, loaded_data)
-    add_md_banlist_history(transformed_card, loaded_data)
+    with StepTimer("add_banlist_history"):
+        add_banlist_history(transformed_card, loaded_data)
+    with StepTimer("add_md_banlist_history"):
+        add_md_banlist_history(transformed_card, loaded_data)
 
     return transformed_card
 
@@ -1375,11 +1286,11 @@ def process_all_cards(raw_dataset, loaded_data, s3_webp_files):
                 regular_dm_sets_lang = regular_dm.setdefault("sets", {}).setdefault(lang, [])
                 regular_dm_sets_lang.extend(arkana_dm["sets"][lang])
                 regular_dm_sets_lang.sort(key=lambda s: s["print_date"], reverse=True)
-                # Remove duplicates: keep only unique (set_number, rarity, art_id, tcgplayer_id)
+                # Remove duplicates: keep only unique (set_number, rarity, art_id)
                 seen = set()
                 unique_prints = []
                 for p in regular_dm_sets_lang:
-                    key = (p.get("set_number"), p.get("rarity"), p.get("art_id"), p.get("tcgplayer_id"))
+                    key = (p.get("set_number"), p.get("rarity"), p.get("art_id"))
                     if key not in seen:
                         seen.add(key)
                         unique_prints.append(p)
@@ -1402,7 +1313,7 @@ def process_all_cards(raw_dataset, loaded_data, s3_webp_files):
                 seen = set()
                 unique_prints = []
                 for p in poly_card_sets_lang:
-                    key = (p.get("set_number"), p.get("rarity"), p.get("art_id"), p.get("tcgplayer_id"))
+                    key = (p.get("set_number"), p.get("rarity"), p.get("art_id"))
                     if key not in seen:
                         seen.add(key)
                         unique_prints.append(p)
@@ -1465,159 +1376,61 @@ def cleanup_temp_files():
     else:
         print("mediawiki_test directory not found, skipping deletion.")
 
-def add_tcgplayer_ids(processed_data, db_collections):
-    prices_db = db_collections.get("spellbook_prod_prices_db")
-    prices = list(prices_db.find({}, { "prices": 0 }))
-    
-    # Build indexed dictionary for O(1) lookups: key = (name_lower, set_number, rarity, alt_art, is_25th)
-    prices_index = {}
-    for p in prices:
-        key = (p.get("name", "").lower(), p.get("set_number", ""), p.get("rarity", ""), p.get("alt_art", False), p.get("25th_anniversary", False))
-        if key not in prices_index:
-            prices_index[key] = []
-        prices_index[key].append(p)
-    
-    for card in processed_data:
-        name = card["name"]["en"].replace("★", " ").replace("☆", " ").replace("Ü", "U").replace("é", "e").replace("ú", "u").replace("ä", "a"). replace("<", "").replace(">", "")
-        name_lower = name.lower()
-        name_aliases = NAME_ALIASES.get(name, [])
-        
-        for language in TCG_LANGUAGES:
-            if language not in card["sets"]:
-                continue
-            for printing in card["sets"][language]:
-                original_set_number = printing["set_number"]
-                set_number = printing["set_number"]
-                set_number_parts = set_number.split("-", 1)
-                if len(set_number_parts[0]) == 3:
-                    for old_code, new_code in SET_NUMBER_PRICE_EQUIVALENCE.items():
-                        if old_code in set_number:
-                            set_number = set_number.replace(old_code, new_code)
-                else:
-                    for lg in ["-DE", "-FR", "-IT", "-SP", "-PT"]:
-                        set_number = set_number.replace(lg, "-EN")
-                rarity = RARITY_PRICE_EQUIVALENCE.get(printing["rarity"], printing["rarity"])
-                if "RA0" in set_number:
-                    rarity = RARITY_COLLECTION_RARITY_EQUIVALENCES.get(rarity, rarity)
-                if "HAC1" in set_number:
-                    rarity = HIDDEN_ARSENAL_CHAPTER_1_EQUIVALENCES.get(rarity, rarity)
-                for codename in ["PCK-", "DDS-", "PCY-", "DOR-", "WC4-", "TSC-"]:
-                    if codename in set_number:
-                        rarity = SECRET_RARE_PROMO_EQUIVALENCES.get(rarity, rarity)
-                        break
-                if set_number in PROMOS:
-                    rarity = "Promo"
-                
-                is_alt_art = printing.get("art_id", 1) > 1
-                if "MIL1" in set_number:
-                    is_alt_art = False
-                if set_number in WRONG_ALT_ARTS:
-                    is_alt_art = False
-                if set_number == "BLC1-EN039":
-                    is_alt_art = True
-                
-                is_25th = "25th Anniversary Edition" in printing.get("set_name", "")
-                
-                # Try exact match first
-                price_entries = prices_index.get((name_lower, set_number, rarity, is_alt_art, is_25th), [])
-                
-                # Try with name aliases
-                if len(price_entries) == 0 and name_aliases:
-                    for alias in name_aliases:
-                        price_entries = prices_index.get((alias.lower(), set_number, rarity, is_alt_art, is_25th), [])
-                        if price_entries:
-                            break
-                
-                # Try with set number without last 3 chars
-                if len(price_entries) == 0:
-                    set_number_no_last3 = set_number[:-3]
-                    price_entries = [p for p in prices if set_number_no_last3 in p.get("set_number", "") and p.get("rarity") == rarity and p.get("name", "").lower() == name_lower]
-                
-                # Try rarity mismatch
-                if len(price_entries) == 0:
-                    price_entries = prices_index.get((name_lower, set_number, "", is_alt_art, is_25th), [])
-                    if not price_entries and name_aliases:
-                        for alias in name_aliases:
-                            price_entries = prices_index.get((alias.lower(), set_number, "", is_alt_art, is_25th), [])
-                            if price_entries:
-                                break
-                
-                # Handle special cases
-                if len(price_entries) == 0 and set_number in SPECIAL_CASES:
-                    special_case = SPECIAL_CASES[set_number]
-                    special_entry = next(
-                        (entry for entry in special_case if entry["rarity"] == rarity and entry["art_id"] == printing.get("art_id")),
-                        None
-                    )
-                    if special_entry:
-                        printing["tcgplayer_id"] = special_entry.get("tcgplayer_id")
-                    else:
-                        printing["tcgplayer_id"] = None
-                elif len(price_entries) > 0:
-                    printing["tcgplayer_id"] = price_entries[0].get("product_id")
-                else:
-                    ignored_set = False
-                    if not ("OP" in set_number and "-PT" in original_set_number):
-                        for ex_set in SETS_NOT_IN_TCGPLAYER:
-                            if ex_set in set_number:
-                                ignored_set = True
-                                break
-                        if not ignored_set:
-                            print("No price entry found for", name, "in", language, "with rarity", rarity, "and set number", set_number)
-                    printing["tcgplayer_id"] = None
-        
-        card["tcgplayer_ids"] = []
-        for lang in TCG_LANGUAGES:
-            if lang in card["sets"]:
-                for printing in card["sets"][lang]:
-                    if "tcgplayer_id" in printing and printing["tcgplayer_id"] is not None and printing["tcgplayer_id"] not in card["tcgplayer_ids"]:
-                        card["tcgplayer_ids"].append(printing["tcgplayer_id"])
-    return processed_data
-
 # --- Main Execution ---
 def main():
     """Main function to run the card processing script."""
+    total_start = time.time()
 
-    db_collections = get_mongo_databases()
-    loaded_data = load_initial_data(db_collections)
+    with StepTimer("get_mongo_databases"):
+        db_collections = get_mongo_databases()
+    
+    with StepTimer("load_initial_data"):
+        loaded_data = load_initial_data(db_collections)
+    
     if UPDATE_S3 and not OVERWRITE_S3_FILES:
-        print("Listing all files in /webp in S3...")
-        s3_webp_files = list_s3_files_in_webp()
-        print(f"Found {len(s3_webp_files)} files in /webp in S3.")
-        print("Listing all files in /art in S3...")
-        s3_art_files = list_s3_art_files_in_webp()
-        print(f"Found {len(s3_art_files)} files in /art in S3.")
+        with StepTimer("list_s3_files"):
+            print("Listing all files in /webp in S3...")
+            s3_webp_files = list_s3_files_in_webp()
+            print(f"Found {len(s3_webp_files)} files in /webp in S3.")
+            print("Listing all files in /art in S3...")
+            s3_art_files = list_s3_art_files_in_webp()
+            print(f"Found {len(s3_art_files)} files in /art in S3.")
     else:
         s3_webp_files = []
         s3_art_files = []
 
-
-    print("Downloading main card dataset...")
-    raw_card_dataset = fetch_json_from_url(DATASET_URL)
-    if not raw_card_dataset: 
-        print("Failed to download or parse main card dataset. Exiting.")
-        return
+    with StepTimer("fetch_json_from_url"):
+        print("Downloading main card dataset...")
+        raw_card_dataset = fetch_json_from_url(DATASET_URL)
+        if not raw_card_dataset: 
+            print("Failed to download or parse main card dataset. Exiting.")
+            return
 
     print("Main dataset downloaded. Starting card processing.")
 
-    processed_card_data = process_all_cards(raw_card_dataset, loaded_data, s3_webp_files)
-    print("Adding tcgplayer IDs to processed cards...")
-    processed_card_data = add_tcgplayer_ids(processed_card_data, db_collections)
+    with StepTimer("process_all_cards"):
+        processed_card_data = process_all_cards(raw_card_dataset, loaded_data, s3_webp_files)
 
-    save_json_file(processed_card_data, OUTPUT_PATH)
+    with StepTimer("save_json_file"):
+        save_json_file(processed_card_data, OUTPUT_PATH)
     print(f"Processed data saved to {OUTPUT_PATH}")
     
     if UPDATE_S3:
-        print("Uploading missing card arts...")
-        for card in processed_card_data:
-            card_password = card["_id"]
-            output_path = Path(BASE_DIR, "temp_images", f"{str(card_password)}.webp")
-            filename = f"art/{card_password}.webp"
-            if filename not in s3_art_files:
-                print(f'Uploading card art for {card["name"]["en"]}')
-                download_transform_and_upload_card_image(card, output_path)
+        with StepTimer("upload_missing_arts"):
+            print("Uploading missing card arts...")
+            for card in processed_card_data:
+                card_password = card["_id"]
+                output_path = Path(BASE_DIR, "temp_images", f"{str(card_password)}.webp")
+                filename = f"art/{card_password}.webp"
+                if filename not in s3_art_files:
+                    print(f'Uploading card art for {card["name"]["en"]}')
+                    download_transform_and_upload_card_image(card, output_path)
 
-    update_databases(processed_card_data, db_collections)
+    with StepTimer("update_databases"):
+        update_databases(processed_card_data, db_collections)
+    
+    total_elapsed = time.time() - total_start
+    print(f"\n[TIMING] Total execution time: {total_elapsed:.3f}s")
 
 if __name__ == "__main__":
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
