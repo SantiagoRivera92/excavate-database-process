@@ -11,6 +11,7 @@ from PIL import Image
 from pymongo import MongoClient, ReplaceOne
 from meta_dump import dump_all
 from mediawiki_api import get_card_gallery
+import pymongo
 import re
 
 
