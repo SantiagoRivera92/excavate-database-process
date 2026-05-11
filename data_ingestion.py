@@ -45,7 +45,7 @@ BASE_DIR = Path(__file__).parent.resolve()
 # URLs
 DATASET_URL = "https://dawnbrandbots.github.io/yaml-yugi/cards.json"
 SETS_URL = "https://yugioh-proxy.santirivera92.workers.dev/cardsets"
-ADVANCED_BANLIST_URL = "https://raw.githubusercontent.com/SantiagoRivera92/TimeWizard/refs/heads/main/banlists/2026-02-02.json"
+ADVANCED_BANLIST_URL = "https://raw.githubusercontent.com/SantiagoRivera92/TimeWizard/refs/heads/main/banlists/2026-05-11.json"
 
 # MongoDB URI
 MONGO_URI = os.getenv("MONGO_URI")
