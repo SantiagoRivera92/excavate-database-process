@@ -9,6 +9,11 @@ Go to the [Releases](https://github.com/SantiagoRivera92/excavate-database-proce
 Releases are tagged by date: `1.0.YYYYMMDD`.
 
 <!-- datadump start -->
+
+## Latest Data Dump
+
+[datadump.json](https://github.com/SantiagoRivera92/excavate-database-process/releases/download/1.0.20260516/datadump.json)
+
 <!-- datadump end -->
 
 ## Data Format
