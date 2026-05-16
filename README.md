@@ -2,6 +2,8 @@
 
 Automated nightly dumps of the Yu-Gi-Oh! card database. Each release contains all cards as a single JSON file.
 
+Ideally this can lighten the load on the API so I don't have to fork over a bunch of money to a bunch of internet billionaire overlords.
+
 ## Download
 
 Go to the [Releases](https://github.com/SantiagoRivera92/excavate-database-process/releases) page and download the latest `datadump.json`.
