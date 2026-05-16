@@ -12,6 +12,7 @@ build/
 
 # Data files that shouldn't be committed
 data/output/
+datadump.json
 data/input/md_cards.json
 data/input/dl_cards.json
 mediawiki_cache/
