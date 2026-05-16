@@ -22,7 +22,7 @@ Releases are tagged by date: `1.0.YYYYMMDD`.
 
 ## Data Format
 
-Each release is a single JSON array of card objects. A sample response from the live API:
+Each release is a single JSON array of card objects. The arrays are arrays for a reason, I only put one element in them for this sample but obviously they will contain more.
 
 ```json
 {
@@ -163,136 +163,11 @@ Each release is a single JSON array of card objects. A sample response from the 
           "name": "1st Anniversary Bundle",
           "rarity": "UR",
           "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Normal Pack: Master Pack",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Structure Deck: Vortex of Magic",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Structure Deck: Dark Magical Blast",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Secret Pack: Darkest Magics",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Secret Pack: Chaos Magic",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
         }
       ],
       "md_release": "2022-01-19",
       "tcg_release": "2002-03-08",
       "dl_prints": [
-        {
-          "name": "Special Campaigns",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Yugi Muto (DSOD)",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Special Campaigns",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Event Special Packs",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Arkana",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Arkana",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Arkana Event",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Yami Yugi",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Yami Yugi",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Ranked Duels Ticket",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Acquirable with UR Tickets",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Acquirable with Tickets",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Structure Deck EX: Soul Servant",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Yami Yugi (Street)",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "KC Grand Tournament",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Special Campaigns",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Event Special Packs",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Special Campaigns",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Structure Deck EX: Soul Servant",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
-        {
-          "name": "Special Set",
-          "rarity": "UR",
-          "image_url": "DarkMagician-RA04-EN-QCScR-1E-AA.webp"
-        },
         {
           "name": "Special Campaigns",
           "rarity": "UR",
@@ -303,42 +178,6 @@ Each release is a single JSON array of card objects. A sample response from the 
         {
           "art_id": 1,
           "url": "DarkMagician-TF05-JP-VG-artwork.png"
-        },
-        {
-          "art_id": 2,
-          "url": "DarkMagician-TF05-JP-VG-2-artwork.png"
-        },
-        {
-          "art_id": 3,
-          "url": "DarkMagician-TF05-JP-VG-3-artwork.png"
-        },
-        {
-          "art_id": 4,
-          "url": "DarkMagician-MADU-EN-VG-artwork.png"
-        },
-        {
-          "art_id": 5,
-          "url": "DarkMagician-TF05-JP-VG-5-artwork.png"
-        },
-        {
-          "art_id": 6,
-          "url": "DarkMagician-MADU-EN-VG-artwork-2.png"
-        },
-        {
-          "art_id": 7,
-          "url": "DarkMagician-OW-3.png"
-        },
-        {
-          "art_id": 8,
-          "url": "DarkMagician-OW-4.png"
-        },
-        {
-          "art_id": 9,
-          "url": "DarkMagician-DULI-EN-VG-artwork-6.png"
-        },
-        {
-          "art_id": 10,
-          "url": "DarkMagician-OW-5.png"
         }
       ],
       "banlist_data": {
