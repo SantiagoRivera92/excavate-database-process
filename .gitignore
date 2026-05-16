@@ -15,6 +15,7 @@ data/output/
 data/input/md_cards.json
 data/input/dl_cards.json
 mediawiki_cache/
+temp_images/
 
 # IDE
 .vscode/
