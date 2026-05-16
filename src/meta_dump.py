@@ -6,7 +6,7 @@ from pathlib import Path
 MD_URL = "https://www.masterduelmeta.com/api/v1/cards?limit=3000&page="
 DL_URL = "https://www.duellinksmeta.com/api/v1/cards?limit=3000&page="
 
-BASE_DIR = Path(__file__).parent.resolve()
+BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data" / "input"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 MD_OUTPUT_FILE = DATA_DIR / "md_cards.json"

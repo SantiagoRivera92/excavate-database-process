@@ -51,4 +51,4 @@ jobs:
         S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
         PYTHONUNBUFFERED: 1
       run: |
-        python nightly_data_processor.py
+        python src/nightly_data_processor.py

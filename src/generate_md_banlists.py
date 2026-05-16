@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 API_URL = "https://yugipedia.com/api.php"
 
-BASE_DIR = Path(__file__).parent.resolve()
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 FORMATS_DIR = BASE_DIR / "data/formats_md"
 

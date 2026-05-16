@@ -40,7 +40,7 @@ class StepTimer:
         elapsed = time.time() - self.start
         print(f"  [TIMING] {self.step_name}: {elapsed:.3f}s")
 
-BASE_DIR = Path(__file__).parent.resolve()
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # URLs
 DATASET_URL = "https://dawnbrandbots.github.io/yaml-yugi/cards.json"

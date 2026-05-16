@@ -33,7 +33,7 @@ jobs:
         MONGO_URI: ${{ secrets.MONGO_URI }}
       run: |
         echo "TAG=1.0.$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
-        python generate_datadump.py
+        python src/generate_datadump.py
 
     - name: Create Release
       id: create_release

@@ -9,7 +9,7 @@ from urllib3.exceptions import ReadTimeoutError
 
 API_URL = "https://yugipedia.com/api.php"
 
-BASE_DIR = Path(__file__).parent.resolve()
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 CACHE_DIR = BASE_DIR / "mediawiki_cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)

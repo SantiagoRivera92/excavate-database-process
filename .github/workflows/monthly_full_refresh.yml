@@ -41,4 +41,4 @@ jobs:
         S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
         PYTHONUNBUFFERED: 1
       run: |
-        python monthly_full_refresh.py
+        python src/monthly_full_refresh.py

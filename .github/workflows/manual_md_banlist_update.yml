@@ -1,9 +1,10 @@
-name: Daily Image Update
+name: Manual MD Banlist Update
 
 on:
-  schedule:
-    - cron: '0 6 * * *'  # Runs daily at 06:00 UTC
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update:
@@ -24,15 +25,23 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Cache MediaWiki gallery data
-      uses: actions/cache@v4
-      with:
-        path: mediawiki_cache/
-        key: mediawiki-cache-${{ hashFiles('data/input/arts.json') }}
-        restore-keys: |
-          mediawiki-cache-
+    - name: Download Master Duel banlists
+      run: |
+        python src/generate_md_banlists.py
 
-    - name: Run daily image update
+    - name: Commit and push banlist changes
+      run: |
+        git add data/formats_md/
+        if git diff --cached --quiet; then
+          echo "No banlist changes to commit"
+        else
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update Master Duel banlists"
+          git push
+        fi
+
+    - name: Run nightly data processor
       env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
         S3_API_URL: ${{ secrets.S3_API_URL }}
@@ -41,4 +50,4 @@ jobs:
         S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
         PYTHONUNBUFFERED: 1
       run: |
-        python src/daily_image_updater.py
+        python src/nightly_data_processor.py
