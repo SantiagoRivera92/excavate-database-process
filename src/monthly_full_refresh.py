@@ -1,4 +1,6 @@
 import time
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from common import (
     BASE_DIR, StepTimer, save_json_file, fetch_json_from_url,
@@ -13,8 +15,62 @@ from common import (
     DATASET_URL, OUTPUT_PATH, CACHE_DIR, ARKANA_DM_ID, FUSION_ID,
     load_touched_map, save_touched_map, batch_get_gallery_touched,
 )
-from meta_dump import dump_all
 import pymongo
+
+_THREAD_WORKERS = 8
+
+
+def _process_single_card(raw_card, name_to_gallery, cards_needing_refresh, loaded_data,
+                          s3_webp_files, card_print_images_collection, touched_map,
+                          touched_map_lock):
+    card_start = time.time()
+    transformed_card = {}
+    names = get_localized_value(raw_card, "name")
+    if not names or "en" not in names:
+        return None
+    transformed_card["name"] = names
+    card_name_en = names["en"]
+    konami_id = raw_card.get("konami_id")
+
+    if not transform_basic_card_info(raw_card, transformed_card):
+        return None
+
+    print(f"Processing: {card_name_en}", flush=True)
+
+    if "text" in raw_card:
+        transformed_card["text"] = get_localized_value(raw_card, "text")
+    if "pendulum_effect" in raw_card:
+        transformed_card["pendulum_effect"] = get_localized_value(raw_card, "pendulum_effect")
+
+    processed_sets = process_card_sets(raw_card.get("sets", {}), card_name_en, loaded_data)
+    transformed_card["sets"] = processed_sets
+
+    gallery_card_name = name_to_gallery[card_name_en]
+
+    assign_genesys_points(transformed_card, loaded_data["genesys_points"])
+
+    if card_name_en in cards_needing_refresh:
+        gallery_info, gallery_touched = get_card_gallery(gallery_card_name, use_cache=True)
+        if gallery_touched:
+            with touched_map_lock:
+                touched_map[gallery_card_name] = gallery_touched
+    else:
+        gallery_info, _ = get_card_gallery(gallery_card_name, use_cache=True)
+
+    assign_image_urls_and_upload(transformed_card, gallery_info, s3_webp_files, card_print_images_collection)
+
+    update_card_statuses(transformed_card, loaded_data, raw_card.get("limit_regulation", {}))
+    add_videogame_data(transformed_card, loaded_data)
+
+    if card_name_en in loaded_data.get("artwork_urls_map", {}):
+        transformed_card["artwork_urls"] = loaded_data["artwork_urls_map"][card_name_en]
+
+    add_banlist_history(transformed_card, loaded_data)
+    add_md_banlist_history(transformed_card, loaded_data)
+
+    elapsed = time.time() - card_start
+    print(f"  [{card_name_en}] [{elapsed:.2f}s]", flush=True)
+    return transformed_card
 
 
 def main():
@@ -69,61 +125,22 @@ def main():
 
     raw_card_dataset.sort(key=lambda card: card.get("name", {}).get("en", ""))
     processed_cards = []
+    touched_map_lock = threading.Lock()
 
-    for raw_card in raw_card_dataset:
-        card_start = time.time()
-        transformed_card = {}
-        names = get_localized_value(raw_card, "name")
-        if not names or "en" not in names:
-            continue
-        transformed_card["name"] = names
-        card_name_en = names["en"]
-        konami_id = raw_card.get("konami_id")
-
-        if not transform_basic_card_info(raw_card, transformed_card):
-            continue
-
-        print(f"Processing: {card_name_en}")
-
-        if "text" in raw_card:
-            transformed_card["text"] = get_localized_value(raw_card, "text")
-        if "pendulum_effect" in raw_card:
-            transformed_card["pendulum_effect"] = get_localized_value(raw_card, "pendulum_effect")
-
-        with StepTimer("process_card_sets"):
-            processed_sets = process_card_sets(raw_card.get("sets", {}), card_name_en, loaded_data)
-            transformed_card["sets"] = processed_sets
-
-        gallery_card_name = name_to_gallery[card_name_en]
-
-        assign_genesys_points(transformed_card, loaded_data["genesys_points"])
-
-        if card_name_en in cards_needing_refresh:
-            with StepTimer("get_card_gallery"):
-                gallery_info, gallery_touched = get_card_gallery(gallery_card_name, use_cache=True)
-                if gallery_touched:
-                    touched_map[gallery_card_name] = gallery_touched
-        else:
-            gallery_info, _ = get_card_gallery(gallery_card_name, use_cache=True)
-
-        with StepTimer("assign_images_and_upload"):
-            assign_image_urls_and_upload(transformed_card, gallery_info, s3_webp_files, card_print_images_collection)
-
-        with StepTimer("update_status"):
-            update_card_statuses(transformed_card, loaded_data, raw_card.get("limit_regulation", {}))
-        with StepTimer("add_videogame_data"):
-            add_videogame_data(transformed_card, loaded_data)
-
-        if card_name_en in loaded_data.get("artwork_urls_map", {}):
-            transformed_card["artwork_urls"] = loaded_data["artwork_urls_map"][card_name_en]
-
-        add_banlist_history(transformed_card, loaded_data)
-        add_md_banlist_history(transformed_card, loaded_data)
-
-        processed_cards.append(transformed_card)
-
-        elapsed = time.time() - card_start
-        print(f"  [{elapsed:.2f}s]")
+    with StepTimer("process_cards"):
+        with ThreadPoolExecutor(max_workers=_THREAD_WORKERS) as executor:
+            futures = {
+                executor.submit(
+                    _process_single_card, raw_card, name_to_gallery,
+                    cards_needing_refresh, loaded_data, s3_webp_files,
+                    card_print_images_collection, touched_map, touched_map_lock
+                ): raw_card
+                for raw_card in raw_card_dataset
+            }
+            for future in as_completed(futures):
+                result = future.result()
+                if result is not None:
+                    processed_cards.append(result)
 
     with StepTimer("merge_cards"):
         processed_cards = merge_dm_and_arkana(processed_cards)
@@ -139,13 +156,15 @@ def main():
 
     with StepTimer("upload_missing_arts"):
         print("Uploading missing card arts...")
-        for card in processed_cards:
+        def _upload_art(card):
             card_password = card["_id"]
             output_path = Path(BASE_DIR, "temp_images", f"{str(card_password)}.webp")
             filename = f"art/{card_password}.webp"
             if filename not in s3_art_files:
                 print(f'Uploading art for {card["name"]["en"]}')
                 download_transform_and_upload_card_image(card, output_path)
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            executor.map(_upload_art, processed_cards)
 
     with StepTimer("write_to_mongodb"):
         ops = []

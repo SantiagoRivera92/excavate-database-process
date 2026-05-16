@@ -1,10 +1,12 @@
 import os
 import json
+import random
 import shutil
 import time
 import re
 from datetime import datetime, timedelta
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 import requests
 import boto3
 from PIL import Image
@@ -670,16 +672,17 @@ def get_card_gallery(card_name, use_cache=True):
     }
     headers = {'User-Agent': 'Excavate by DiamondDude/1.0 (https://www.excavate.top)'}
 
-    for _ in range(20):
+    for attempt in range(20):
+        backoff = min(60, 5 * (2 ** attempt) + random.uniform(0, 5))
         try:
             response = requests.get(API_URL, params=params, headers=headers, timeout=120)
             if response.status_code in (520, 429, 403, 502, 503):
-                time.sleep(10)
+                time.sleep(backoff)
                 continue
             try:
                 data = response.json()
             except (requests.exceptions.JSONDecodeError, Exception):
-                time.sleep(10)
+                time.sleep(backoff)
                 continue
 
             if "error" in data:
@@ -773,7 +776,7 @@ def get_card_gallery(card_name, use_cache=True):
 
         except (TimeoutError, requests.exceptions.ReadTimeout, urllib3.exceptions.ProtocolError,
                 requests.exceptions.ConnectionError, ReadTimeoutError, Exception):
-            time.sleep(10)
+            time.sleep(backoff)
 
     print(f"Failed to fetch gallery for {card_name} after multiple attempts.")
     return None, ""
@@ -1090,7 +1093,10 @@ def add_banlist_history(transformed_card, loaded_data):
     if not card_name_en:
         return
     tcg_banlists_map = loaded_data.get("tcg_banlists_map", {})
+    tcg_banlist_inverted = loaded_data.get("tcg_banlist_inverted", {})
     transformed_card["banlist_data"] = {}
+
+    precomputed = tcg_banlist_inverted.get(card_name_en, {})
 
     earliest_tcg_print_date = None
     if "en" in transformed_card.get("sets", {}):
@@ -1110,17 +1116,11 @@ def add_banlist_history(transformed_card, loaded_data):
                 if current_print_date and (earliest_tcg_print_date is None or current_print_date < earliest_tcg_print_date):
                     earliest_tcg_print_date = current_print_date
 
-    for banlist_date_str, banlist_content in tcg_banlists_map.items():
-        status_code = -1
-        if card_name_en in banlist_content.get("forbidden", set()):
-            status_code = 0
-        elif card_name_en in banlist_content.get("limited", set()):
-            status_code = 1
-        elif card_name_en in banlist_content.get("semilimited", set()):
-            status_code = 2
-        elif card_name_en in banlist_content.get("unlimited", set()):
-            status_code = 3
+    for banlist_date_str in tcg_banlists_map:
+        if banlist_date_str in precomputed:
+            status_code = precomputed[banlist_date_str]
         else:
+            status_code = -1
             if earliest_tcg_print_date and earliest_tcg_print_date <= banlist_date_str:
                 status_code = 3
         transformed_card["banlist_data"][banlist_date_str] = status_code
@@ -1131,19 +1131,17 @@ def add_md_banlist_history(transformed_card, loaded_data):
     if not card_name_en:
         return
     md_banlists_map = loaded_data.get("md_banlists_map", {})
+    md_banlist_inverted = loaded_data.get("md_banlist_inverted", {})
     transformed_card["md_banlist_data"] = {}
     md_release_date = transformed_card.get("md_release")
     if not md_banlists_map:
         return
-    for banlist_date_str, banlist_content in md_banlists_map.items():
-        status_code = -1
-        if card_name_en in banlist_content.get("forbidden", set()):
-            status_code = 0
-        elif card_name_en in banlist_content.get("limited", set()):
-            status_code = 1
-        elif card_name_en in banlist_content.get("semilimited", set()):
-            status_code = 2
+    precomputed = md_banlist_inverted.get(card_name_en, {})
+    for banlist_date_str in md_banlists_map:
+        if banlist_date_str in precomputed:
+            status_code = precomputed[banlist_date_str]
         else:
+            status_code = -1
             if md_release_date and md_release_date <= banlist_date_str:
                 status_code = 3
         transformed_card["md_banlist_data"][banlist_date_str] = status_code
@@ -1256,13 +1254,19 @@ def assign_image_urls_and_upload(transformed_card, gallery_info, s3_webp_files, 
                         files_to_download.append((raw_url, s3_url, s3_key))
                     break
 
-    # Download missing images
+    # Download missing images (parallel)
     if files_to_download:
         print(f"Downloading {len(files_to_download)} new images for {transformed_card.get('name', {}).get('en', 'Unknown')}")
-        for raw_url, s3_url, s3_key in files_to_download:
+        def _download_one(item):
+            raw_url, s3_url, s3_key = item
             output_path = Path(BASE_DIR, "temp_images", raw_url.split("/")[-1])
             if download_transform_and_upload_image(raw_url, output_path):
-                s3_webp_files.add(s3_key)
+                return s3_key
+            return None
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            for s3_key in executor.map(_download_one, files_to_download):
+                if s3_key:
+                    s3_webp_files.add(s3_key)
 
     # Update CardPrintImages
     if card_print_images_collection is not None and new_lookup_entries:
@@ -1294,26 +1298,38 @@ def load_initial_data(mongo_databases=None, update_videogame_data=False):
 
     with StepTimer("load_tcg_banlists"):
         data["tcg_banlists_map"] = {}
+        tcg_banlist_inverted = {}
         for file_path in BANLIST_FOLDER.glob("*.json"):
             banlist = load_json_file(file_path)
-            data["tcg_banlists_map"][file_path.stem] = {
+            date_str = file_path.stem
+            data["tcg_banlists_map"][date_str] = {
                 "forbidden": set(banlist.get("forbidden", [])),
                 "limited": set(banlist.get("limited", [])),
                 "semilimited": set(banlist.get("semilimited", [])),
                 "unlimited": set(banlist.get("unlimited", [])),
             }
+            for status, code in [("forbidden", 0), ("limited", 1), ("semilimited", 2), ("unlimited", 3)]:
+                for name in banlist.get(status, []):
+                    tcg_banlist_inverted.setdefault(name, {})[date_str] = code
+        data["tcg_banlist_inverted"] = tcg_banlist_inverted
 
     with StepTimer("load_md_banlists"):
         data["md_banlists_map"] = {}
+        md_banlist_inverted = {}
         if MD_BANLIST_FOLDER.exists():
             for file_path in MD_BANLIST_FOLDER.glob("*.json"):
                 banlist = load_json_file(file_path)
-                data["md_banlists_map"][file_path.stem] = {
+                date_str = file_path.stem
+                data["md_banlists_map"][date_str] = {
                     "forbidden": set(banlist.get("forbidden", [])),
                     "limited": set(banlist.get("limited", [])),
                     "semilimited": set(banlist.get("semilimited", [])),
                     "unlimited": set(banlist.get("unlimited", [])),
                 }
+                for status, code in [("forbidden", 0), ("limited", 1), ("semilimited", 2), ("unlimited", 3)]:
+                    for name in banlist.get(status, []):
+                        md_banlist_inverted.setdefault(name, {})[date_str] = code
+            data["md_banlist_inverted"] = md_banlist_inverted
         else:
             print(f"Warning: MD banlist folder not found at {MD_BANLIST_FOLDER}.")
 
