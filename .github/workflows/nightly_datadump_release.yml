@@ -41,7 +41,7 @@ jobs:
       with:
         tag_name: ${{ steps.dump.outputs.TAG }}
         name: Nightly Data Dump ${{ steps.dump.outputs.TAG }}
-        body: Automated nightly data dump of the Cards collection with status.tw stripped.
+        body: Automated nightly data dump of the Cards table from the Excavate database.
         files: datadump.json
 
     - name: Commit README update
