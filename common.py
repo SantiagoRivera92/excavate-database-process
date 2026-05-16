@@ -264,10 +264,61 @@ DL_CARDS_PATH = BASE_DIR / "data/input/dl_cards.json"
 BANLIST_FOLDER = BASE_DIR / "data/formats/"
 MD_BANLIST_FOLDER = BASE_DIR / "data/formats_md/"
 CACHE_DIR = BASE_DIR / "mediawiki_cache"
+GALLERY_TOUCHED_PATH = CACHE_DIR / "_touched.json"
 MEDIAWIKI_TEST_PATH = BASE_DIR / "mediawiki_test"
 
 # CardPrintImages collection name
 CARD_PRINT_IMAGES_COLLECTION = "CardPrintImages"
+
+
+# --- Gallery Touched Tracking ---
+def load_touched_map():
+    try:
+        with open(GALLERY_TOUCHED_PATH) as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+def save_touched_map(touched_map):
+    if not touched_map:
+        return
+    GALLERY_TOUCHED_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(GALLERY_TOUCHED_PATH, "w") as f:
+        json.dump(touched_map, f, indent=2)
+
+
+def batch_get_gallery_touched(card_names):
+    result = {}
+    headers = {'User-Agent': 'Excavate by DiamondDude/1.0 (https://www.excavate.top)'}
+    for i in range(0, len(card_names), 50):
+        batch = card_names[i:i+50]
+        titles = "|".join(f"Card Gallery:{n}" for n in batch)
+        params = {
+            "action": "query",
+            "prop": "info",
+            "titles": titles,
+            "format": "json",
+            "formatversion": "2",
+        }
+        for attempt in range(3):
+            try:
+                response = requests.get(API_URL, params=params, headers=headers, timeout=60)
+                if response.status_code in (520, 429, 502, 503):
+                    time.sleep(5)
+                    continue
+                data = response.json()
+                for page in data.get("query", {}).get("pages", []):
+                    title = page.get("title", "")
+                    if title.startswith("Card Gallery:"):
+                        name = title[len("Card Gallery:"):]
+                        result[name] = page.get("touched", "")
+                break
+            except Exception:
+                time.sleep(5)
+                continue
+    print(f"  Checked {len(result)} gallery pages for modifications")
+    return result
 
 
 class StepTimer:
@@ -598,7 +649,11 @@ def get_card_gallery(card_name, use_cache=True):
         if cache_age < 1209600 and use_cache:
             with open(cache_file_path, 'r', encoding="utf-8") as cache_file:
                 try:
-                    return json.load(cache_file)
+                    cached = json.load(cache_file)
+                    # Support both old format (data directly) and new (data + _touched)
+                    if "data" in cached:
+                        return cached["data"], cached.get("_touched", "")
+                    return cached, ""
                 except json.decoder.JSONDecodeError:
                     print("Faulty cache, downloading again")
 
@@ -627,12 +682,13 @@ def get_card_gallery(card_name, use_cache=True):
 
             if "error" in data:
                 if "(card)" not in card_name:
-                    return get_card_gallery(card_name=f"{card_name} (card)", use_cache=use_cache)
-                return None
+                    result, _ = get_card_gallery(card_name=f"{card_name} (card)", use_cache=use_cache)
+                    return result, ""
+                return None, ""
 
             if "parse" not in data:
                 print(f"No gallery found for {card_name}")
-                return None
+                return None, ""
 
             result = {}
             content = data["parse"]["text"]
@@ -706,18 +762,19 @@ def get_card_gallery(card_name, use_cache=True):
                         for pi in print_info_array:
                             result[language_code].append(pi)
 
+            touched = data.get("parse", {}).get("touched", "")
             if result:
                 os.makedirs(CACHE_DIR, exist_ok=True)
                 with open(cache_file_path, 'w', encoding="utf-8") as cf:
-                    json.dump(result, cf)
-            return result
+                    json.dump({"_touched": touched, "data": result}, cf)
+            return result, touched
 
         except (TimeoutError, requests.exceptions.ReadTimeout, urllib3.exceptions.ProtocolError,
                 requests.exceptions.ConnectionError, ReadTimeoutError, Exception):
             time.sleep(10)
 
     print(f"Failed to fetch gallery for {card_name} after multiple attempts.")
-    return None
+    return None, ""
 
 
 def _extract_print_info(li):

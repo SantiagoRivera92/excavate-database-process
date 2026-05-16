@@ -14,6 +14,7 @@ from common import (
     merge_dm_and_arkana, merge_poly_and_fusion,
     DATASET_URL, OUTPUT_PATH, ARKANA_DM_ID, FUSION_ID,
     REGULAR_DM_ID, POLY_ID, CACHE_DIR,
+    load_touched_map, save_touched_map,
 )
 from meta_dump import dump_all
 import pymongo
@@ -51,6 +52,10 @@ def main():
                                 )
                                 count += 1
             print(f"Bootstrapped {count} entries into CardPrintImages")
+
+    with StepTimer("load_touched_map"):
+        touched_map = load_touched_map()
+        print(f"Loaded touched data for {len(touched_map)} gallery pages")
 
     with StepTimer("load_existing_konami_ids"):
         existing_ids = set()
@@ -106,7 +111,9 @@ def main():
                 elif cid == FUSION_ID:
                     gallery_card_name = "Polymerization (alternate password)"
 
-                gallery_info = get_card_gallery(gallery_card_name, use_cache=True)
+                gallery_info, gallery_touched = get_card_gallery(gallery_card_name, use_cache=True)
+                if gallery_touched:
+                    touched_map[gallery_card_name] = gallery_touched
                 if gallery_info:
                     for lang in SUPPORTED_LANGUAGES:
                         if lang not in transformed_card.get("sets", {}) or lang not in gallery_info:
@@ -172,6 +179,9 @@ def main():
             print(f"MongoDB: upserted {result.upserted_count}, modified {result.modified_count}")
         else:
             print("No cards to write to MongoDB")
+
+    with StepTimer("save_touched_map"):
+        save_touched_map(touched_map)
 
     total_elapsed = time.time() - total_start
     print(f"\n[TIMING] Total: {total_elapsed:.3f}s")

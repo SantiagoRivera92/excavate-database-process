@@ -11,6 +11,7 @@ from common import (
     download_transform_and_upload_card_image,
     merge_dm_and_arkana, merge_poly_and_fusion,
     DATASET_URL, OUTPUT_PATH, CACHE_DIR, ARKANA_DM_ID, FUSION_ID,
+    load_touched_map, save_touched_map, batch_get_gallery_touched,
 )
 from meta_dump import dump_all
 import pymongo
@@ -24,6 +25,10 @@ def main():
         cards_collection = client["Cards"].Cards
         card_print_images_collection = get_card_print_images_collection(client)
 
+    with StepTimer("load_touched_map"):
+        touched_map = load_touched_map()
+        print(f"Loaded touched data for {len(touched_map)} gallery pages")
+
     with StepTimer("load_initial_data"):
         loaded_data = load_initial_data(update_videogame_data=True)
 
@@ -36,6 +41,30 @@ def main():
         print("Downloading main card dataset...")
         raw_card_dataset = fetch_json_from_url(DATASET_URL)
         print(f"Downloaded {len(raw_card_dataset)} cards")
+
+    # Build gallery name mapping and check which need refresh
+    name_to_gallery = {}
+    for raw_card in raw_card_dataset:
+        names = get_localized_value(raw_card, "name")
+        if not names or "en" not in names:
+            continue
+        card_name_en = names["en"]
+        konami_id = raw_card.get("konami_id")
+        gallery_card_name = card_name_en
+        if konami_id == ARKANA_DM_ID:
+            gallery_card_name = "Dark Magician (Arkana)"
+        elif konami_id == FUSION_ID:
+            gallery_card_name = "Polymerization (alternate password)"
+        name_to_gallery[card_name_en] = gallery_card_name
+
+    with StepTimer("batch_check_touched"):
+        all_gallery_names = list(name_to_gallery.values())
+        current_touched = batch_get_gallery_touched(all_gallery_names)
+        cards_needing_refresh = {
+            name for name, gname in name_to_gallery.items()
+            if current_touched.get(gname, "") != touched_map.get(gname, "")
+        }
+        print(f"Cards needing gallery refresh: {len(cards_needing_refresh)} / {len(raw_card_dataset)}")
 
     raw_card_dataset.sort(key=lambda card: card.get("name", {}).get("en", ""))
     processed_cards = []
@@ -64,17 +93,18 @@ def main():
             processed_sets = process_card_sets(raw_card.get("sets", {}), card_name_en, loaded_data)
             transformed_card["sets"] = processed_sets
 
-        gallery_card_name = card_name_en
-        cid = transformed_card.get("card_id")
-        if cid == ARKANA_DM_ID:
-            gallery_card_name = "Dark Magician (Arkana)"
-        elif cid == FUSION_ID:
-            gallery_card_name = "Polymerization (alternate password)"
+        gallery_card_name = name_to_gallery[card_name_en]
 
         assign_genesys_points(transformed_card, loaded_data["genesys_points"])
 
-        with StepTimer("get_card_gallery"):
-            gallery_info = get_card_gallery(gallery_card_name, use_cache=True)
+        if card_name_en in cards_needing_refresh:
+            with StepTimer("get_card_gallery"):
+                gallery_info, gallery_touched = get_card_gallery(gallery_card_name, use_cache=True)
+                if gallery_touched:
+                    touched_map[gallery_card_name] = gallery_touched
+        else:
+            gallery_info, _ = get_card_gallery(gallery_card_name, use_cache=True)
+
         with StepTimer("assign_images_and_upload"):
             assign_image_urls_and_upload(transformed_card, gallery_info, s3_webp_files, card_print_images_collection)
 
@@ -98,6 +128,9 @@ def main():
         processed_cards = merge_dm_and_arkana(processed_cards)
         processed_cards = merge_poly_and_fusion(processed_cards)
         processed_cards.sort(key=lambda c: c.get("name", {}).get("en", ""))
+
+    with StepTimer("save_touched_map"):
+        save_touched_map(touched_map)
 
     with StepTimer("save_json"):
         save_json_file(processed_cards, OUTPUT_PATH)

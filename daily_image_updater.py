@@ -8,6 +8,7 @@ from common import (
     get_card_gallery, find_image_for_printing,
     download_transform_and_upload_image, s3_url_from_raw,
     CACHE_DIR, ARKANA_DM_ID, FUSION_ID,
+    load_touched_map, save_touched_map,
 )
 
 
@@ -58,6 +59,10 @@ def main():
         s3_webp_files = list_s3_files_in_webp()
         print(f"S3 webp files: {len(s3_webp_files)}")
 
+    with StepTimer("load_touched_map"):
+        touched_map = load_touched_map()
+        print(f"Loaded touched data for {len(touched_map)} gallery pages")
+
     with StepTimer("find_cards_missing_images"):
         cards_to_process = get_cards_with_missing_recent_images(cards_collection, lookback_days=365)
 
@@ -77,7 +82,9 @@ def main():
             gallery_card_name = "Polymerization (alternate password)"
 
         with StepTimer(f"gallery_{card_name_en[:20]}"):
-            gallery_info = get_card_gallery(gallery_card_name, use_cache=True)
+            gallery_info, gallery_touched = get_card_gallery(gallery_card_name, use_cache=True)
+            if gallery_touched:
+                touched_map[gallery_card_name] = gallery_touched
 
         if not gallery_info:
             print(f"  No gallery found")
@@ -127,6 +134,10 @@ def main():
             print(f"  Patched: {printing['set_number']} -> {s3_url}")
 
     print(f"\nTotal images uploaded: {images_uploaded}")
+
+    with StepTimer("save_touched_map"):
+        save_touched_map(touched_map)
+
     total_elapsed = time.time() - total_start
     print(f"[TIMING] Total: {total_elapsed:.3f}s")
 
