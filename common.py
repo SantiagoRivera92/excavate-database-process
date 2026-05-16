@@ -1265,7 +1265,7 @@ def assign_image_urls_and_upload(transformed_card, gallery_info, s3_webp_files, 
                 s3_webp_files.add(s3_key)
 
     # Update CardPrintImages
-    if card_print_images_collection and new_lookup_entries:
+    if card_print_images_collection is not None and new_lookup_entries:
         for set_number, set_name, rarity, art_id, suffix, image_url in new_lookup_entries:
             upsert_card_print_image(card_print_images_collection, set_number, set_name, rarity, art_id, suffix, image_url)
 
