@@ -2,6 +2,8 @@
 
 Automated nightly dumps of the Yu-Gi-Oh! card database. Each release contains all cards as a single JSON file.
 
+This repo also does a lot of background stuff for the database. If you want to spin up your own version of the database just hit me up. Full disclosure, I went insane doing it and you will too.
+
 Ideally this can lighten the load on the API so I don't have to fork over a bunch of money to a bunch of internet billionaire overlords.
 
 ## Download
