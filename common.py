@@ -563,6 +563,8 @@ def get_card_print_images_collection(client=None):
 def get_image_lookup_from_collection(collection):
     lookup = {}
     for doc in collection.find({}, {"_id": 0}):
+        if "set_number" not in doc:
+            continue
         key = (doc["set_number"], doc["set_name"], doc["rarity"], doc["art_id"])
         lookup[key] = doc["image_url"]
     print(f"Loaded {len(lookup)} image URL mappings from CardPrintImages")

@@ -18,6 +18,7 @@ import pymongo
 
 
 def main():
+    print("Monthly full refresh starting...", flush=True)
     total_start = time.time()
 
     with StepTimer("connect_mongodb"):

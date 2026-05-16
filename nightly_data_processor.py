@@ -14,6 +14,7 @@ from common import (
     merge_dm_and_arkana, merge_poly_and_fusion,
     DATASET_URL, OUTPUT_PATH, ARKANA_DM_ID, FUSION_ID,
     REGULAR_DM_ID, POLY_ID, CACHE_DIR,
+    CARD_PRINT_IMAGES_COLLECTION,
     load_touched_map, save_touched_map,
 )
 from meta_dump import dump_all
@@ -21,6 +22,7 @@ import pymongo
 
 
 def main():
+    print("Nightly data processor starting...", flush=True)
     total_start = time.time()
 
     with StepTimer("connect_mongodb"):
@@ -31,27 +33,63 @@ def main():
     with StepTimer("load_image_lookup"):
         image_lookup = get_image_lookup_from_collection(card_print_images_collection)
 
-    # Bootstrap CardPrintImages from existing Cards data if empty
-    if not image_lookup:
-        print("CardPrintImages is empty. Bootstrapping from existing Cards collection...")
-        with StepTimer("bootstrap_card_print_images"):
+    # Bootstrap CardPrintImages — handles empty collection, partial (interrupted) bootstrap,
+    # and ongoing reconciliation of any missing entries.
+    bootstrap_flag = card_print_images_collection.find_one({"_id": "_bootstrap_complete"})
+    needs_full_sync = not image_lookup or not bootstrap_flag
+
+    if needs_full_sync:
+        reason = "empty" if not image_lookup else "incomplete (previous run was interrupted)"
+        print(f"CardPrintImages is {reason}. Syncing from existing Cards collection...", flush=True)
+        with StepTimer("sync_card_print_images"):
+            batch = []
             count = 0
-            for card in cards_collection.find({}, {"_id": 1, "sets": 1}):
+            card_count = 0
+            next_print = time.time() + 15
+            cursor = cards_collection.find({}, {"_id": 1, "sets": 1})
+            for card in cursor:
+                card_count += 1
+                if time.time() >= next_print:
+                    print(f"  Scanned {card_count} cards, found {count} new printings to sync...", flush=True)
+                    next_print = time.time() + 15
                 for lang, prints in card.get("sets", {}).items():
                     for p in prints:
-                        if p.get("image_url"):
-                            set_name_norm = SET_EQUIVALENCES.get(p["set_name"], p["set_name"])
-                            key = (p["set_number"], set_name_norm, p["rarity"], p.get("art_id", 1))
-                            if key not in image_lookup:
-                                image_lookup[key] = p["image_url"]
-                                upsert_card_print_image(
-                                    card_print_images_collection,
-                                    p["set_number"], set_name_norm,
-                                    p["rarity"], p.get("art_id", 1),
-                                    p.get("suffix", ""), p["image_url"],
-                                )
-                                count += 1
-            print(f"Bootstrapped {count} entries into CardPrintImages")
+                        if not p.get("image_url"):
+                            continue
+                        set_name_norm = SET_EQUIVALENCES.get(p["set_name"], p["set_name"])
+                        key = (p["set_number"], set_name_norm, p["rarity"], p.get("art_id", 1))
+                        if key in image_lookup:
+                            continue
+                        image_lookup[key] = p["image_url"]
+                        doc_id = f"{key[0]}|{key[1]}|{key[2]}|{key[3]}"
+                        batch.append(pymongo.ReplaceOne(
+                            {"_id": doc_id},
+                            {
+                                "_id": doc_id,
+                                "set_number": key[0],
+                                "set_name": key[1],
+                                "rarity": key[2],
+                                "art_id": key[3],
+                                "suffix": p.get("suffix", ""),
+                                "image_url": p["image_url"],
+                                "updated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                            },
+                            upsert=True,
+                        ))
+                        count += 1
+                        if len(batch) >= 500:
+                            card_print_images_collection.bulk_write(batch, ordered=False)
+                            batch = []
+            if batch:
+                card_print_images_collection.bulk_write(batch, ordered=False)
+            # Mark bootstrap complete
+            card_print_images_collection.replace_one(
+                {"_id": "_bootstrap_complete"},
+                {"_id": "_bootstrap_complete", "complete": True, "entry_count": len(image_lookup),
+                 "updated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())},
+                upsert=True,
+            )
+            print(f"Synced {count} entries into CardPrintImages (total: {len(image_lookup)})")
 
     with StepTimer("load_touched_map"):
         touched_map = load_touched_map()

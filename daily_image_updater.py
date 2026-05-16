@@ -48,6 +48,7 @@ def patch_card_sets_in_mongodb(cards_collection, konami_id, set_number, rarity, 
 
 
 def main():
+    print("Daily image updater starting...", flush=True)
     total_start = time.time()
 
     with StepTimer("connect_mongodb"):
