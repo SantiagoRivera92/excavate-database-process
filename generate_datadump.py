@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from common import get_mongo_databases
 
@@ -30,7 +30,7 @@ def main():
         print("GITHUB_REPOSITORY not set, skipping README update")
         return
 
-    tag = f"1.0.{datetime.now(datetime.timezone.utc).strftime('%Y%m%d')}"
+    tag = f"1.0.{datetime.now(timezone.utc).strftime('%Y%m%d')}"
     download_url = f"https://github.com/{repo}/releases/download/{tag}/datadump.json"
 
     readme_path = Path(__file__).parent / "README.md"
