@@ -976,6 +976,19 @@ def update_card_statuses(transformed_card, loaded_data, raw_card_limit_reg):
     if transformed_card["status"]["OCG"] == "Not yet released":
         transformed_card["status"]["OCG"] = UNRELEASED
 
+    today = datetime.now().strftime("%Y-%m-%d")
+    has_released_tcg_printing = any(
+        printing.get("print_date", "9999-12-31") <= today
+        for lang in TCG_LANGUAGES
+        if lang in transformed_card.get("sets", {})
+        for printing in transformed_card["sets"][lang]
+    )
+
+    if not has_released_tcg_printing:
+        transformed_card["status"]["Advanced"] = UNRELEASED
+        transformed_card["status"]["Common Charity"] = UNRELEASED
+        return
+
     if card_name_en in adv_banlist.get("forbidden", []):
         transformed_card["status"]["Advanced"] = FORBIDDEN
     elif card_name_en in adv_banlist.get("limited", []):
@@ -1151,6 +1164,16 @@ def assign_genesys_points(transformed_card, genesys_points):
     card_name_en = transformed_card.get('name', {}).get('en')
     typeline = transformed_card.get('typeline', "")
     if not card_name_en:
+        return
+    today = datetime.now().strftime("%Y-%m-%d")
+    has_released_tcg_printing = any(
+        printing.get("print_date", "9999-12-31") <= today
+        for lang in TCG_LANGUAGES
+        if lang in transformed_card.get("sets", {})
+        for printing in transformed_card["sets"][lang]
+    )
+    if not has_released_tcg_printing:
+        transformed_card["genesys_points"] = 0
         return
     if card_name_en in genesys_points:
         transformed_card["genesys_points"] = genesys_points[card_name_en]
