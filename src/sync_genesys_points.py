@@ -46,8 +46,8 @@ def main():
 
     for name, points in konami_pointed.items():
         if name in db_pointed:
+            changes.append((name, db_pointed[name]["current_points"], points))
             if db_pointed[name]["current_points"] != points:
-                changes.append((name, db_pointed[name]["current_points"], points))
                 updates.append(UpdateOne({"_id": db_pointed[name]["konami_id"]}, {"$set": {"genesys_points": points}}))
         else:
             found = cards_collection.find_one({"name.en": name}, {"_id": 1})
