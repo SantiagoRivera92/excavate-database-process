@@ -1,8 +1,8 @@
 import time
 from pathlib import Path
 from common import (
-    BASE_DIR, SET_EQUIVALENCES, SUPPORTED_LANGUAGES, EXCLUDED_SETS_TIME_WIZARD,
-    StepTimer, load_json_file, save_json_file, fetch_json_from_url,
+    BASE_DIR, SET_EQUIVALENCES, SUPPORTED_LANGUAGES,
+    StepTimer, save_json_file, fetch_json_from_url,
     get_localized_value, get_mongo_client, get_card_print_images_collection,
     get_image_lookup_from_collection, upsert_card_print_image,
     load_initial_data, transform_basic_card_info, process_card_sets,
@@ -12,12 +12,9 @@ from common import (
     apply_image_urls_from_lookup,
     download_transform_and_upload_image, s3_url_from_raw,
     merge_dm_and_arkana, merge_poly_and_fusion,
-    DATASET_URL, OUTPUT_PATH, ARKANA_DM_ID, FUSION_ID,
-    REGULAR_DM_ID, POLY_ID, CACHE_DIR,
-    CARD_PRINT_IMAGES_COLLECTION,
+    DATASET_URL, OUTPUT_PATH, ARKANA_DM_ID, FUSION_ID, CACHE_DIR,
     load_touched_map, save_touched_map,
 )
-from meta_dump import dump_all
 import pymongo
 
 

@@ -367,7 +367,7 @@ def fetch_json_from_url(url, timeout=30):
         raise SystemExit(f"Failed to fetch critical data from {url}") from e
 
 
-def fetch_genesys_points_json(timeout=30):
+def fetch_genesys_points_json(timeout=60):
     try:
         body = {"resultsPerPage": 10000, "currentPage": 1}
         url = "https://registration.yugioh-card.com/genesys/CardListSearch/PointsList"
@@ -375,6 +375,7 @@ def fetch_genesys_points_json(timeout=30):
         response.raise_for_status()
         data = response.json()
         results = data["Result"]["Results"]
+        print(results)
         return {item["Name"]: item["Points"] for item in results}
     except requests.exceptions.RequestException as e:
         print("Error fetching Genesys points")
