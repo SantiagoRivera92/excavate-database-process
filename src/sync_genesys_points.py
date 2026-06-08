@@ -37,27 +37,34 @@ def main():
     print(f"Found {len(db_pointed)} pointed cards in MongoDB", flush=True)
 
     updates = []
+    changes = []
 
     for name, info in db_pointed.items():
         if name not in konami_pointed:
-            print(f"  {name}: {info['current_points']} → 0 (removed from Konami)", flush=True)
+            changes.append((name, info["current_points"], 0))
             updates.append(UpdateOne({"_id": info["konami_id"]}, {"$set": {"genesys_points": 0}}))
 
     for name, points in konami_pointed.items():
         if name in db_pointed:
             if db_pointed[name]["current_points"] != points:
-                print(f"  {name}: {db_pointed[name]['current_points']} → {points}", flush=True)
+                changes.append((name, db_pointed[name]["current_points"], points))
                 updates.append(UpdateOne({"_id": db_pointed[name]["konami_id"]}, {"$set": {"genesys_points": points}}))
         else:
             found = cards_collection.find_one({"name.en": name}, {"_id": 1})
             if found:
-                print(f"  {name}: 0 → {points} (newly pointed)", flush=True)
+                changes.append((name, 0, points))
                 updates.append(UpdateOne({"_id": found["_id"]}, {"$set": {"genesys_points": points}}))
             else:
                 print(f"  WARNING: {name} not found in database, cannot update points", flush=True)
 
+    if changes:
+        changes.sort(key=lambda c: -c[2])
+        print(f"\nChanges ({len(changes)}):", flush=True)
+        for name, old, new in changes:
+            print(f"  {name}: {old} => {new}", flush=True)
+
     if updates:
-        print(f"Applying {len(updates)} updates to MongoDB...", flush=True)
+        print(f"\nApplying {len(updates)} updates to MongoDB...", flush=True)
         result = cards_collection.bulk_write(updates, ordered=False)
         print(f"Matched: {result.matched_count}, Modified: {result.modified_count}", flush=True)
     else:
