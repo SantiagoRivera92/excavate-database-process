@@ -372,7 +372,16 @@ def fetch_genesys_points_json(timeout=60):
         url = "https://www.yugioh-card.com/en/genesys/"
         response = requests.get(url, timeout=timeout)
         response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
+        raw = response.content
+        for encoding in ("utf-8", "windows-1252", "iso-8859-1"):
+            try:
+                text = raw.decode(encoding)
+                break
+            except UnicodeDecodeError:
+                continue
+        else:
+            text = raw.decode("utf-8", errors="replace")
+        soup = BeautifulSoup(text, "html.parser")
         table = soup.find("table", id="tablepress-genesys")
         if not table:
             print("Could not find Genesys points table on the page")
