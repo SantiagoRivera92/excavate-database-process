@@ -369,14 +369,27 @@ def fetch_json_from_url(url, timeout=30):
 
 def fetch_genesys_points_json(timeout=60):
     try:
-        body = {"resultsPerPage": 10000, "currentPage": 1}
-        url = "https://registration.yugioh-card.com/genesys/CardListSearch/PointsList"
-        response = requests.post(url, data=body, timeout=timeout)
+        url = "https://www.yugioh-card.com/en/genesys/"
+        response = requests.get(url, timeout=timeout)
         response.raise_for_status()
-        data = response.json()
-        results = data["Result"]["Results"]
-        print(results)
-        return {item["Name"]: item["Points"] for item in results}
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = soup.find("table", id="tablepress-genesys")
+        if not table:
+            print("Could not find Genesys points table on the page")
+            raise SystemExit("Failed to fetch critical data")
+        tbody = table.find("tbody")
+        points_dict = {}
+        for row in tbody.find_all("tr"):
+            cols = row.find_all("td")
+            if len(cols) >= 2:
+                name = cols[0].get_text(strip=True)
+                points_text = cols[1].get_text(strip=True)
+                try:
+                    points = int(points_text)
+                except ValueError:
+                    continue
+                points_dict[name] = points
+        return points_dict
     except requests.exceptions.RequestException as e:
         print("Error fetching Genesys points")
         raise SystemExit("Failed to fetch critical data") from e

@@ -13,6 +13,7 @@ from meta_dump import dump_all
 from mediawiki_api import get_card_gallery
 import pymongo
 import re
+from common import fetch_genesys_points_json, fetch_currently_pointed_cards, assign_genesys_points
 
 
 def time_function(func):
@@ -414,41 +415,6 @@ def fetch_json_from_url(url, timeout=10):
         # Depending on severity, you might want to raise the exception or exit
         raise SystemExit(f"Failed to fetch critical data from {url}") from e
     
-def fetch_genesys_points_json(timeout=10):
-    """Fetches the Genesys JSON data from Konami"""
-    try:
-        body = {"resultsPerPage": 10000, "currentPage": 1}
-        url = "https://registration.yugioh-card.com/genesys/CardListSearch/PointsList"
-        
-        response = requests.post(url, data=body, timeout=timeout)
-        response.raise_for_status()
-        
-        data = response.json()
-        results = data["Result"]["Results"]
-        
-        points_dict = {}
-        for item in results:
-            points_dict[item["Name"]] = item["Points"]
-        return points_dict
-        
-    except requests.exceptions.RequestException as e:
-        print("Error fetching Genesys points")
-        raise SystemExit("Failed to fetch critical data") from e
-
-def fetch_currently_pointed_cards(mongo_databases):
-    """Fetches every card from the mongo database that has genesys_points>0"""
-    try:
-        
-        pointed_cards = mongo_databases["spellbook_dev_db"].find({"genesys_points": {"$gt": 0}}, {"name.en": 1, "genesys_points": 1})
-        pointed_cards_list = []
-        for card in pointed_cards:
-            pointed_cards_list.append(card["name"]["en"])
-        return pointed_cards_list
-        
-    except Exception as e:
-        print("Error fetching currently pointed cards from MongoDB, returning empty list")
-        return []
-
 def get_earliest_tcg_date(card_data):
     if "sets" not in card_data or "en" not in card_data["sets"] or len(card_data["sets"]["en"]) == 0: 
         return None
@@ -1189,32 +1155,6 @@ def add_md_banlist_history(transformed_card, loaded_data):
             if md_release_date and md_release_date <= banlist_date_str:
                 status_code = 3
         transformed_card["md_banlist_data"][banlist_date_str] = status_code
-
-def assign_genesys_points(transformed_card, genesys_points):
-    """Adds Genesys Points to the card if applicable."""
-    card_name_en = transformed_card.get('name',{}).get('en')
-    typeline = transformed_card.get('typeline', "")
-    if not card_name_en:
-        return
-
-    today = datetime.now().strftime("%Y-%m-%d")
-    has_released_tcg_printing = any(
-        printing.get("print_date", "9999-12-31") <= today
-        for lang in TCG_LANGUAGES
-        if lang in transformed_card.get("sets", {})
-        for printing in transformed_card["sets"][lang]
-    )
-    if not has_released_tcg_printing:
-        transformed_card["genesys_points"] = 0
-        return
-
-    if card_name_en in genesys_points:
-        transformed_card["genesys_points"] = genesys_points[card_name_en]
-    elif "Link" in typeline or "Pendulum" in typeline:
-        transformed_card["genesys_points"] = -1
-    else:
-        transformed_card["genesys_points"] = 0
-
 
 def process_single_card(raw_card_data, loaded_data, s3_webp_files):
     """Processes a single card from the raw dataset."""
