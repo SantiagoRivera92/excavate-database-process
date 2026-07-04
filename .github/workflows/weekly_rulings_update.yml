@@ -1,0 +1,32 @@
+name: Weekly Rulings Update
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  update-rulings:
+    runs-on: ubuntu-latest
+    environment: Excavate
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run weekly rulings processor
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        PYTHONUNBUFFERED: 1
+      run: |
+        python src/weekly_rulings_processor.py
