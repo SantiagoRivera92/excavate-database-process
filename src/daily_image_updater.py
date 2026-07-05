@@ -23,11 +23,22 @@ def get_cards_with_missing_recent_images(cards_collection, lookback_days=365):
                 }
             }
         }},
-        {"$project": {"name.en": 1, "card_id": 1, "_id": 1, "sets.en": 1}},
+        {"$project": {"name.en": 1, "card_id": 1, "_id": 1, "image_url": 1, "sets.en": 1}},
     ]
     cards = list(cards_collection.aggregate(pipeline))
     print(f"Found {len(cards)} cards with recent printings missing images")
     return cards
+
+
+PRIORITY_RARITIES = ["Common", "Rare", "Super Rare", "Ultra Rare", "Secret Rare"]
+
+
+def should_update_main_image(rarity, art_id, set_number, current_main_is_en):
+    if rarity in PRIORITY_RARITIES and art_id == 1 and "LART" not in set_number:
+        return True
+    if not current_main_is_en:
+        return True
+    return False
 
 
 def patch_card_sets_in_mongodb(cards_collection, konami_id, set_number, rarity, art_id, image_url):
@@ -45,13 +56,6 @@ def patch_card_sets_in_mongodb(cards_collection, konami_id, set_number, rarity, 
             {"_id": konami_id},
             {"$set": {"sets.en.$[elem].image_url": image_url}},
             array_filters=[{"elem.set_number": set_number}],
-        )
-
-    priority_rarities = ["Common", "Rare", "Super Rare", "Ultra Rare", "Secret Rare"]
-    if rarity in priority_rarities and art_id == 1 and "LART" not in set_number:
-        cards_collection.update_one(
-            {"_id": konami_id},
-            {"$set": {"image_url": file_name}},
         )
 
 
@@ -100,6 +104,16 @@ def main():
             continue
 
         en_prints = card.get("sets", {}).get("en", [])
+        current_main = card.get("image_url")
+
+        en_files = set()
+        for p in en_prints:
+            if p.get("image_url"):
+                en_files.add(p["image_url"].split("/")[-1])
+
+        current_main_is_en = current_main is not None and current_main in en_files
+
+        patched_files = []
         for printing in en_prints:
             if printing.get("image_url") is not None:
                 continue
@@ -115,7 +129,6 @@ def main():
             s3_url, s3_key = s3_url_from_raw(raw_url)
             if s3_key in s3_webp_files:
                 print(f"  Already in S3: {s3_key}")
-                # Still update MongoDB and CardPrintImages
             else:
                 print(f"  Downloading and uploading: {raw_url}")
                 output_path = Path(BASE_DIR, "temp_images", raw_url.split("/")[-1])
@@ -124,6 +137,10 @@ def main():
                     continue
                 s3_webp_files.add(s3_key)
                 images_uploaded += 1
+
+            file_name = s3_url.split("/")[-1]
+            patched_files.append(file_name)
+            en_files.add(file_name)
 
             # Update CardPrintImages
             set_name_norm = SET_EQUIVALENCES.get(printing["set_name"], printing["set_name"])
@@ -140,7 +157,16 @@ def main():
                 printing["set_number"], printing["rarity"],
                 printing.get("art_id", 1), s3_url,
             )
-            print(f"  Patched: {printing['set_number']} -> {s3_url}")
+
+            if should_update_main_image(printing["rarity"], printing.get("art_id", 1), printing["set_number"], current_main_is_en):
+                cards_collection.update_one(
+                    {"_id": card["_id"]},
+                    {"$set": {"image_url": file_name}},
+                )
+                current_main_is_en = True
+                print(f"  Updated main image: {file_name}")
+            else:
+                print(f"  Patched: {printing['set_number']} -> {s3_url}")
 
     print(f"\nTotal images uploaded: {images_uploaded}")
 
