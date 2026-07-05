@@ -31,11 +31,12 @@ def get_cards_with_missing_recent_images(cards_collection, lookback_days=365):
 
 
 def patch_card_sets_in_mongodb(cards_collection, konami_id, set_number, rarity, art_id, image_url):
+    file_name = image_url.split("/")[-1]
     result = cards_collection.update_one(
         {"_id": konami_id, "sets.en.set_number": set_number},
         {"$set": {
             "sets.en.$[elem].image_url": image_url,
-            "sets.en.$[elem].file": image_url.split("/")[-1],
+            "sets.en.$[elem].file": file_name,
         }},
         array_filters=[{"elem.set_number": set_number, "elem.rarity": rarity, "elem.art_id": art_id}],
     )
@@ -44,6 +45,13 @@ def patch_card_sets_in_mongodb(cards_collection, konami_id, set_number, rarity, 
             {"_id": konami_id},
             {"$set": {"sets.en.$[elem].image_url": image_url}},
             array_filters=[{"elem.set_number": set_number}],
+        )
+
+    priority_rarities = ["Common", "Rare", "Super Rare", "Ultra Rare", "Secret Rare"]
+    if rarity in priority_rarities and art_id == 1 and "LART" not in set_number:
+        cards_collection.update_one(
+            {"_id": konami_id},
+            {"$set": {"image_url": file_name}},
         )
 
 
