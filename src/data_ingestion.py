@@ -1309,7 +1309,12 @@ def update_databases(processed_data, db_collections):
         konami_id = card_data.get("_id")
         dev_ops.append(pymongo.ReplaceOne({"_id": konami_id}, card_data, upsert=True))
         prod_ops.append(pymongo.ReplaceOne({"_id": konami_id}, card_data, upsert=True))
-    
+        if len(dev_ops) >= 500:
+            spellbook_dev_db.bulk_write(dev_ops, ordered=False)
+            spellbook_prod_db.bulk_write(prod_ops, ordered=False)
+            dev_ops = []
+            prod_ops = []
+
     if dev_ops:
         spellbook_dev_db.bulk_write(dev_ops, ordered=False)
         spellbook_prod_db.bulk_write(prod_ops, ordered=False)

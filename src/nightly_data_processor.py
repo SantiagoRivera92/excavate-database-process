@@ -209,9 +209,13 @@ def main():
             if card.get("image_url") is None:
                 continue
             ops.append(pymongo.ReplaceOne({"_id": card["_id"]}, card, upsert=True))
+            if len(ops) >= 500:
+                result = cards_collection.bulk_write(ops, ordered=False)
+                print(f"MongoDB batch: upserted {result.upserted_count}, modified {result.modified_count}")
+                ops = []
         if ops:
             result = cards_collection.bulk_write(ops, ordered=False)
-            print(f"MongoDB: upserted {result.upserted_count}, modified {result.modified_count}")
+            print(f"MongoDB final batch: upserted {result.upserted_count}, modified {result.modified_count}")
         else:
             print("No cards to write to MongoDB")
 
