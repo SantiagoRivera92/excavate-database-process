@@ -887,6 +887,14 @@ def transform_basic_card_info(raw_card, transformed_card):
         transformed_card["archetypes"] = raw_card["series"]
     if "attribute" in raw_card:
         transformed_card["attribute"] = raw_card["attribute"]
+
+    extra_types = {"Fusion", "Synchro", "Xyz", "Link"}
+    typeline = transformed_card.get("typeline", "") or ""
+    transformed_card["is_extra_deck"] = (
+        transformed_card.get("card_type") == "Monster" and
+        any(t in typeline for t in extra_types)
+    )
+
     return True
 
 
