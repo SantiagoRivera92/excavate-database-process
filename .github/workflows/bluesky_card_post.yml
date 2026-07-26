@@ -11,24 +11,19 @@ jobs:
     environment: Excavate
 
     steps:
-    - name: Checkout excavate-bsky
-      uses: actions/checkout@v4
-      with:
-        repository: SantiagoRivera92/excavate-bsky
-        path: excavate-bsky
+    - uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r excavate-bsky/requirements.txt
+        pip install requests atproto Pillow
 
     - name: Post card
       env:
         EXCAVATE_CARDS_BSKY_ACCOUNT: ${{ secrets.EXCAVATE_CARDS_BSKY_ACCOUNT }}
         EXCAVATE_CARDS_BSKY_APP_PASSWORD: ${{ secrets.EXCAVATE_CARDS_BSKY_APP_PASSWORD }}
-      run: python excavate-bsky/bskybot.py
+      run: python bskybot.py
