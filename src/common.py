@@ -404,6 +404,30 @@ def fetch_genesys_points_json(timeout=60):
         raise SystemExit("Failed to fetch critical data") from e
 
 
+def fetch_genesys_points_from_duelingnexus(timeout=30):
+    try:
+        url = "https://duelingnexus.com/assets/data/banlists.json"
+        data = fetch_json_from_url(url, timeout=timeout)
+        banlists = data.get("banlists", [])
+        genesys_banlist = None
+        for banlist in banlists:
+            if "TCG Genesys" in banlist.get("name", ""):
+                genesys_banlist = banlist
+                break
+        if not genesys_banlist:
+            print("Could not find TCG Genesys banlist in Dueling Nexus data")
+            raise SystemExit("Failed to fetch critical data")
+        print(f"Using banlist: {genesys_banlist['name']}", flush=True)
+        points_dict = {}
+        for password_str, points in genesys_banlist.get("cards", {}).items():
+            if points > 0:
+                points_dict[int(password_str)] = points
+        return points_dict
+    except requests.exceptions.RequestException as e:
+        print("Error fetching Genesys points from Dueling Nexus")
+        raise SystemExit("Failed to fetch critical data") from e
+
+
 def fetch_currently_pointed_cards(mongo_databases):
     try:
         pointed_cards = mongo_databases["spellbook_dev_db"].find(
