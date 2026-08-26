@@ -16,7 +16,7 @@ Releases are tagged by date: `1.0.YYYYMMDD`.
 
 ## Latest Data Dump
 
-[datadump.json](https://github.com/SantiagoRivera92/excavate-database-process/releases/download/1.0.20260825/datadump.json)
+[datadump.json](https://github.com/SantiagoRivera92/excavate-database-process/releases/download/1.0.20260826/datadump.json)
 
 <!-- datadump end -->
 
