@@ -19,7 +19,7 @@ from urllib3.exceptions import ReadTimeoutError
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATASET_URL = "https://dawnbrandbots.github.io/yaml-yugi/cards.json"
 SETS_URL = "https://yugioh-proxy.santirivera92.workers.dev/cardsets"
-ADVANCED_BANLIST_URL = "https://raw.githubusercontent.com/SantiagoRivera92/TimeWizard/refs/heads/main/banlists/2026-05-11.json"
+ADVANCED_BANLIST_URL = "https://raw.githubusercontent.com/SantiagoRivera92/excavate-database-process/refs/heads/main/data/formats/2026-09-20.json"
 
 MONGO_URI = os.getenv("MONGO_URI")
 S3_API_URL = os.getenv("S3_API_URL")
