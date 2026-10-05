@@ -3,7 +3,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from common import get_mongo_client, fetch_genesys_points_from_duelingnexus, MONGO_URI
+from common import get_mongo_client, fetch_genesys_points_from_yaml_yugi, MONGO_URI
 from pymongo import UpdateOne
 
 
@@ -24,9 +24,9 @@ def main():
     client = get_mongo_client()
     cards_collection = client["Cards"].Cards
 
-    print("Fetching Genesys points from Dueling Nexus...", flush=True)
-    nexus_points = fetch_genesys_points_from_duelingnexus()
-    print(f"Found {len(nexus_points)} pointed cards in Dueling Nexus data", flush=True)
+    print("Fetching Genesys points from yaml-yugi...", flush=True)
+    yaml_yugi_points = fetch_genesys_points_from_yaml_yugi()
+    print(f"Found {len(yaml_yugi_points)} pointed cards in yaml-yugi data", flush=True)
 
     print("Fetching currently pointed cards from MongoDB...", flush=True)
     db_pointed_cursor = cards_collection.find(
@@ -53,11 +53,11 @@ def main():
     changes = []
 
     for card_id, info in db_pointed.items():
-        if card_id not in nexus_points:
+        if card_id not in yaml_yugi_points:
             changes.append((info["name_en"], info["current_points"], 0))
             updates.append(UpdateOne({"_id": info["_id"]}, {"$set": {"genesys_points": 0}}))
 
-    for card_id, points in nexus_points.items():
+    for card_id, points in yaml_yugi_points.items():
         if card_id in db_pointed:
             changes.append((db_pointed[card_id]["name_en"], db_pointed[card_id]["current_points"], points))
             if db_pointed[card_id]["current_points"] != points:

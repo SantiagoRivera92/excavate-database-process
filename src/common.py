@@ -404,27 +404,26 @@ def fetch_genesys_points_json(timeout=60):
         raise SystemExit("Failed to fetch critical data") from e
 
 
-def fetch_genesys_points_from_duelingnexus(timeout=30):
+def fetch_genesys_points_from_yaml_yugi(timeout=30):
     try:
-        url = "https://duelingnexus.com/assets/data/banlists.json"
+        url = "https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/genesys/current.vector.json"
         data = fetch_json_from_url(url, timeout=timeout)
-        banlists = data.get("banlists", [])
-        genesys_banlist = None
-        for banlist in banlists:
-            if "TCG Genesys" in banlist.get("name", ""):
-                genesys_banlist = banlist
-                break
-        if not genesys_banlist:
-            print("Could not find TCG Genesys banlist in Dueling Nexus data")
+        regulation = data.get("regulation", {})
+        if not regulation:
+            print("Could not find Genesys regulation data in yaml-yugi data")
             raise SystemExit("Failed to fetch critical data")
-        print(f"Using banlist: {genesys_banlist['name']}", flush=True)
+        print(f"Using Genesys regulation dated {data.get('date', 'unknown')}", flush=True)
         points_dict = {}
-        for password_str, points in genesys_banlist.get("cards", {}).items():
+        for card_id_str, points in regulation.items():
+            try:
+                card_id = int(card_id_str)
+            except (ValueError, TypeError):
+                continue
             if points > 0:
-                points_dict[int(password_str)] = points
+                points_dict[card_id] = points
         return points_dict
     except requests.exceptions.RequestException as e:
-        print("Error fetching Genesys points from Dueling Nexus")
+        print("Error fetching Genesys points from yaml-yugi")
         raise SystemExit("Failed to fetch critical data") from e
 
 
