@@ -127,7 +127,7 @@ Hot Red Dragon Archfiend Abyss 20->33
 Hideout in the Sky, Coulomb 5->8
 Hyperinvoked Aeon 15->20
 Imsety, Glory of Horus 33->0
-Incredible Eccelsia, the Virtuous 3->7
+Incredible Ecclesia, the Virtuous 3->7
 Infernal Flame Banshee 33->25
 Infernity Launcher 88->40
 Infernoid Evil 7->10
