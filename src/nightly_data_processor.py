@@ -7,8 +7,7 @@ from common import (
     get_image_lookup_from_collection, upsert_card_print_image,
     load_initial_data, transform_basic_card_info, process_card_sets,
     update_card_statuses, add_videogame_data, add_banlist_history,
-    add_md_banlist_history, assign_genesys_points,
-    get_card_gallery, find_image_for_printing,
+    add_md_banlist_history, get_card_gallery, find_image_for_printing,
     apply_image_urls_from_lookup,
     download_transform_and_upload_image, s3_url_from_raw,
     merge_dm_and_arkana, merge_poly_and_fusion,
@@ -94,8 +93,10 @@ def main():
 
     with StepTimer("load_existing_konami_ids"):
         existing_ids = set()
-        for doc in cards_collection.find({}, {"_id": 1}):
+        existing_genesys_points = {}
+        for doc in cards_collection.find({}, {"_id": 1, "genesys_points": 1}):
             existing_ids.add(doc["_id"])
+            existing_genesys_points[doc["_id"]] = doc.get("genesys_points", 0)
         print(f"Existing cards in MongoDB: {len(existing_ids)}")
 
     with StepTimer("load_initial_data"):
@@ -187,7 +188,7 @@ def main():
 
         add_banlist_history(transformed_card, loaded_data)
         add_md_banlist_history(transformed_card, loaded_data)
-        assign_genesys_points(transformed_card, loaded_data["genesys_points"])
+        transformed_card["genesys_points"] = existing_genesys_points.get(konami_id, 0)
 
         processed_cards.append(transformed_card)
 

@@ -13,7 +13,7 @@ from meta_dump import dump_all
 from mediawiki_api import get_card_gallery
 import pymongo
 import re
-from common import fetch_genesys_points_json, fetch_currently_pointed_cards, assign_genesys_points
+from common import fetch_genesys_points_json, fetch_currently_pointed_cards
 
 
 def time_function(func):
@@ -1156,7 +1156,7 @@ def add_md_banlist_history(transformed_card, loaded_data):
                 status_code = 3
         transformed_card["md_banlist_data"][banlist_date_str] = status_code
 
-def process_single_card(raw_card_data, loaded_data, s3_webp_files):
+def process_single_card(raw_card_data, loaded_data, existing_genesys_points, s3_webp_files):
     """Processes a single card from the raw dataset."""
         
     transformed_card = {}
@@ -1198,7 +1198,7 @@ def process_single_card(raw_card_data, loaded_data, s3_webp_files):
     elif transformed_card.get("card_id") == FUSION_ID:
         gallery_card_name = "Polymerization (alternate password)"
 
-    assign_genesys_points(transformed_card, loaded_data["genesys_points"])
+    transformed_card["genesys_points"] = existing_genesys_points.get(konami_id, 0)
 
     with StepTimer("get_card_gallery"):
         gallery_info = get_card_gallery(card_name=gallery_card_name, use_cache=USE_CACHE)
@@ -1228,7 +1228,7 @@ def process_single_card(raw_card_data, loaded_data, s3_webp_files):
     return transformed_card
 
 
-def process_all_cards(raw_dataset, loaded_data, s3_webp_files):
+def process_all_cards(raw_dataset, loaded_data, existing_genesys_points, s3_webp_files):
     """Processes all cards from the dataset."""
     processed_cards = []
     if not isinstance(raw_dataset, list):
@@ -1237,7 +1237,7 @@ def process_all_cards(raw_dataset, loaded_data, s3_webp_files):
     raw_dataset.sort(key=lambda card: card.get("name", {}).get("en", ""))
 
     for raw_card in raw_dataset:
-        processed_card = process_single_card(raw_card, loaded_data, s3_webp_files)
+        processed_card = process_single_card(raw_card, loaded_data, existing_genesys_points, s3_webp_files)
         if processed_card:
             processed_cards.append(processed_card)
     regular_dm = next((c for c in processed_cards if c.get("card_id") == REGULAR_DM_ID), None)
@@ -1353,7 +1353,14 @@ def main():
 
     with StepTimer("get_mongo_databases"):
         db_collections = get_mongo_databases()
-    
+
+    with StepTimer("load_existing_genesys_points"):
+        existing_genesys_points = {
+            doc["_id"]: doc.get("genesys_points", 0)
+            for doc in db_collections["spellbook_dev_db"].find({}, {"_id": 1, "genesys_points": 1})
+        }
+        print(f"Loaded existing Genesys points for {len(existing_genesys_points)} cards")
+
     with StepTimer("load_initial_data"):
         loaded_data = load_initial_data(db_collections)
     
@@ -1379,7 +1386,7 @@ def main():
     print("Main dataset downloaded. Starting card processing.")
 
     with StepTimer("process_all_cards"):
-        processed_card_data = process_all_cards(raw_card_dataset, loaded_data, s3_webp_files)
+        processed_card_data = process_all_cards(raw_card_dataset, loaded_data, existing_genesys_points, s3_webp_files)
 
     with StepTimer("save_json_file"):
         save_json_file(processed_card_data, OUTPUT_PATH)

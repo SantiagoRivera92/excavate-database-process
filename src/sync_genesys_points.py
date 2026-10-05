@@ -3,7 +3,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from common import get_mongo_client, fetch_genesys_points_from_yaml_yugi, MONGO_URI
+from common import (
+    get_mongo_client,
+    fetch_genesys_points_from_yaml_yugi,
+    parse_genesys_manual_updates,
+    MONGO_URI,
+)
 from pymongo import UpdateOne
 
 
@@ -27,6 +32,38 @@ def main():
     print("Fetching Genesys points from yaml-yugi...", flush=True)
     yaml_yugi_points = fetch_genesys_points_from_yaml_yugi()
     print(f"Found {len(yaml_yugi_points)} pointed cards in yaml-yugi data", flush=True)
+
+    manual_changes, manual_errors = parse_genesys_manual_updates()
+    if manual_errors:
+        print(f"WARNING: {len(manual_errors)} line(s) in the manual updates file could not be parsed", flush=True)
+    if manual_changes:
+        print(f"Applying {len(manual_changes)} manual override(s) on top of upstream data...", flush=True)
+        manual_names = sorted({name for name, _, _ in manual_changes})
+        name_to_ids = {}
+        for doc in cards_collection.find({"name.en": {"$in": manual_names}}, {"_id": 1, "name.en": 1}):
+            name_to_ids.setdefault(doc.get("name", {}).get("en"), []).append(doc["_id"])
+        applied = 0
+        missing = []
+        for name, _old, new in manual_changes:
+            ids = name_to_ids.get(name)
+            if not ids:
+                missing.append(name)
+                continue
+            for card_key in ids:
+                try:
+                    card_key = int(card_key)
+                except (ValueError, TypeError):
+                    pass
+                if new > 0:
+                    yaml_yugi_points[card_key] = new
+                else:
+                    yaml_yugi_points.pop(card_key, None)
+                applied += 1
+        print(f"Applied {applied} manual override(s) to {len(yaml_yugi_points)} pointed cards", flush=True)
+        if missing:
+            print(f"WARNING: {len(missing)} manual override name(s) not found in database:", flush=True)
+            for name in missing:
+                print(f"  {name}", flush=True)
 
     print("Fetching currently pointed cards from MongoDB...", flush=True)
     db_pointed_cursor = cards_collection.find(

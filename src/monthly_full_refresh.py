@@ -7,7 +7,7 @@ from common import (
     get_localized_value, get_mongo_client, get_card_print_images_collection,
     load_initial_data, transform_basic_card_info, process_card_sets,
     update_card_statuses, add_videogame_data, add_banlist_history,
-    add_md_banlist_history, assign_genesys_points,
+    add_md_banlist_history,
     get_card_gallery, assign_image_urls_and_upload,
     list_s3_files_in_webp, list_s3_art_files_in_webp,
     download_transform_and_upload_card_image,
@@ -21,8 +21,8 @@ _THREAD_WORKERS = 8
 
 
 def _process_single_card(raw_card, name_to_gallery, cards_needing_refresh, loaded_data,
-                          s3_webp_files, card_print_images_collection, touched_map,
-                          touched_map_lock):
+                          existing_genesys_points, s3_webp_files, card_print_images_collection,
+                          touched_map, touched_map_lock):
     card_start = time.time()
     transformed_card = {}
     names = get_localized_value(raw_card, "name")
@@ -47,7 +47,7 @@ def _process_single_card(raw_card, name_to_gallery, cards_needing_refresh, loade
 
     gallery_card_name = name_to_gallery[card_name_en]
 
-    assign_genesys_points(transformed_card, loaded_data["genesys_points"])
+    transformed_card["genesys_points"] = existing_genesys_points.get(konami_id, 0)
 
     if card_name_en in cards_needing_refresh:
         gallery_info, gallery_touched = get_card_gallery(gallery_card_name, use_cache=True)
@@ -81,6 +81,13 @@ def main():
         client = get_mongo_client()
         cards_collection = client["Cards"].Cards
         card_print_images_collection = get_card_print_images_collection(client)
+
+    with StepTimer("load_existing_genesys_points"):
+        existing_genesys_points = {
+            doc["_id"]: doc.get("genesys_points", 0)
+            for doc in cards_collection.find({}, {"_id": 1, "genesys_points": 1})
+        }
+        print(f"Loaded existing Genesys points for {len(existing_genesys_points)} cards")
 
     with StepTimer("load_touched_map"):
         touched_map = load_touched_map()
@@ -132,8 +139,9 @@ def main():
             futures = {
                 executor.submit(
                     _process_single_card, raw_card, name_to_gallery,
-                    cards_needing_refresh, loaded_data, s3_webp_files,
-                    card_print_images_collection, touched_map, touched_map_lock
+                    cards_needing_refresh, loaded_data, existing_genesys_points,
+                    s3_webp_files, card_print_images_collection, touched_map,
+                    touched_map_lock
                 ): raw_card
                 for raw_card in raw_card_dataset
             }

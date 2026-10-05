@@ -427,6 +427,29 @@ def fetch_genesys_points_from_yaml_yugi(timeout=30):
         raise SystemExit("Failed to fetch critical data") from e
 
 
+GENESYS_MANUAL_UPDATES_FILE = BASE_DIR / "data/input/genesys_manual_updates.txt"
+GENESYS_CHANGE_RE = re.compile(r"^(?P<name>.+?)\s+(?P<old>-?\d+)\s*->\s*(?P<new>-?\d+)\s*$")
+
+
+def parse_genesys_manual_updates(path=None):
+    """Parse a 'Card Name old->new' changes file into (name, old, new) tuples."""
+    path = Path(path) if path else GENESYS_MANUAL_UPDATES_FILE
+    changes = []
+    errors = []
+    if not path.exists():
+        return changes, errors
+    for lineno, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        line = raw.strip()
+        if not line:
+            continue
+        match = GENESYS_CHANGE_RE.match(line)
+        if not match:
+            errors.append((lineno, raw))
+            continue
+        changes.append((match.group("name").strip(), int(match.group("old")), int(match.group("new"))))
+    return changes, errors
+
+
 def fetch_currently_pointed_cards(mongo_databases):
     try:
         pointed_cards = mongo_databases["spellbook_dev_db"].find(
@@ -1214,29 +1237,6 @@ def add_md_banlist_history(transformed_card, loaded_data):
         transformed_card["md_banlist_data"][banlist_date_str] = status_code
 
 
-def assign_genesys_points(transformed_card, genesys_points):
-    card_name_en = transformed_card.get('name', {}).get('en')
-    typeline = transformed_card.get('typeline', "")
-    if not card_name_en:
-        return
-    today = datetime.now().strftime("%Y-%m-%d")
-    has_released_tcg_printing = any(
-        printing.get("print_date", "9999-12-31") <= today
-        for lang in TCG_LANGUAGES
-        if lang in transformed_card.get("sets", {})
-        for printing in transformed_card["sets"][lang]
-    )
-    if not has_released_tcg_printing:
-        transformed_card["genesys_points"] = 0
-        return
-    if card_name_en in genesys_points:
-        transformed_card["genesys_points"] = genesys_points[card_name_en]
-    elif "Link" in typeline or "Pendulum" in typeline:
-        transformed_card["genesys_points"] = -1
-    else:
-        transformed_card["genesys_points"] = 0
-
-
 # --- Image Matching / Assignment ---
 
 def find_image_for_printing(printing, gallery_info, lang="en"):
@@ -1426,8 +1426,6 @@ def load_initial_data(mongo_databases=None, update_videogame_data=False):
         data["raw_sets_by_name"] = {s["set_name"]: s for s in data["raw_sets_list"]}
     with StepTimer("fetch_advanced_banlist"):
         data["advanced_banlist_data"] = fetch_json_from_url(ADVANCED_BANLIST_URL)
-    with StepTimer("fetch_genesys_points"):
-        data["genesys_points"] = fetch_genesys_points_json()
     if mongo_databases:
         with StepTimer("fetch_currently_pointed"):
             data["currently_pointed_cards"] = fetch_currently_pointed_cards(mongo_databases)
