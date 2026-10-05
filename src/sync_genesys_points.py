@@ -7,9 +7,9 @@ from common import get_mongo_client, fetch_genesys_points_from_yaml_yugi, MONGO_
 from pymongo import UpdateOne
 
 
-def _find_card_by_card_id(collection, card_id):
-    for key in (card_id, str(card_id)):
-        doc = collection.find_one({"card_id": key}, {"_id": 1, "name.en": 1})
+def _find_card_by_konami_id(collection, konami_id):
+    for key in (konami_id, str(konami_id)):
+        doc = collection.find_one({"_id": key}, {"_id": 1, "name.en": 1})
         if doc:
             return doc
     return None
@@ -31,18 +31,18 @@ def main():
     print("Fetching currently pointed cards from MongoDB...", flush=True)
     db_pointed_cursor = cards_collection.find(
         {"genesys_points": {"$gt": 0}},
-        {"_id": 1, "card_id": 1, "name.en": 1, "genesys_points": 1},
+        {"_id": 1, "name.en": 1, "genesys_points": 1},
     )
     db_pointed = {}
     for doc in db_pointed_cursor:
-        card_id = doc.get("card_id")
-        if card_id is None:
+        konami_id = doc.get("_id")
+        if konami_id is None:
             continue
         try:
-            card_id = int(card_id)
+            konami_id = int(konami_id)
         except (ValueError, TypeError):
             pass
-        db_pointed[card_id] = {
+        db_pointed[konami_id] = {
             "_id": doc["_id"],
             "name_en": doc.get("name", {}).get("en", ""),
             "current_points": doc.get("genesys_points", 0),
@@ -52,24 +52,24 @@ def main():
     updates = []
     changes = []
 
-    for card_id, info in db_pointed.items():
-        if card_id not in yaml_yugi_points:
+    for konami_id, info in db_pointed.items():
+        if konami_id not in yaml_yugi_points:
             changes.append((info["name_en"], info["current_points"], 0))
             updates.append(UpdateOne({"_id": info["_id"]}, {"$set": {"genesys_points": 0}}))
 
-    for card_id, points in yaml_yugi_points.items():
-        if card_id in db_pointed:
-            changes.append((db_pointed[card_id]["name_en"], db_pointed[card_id]["current_points"], points))
-            if db_pointed[card_id]["current_points"] != points:
-                updates.append(UpdateOne({"_id": db_pointed[card_id]["_id"]}, {"$set": {"genesys_points": points}}))
+    for konami_id, points in yaml_yugi_points.items():
+        if konami_id in db_pointed:
+            changes.append((db_pointed[konami_id]["name_en"], db_pointed[konami_id]["current_points"], points))
+            if db_pointed[konami_id]["current_points"] != points:
+                updates.append(UpdateOne({"_id": db_pointed[konami_id]["_id"]}, {"$set": {"genesys_points": points}}))
         else:
-            found = _find_card_by_card_id(cards_collection, card_id)
+            found = _find_card_by_konami_id(cards_collection, konami_id)
             if found:
-                name = found.get("name", {}).get("en", str(card_id))
+                name = found.get("name", {}).get("en", str(konami_id))
                 changes.append((name, 0, points))
                 updates.append(UpdateOne({"_id": found["_id"]}, {"$set": {"genesys_points": points}}))
             else:
-                print(f"  WARNING: {card_id} not found in database, cannot update points", flush=True)
+                print(f"  WARNING: {konami_id} not found in database, cannot update points", flush=True)
 
     if changes:
         changes.sort(key=lambda c: -c[2])
