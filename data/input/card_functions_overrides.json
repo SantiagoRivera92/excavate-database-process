@@ -1,0 +1,496 @@
+{
+  "_meta": {
+    "description": "Agent-supplied roles and effect corrections, merged by src/card_function_tagger.py. One entry per reviewed card.",
+    "generated": "2026-10-18"
+  },
+  "version": 1,
+  "cards": {
+    "4088": {
+      "roles": [
+        "brick",
+        "engine_requirement"
+      ]
+    },
+    "4342": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "4343": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "4678": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "4895": {
+      "roles": [
+        "non_engine"
+      ]
+    },
+    "5008": {
+      "roles": [
+        "floodgate",
+        "non_engine"
+      ]
+    },
+    "5114": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "5442": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "5496": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "5533": {
+      "roles": [
+        "floodgate",
+        "gy_hate",
+        "non_engine"
+      ]
+    },
+    "5622": {
+      "roles": [
+        "floodgate",
+        "non_engine"
+      ]
+    },
+    "5740": {
+      "roles": [
+        "floodgate",
+        "non_engine"
+      ],
+      "effects_add": [
+        "pay_lp"
+      ]
+    },
+    "6390": {
+      "roles": [
+        "extender"
+      ]
+    },
+    "6707": {
+      "roles": [
+        "floodgate",
+        "gy_hate",
+        "non_engine"
+      ]
+    },
+    "6980": {
+      "roles": [
+        "disruption",
+        "gy_hate",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "7445": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "7652": {
+      "roles": [
+        "floodgate",
+        "non_engine"
+      ],
+      "effects_add": [
+        "restrict_summon"
+      ]
+    },
+    "7673": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "7934": {
+      "roles": [
+        "floodgate",
+        "non_engine"
+      ]
+    },
+    "8933": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "9153": {
+      "roles": [
+        "floodgate",
+        "non_engine"
+      ]
+    },
+    "9279": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "9454": {
+      "roles": [
+        "disruption",
+        "gy_hate",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_remove": [
+        "banishes"
+      ]
+    },
+    "9621": {
+      "roles": [
+        "extender"
+      ]
+    },
+    "9702": {
+      "roles": [
+        "starter"
+      ]
+    },
+    "9755": {
+      "roles": [
+        "starter"
+      ]
+    },
+    "9882": {
+      "roles": [
+        "extender"
+      ]
+    },
+    "10208": {
+      "roles": [
+        "floodgate",
+        "gy_hate",
+        "non_engine"
+      ]
+    },
+    "10642": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_add": [
+        "restrict_summon"
+      ]
+    },
+    "11243": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_remove": [
+        "banishes"
+      ]
+    },
+    "11708": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "11829": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "11927": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "12070": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "12106": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "12175": {
+      "roles": [
+        "non_engine"
+      ]
+    },
+    "12250": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "12464": {
+      "roles": [
+        "non_engine"
+      ]
+    },
+    "12465": {
+      "roles": [
+        "non_engine"
+      ]
+    },
+    "12627": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine",
+        "protection"
+      ]
+    },
+    "12843": {
+      "roles": [
+        "engine_requirement",
+        "starter"
+      ]
+    },
+    "12950": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_remove": [
+        "mills",
+        "ss_from_deck"
+      ]
+    },
+    "13293": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "13447": {
+      "roles": [
+        "floodgate",
+        "non_engine"
+      ]
+    },
+    "13587": {
+      "roles": [
+        "disruption",
+        "gy_hate",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_remove": [
+        "banishes",
+        "mills",
+        "recursion",
+        "ss_from_gy"
+      ]
+    },
+    "13619": {
+      "roles": [
+        "disruption",
+        "gy_hate",
+        "non_engine"
+      ]
+    },
+    "13622": {
+      "roles": [
+        "board_breaker",
+        "disruption",
+        "non_engine"
+      ]
+    },
+    "13631": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "14101": {
+      "roles": [
+        "extender"
+      ]
+    },
+    "14102": {
+      "roles": [
+        "extender"
+      ]
+    },
+    "14627": {
+      "roles": [
+        "disruption",
+        "non_engine"
+      ]
+    },
+    "14740": {
+      "roles": [
+        "disruption",
+        "floodgate",
+        "gy_hate",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "14741": {
+      "roles": [
+        "board_breaker",
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "14742": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "14876": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "15296": {
+      "roles": [
+        "hand_disruption",
+        "non_engine"
+      ]
+    },
+    "15299": {
+      "roles": [
+        "board_breaker",
+        "disruption",
+        "non_engine"
+      ]
+    },
+    "16195": {
+      "roles": [
+        "starter"
+      ]
+    },
+    "17066": {
+      "roles": [
+        "starter"
+      ]
+    },
+    "17469": {
+      "roles": [
+        "board_breaker",
+        "non_engine"
+      ]
+    },
+    "17762": {
+      "roles": [
+        "disruption",
+        "gy_hate",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "17764": {
+      "roles": [
+        "disruption",
+        "gy_hate",
+        "hand_trap",
+        "non_engine"
+      ]
+    },
+    "18214": {
+      "roles": [
+        "non_engine"
+      ]
+    },
+    "19149": {
+      "roles": [
+        "starter"
+      ]
+    },
+    "20206": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_remove": [
+        "ss_from_hand"
+      ]
+    },
+    "20257": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_add": [
+        "restrict_activation"
+      ],
+      "effects_remove": [
+        "searcher"
+      ]
+    },
+    "20500": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_remove": [
+        "ss_from_deck",
+        "ss_from_extra_deck"
+      ]
+    },
+    "20555": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_add": [
+        "restrict_activation"
+      ]
+    },
+    "20764": {
+      "roles": [
+        "disruption",
+        "hand_trap",
+        "non_engine"
+      ],
+      "effects_remove": [
+        "ss_from_banishment",
+        "ss_from_gy"
+      ]
+    },
+    "22692": {
+      "roles_add": [
+        "starter"
+      ]
+    }
+  }
+}

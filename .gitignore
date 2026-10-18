@@ -18,6 +18,13 @@ data/input/dl_cards.json
 mediawiki_cache/
 temp_images/
 
+# Card function tagging pipeline (local only: the process, not the results)
+src/card_functions_rules.py
+src/card_functions_llm.py
+src/card_function_tagger.py
+src/import_searchygo_tags.py
+.github/workflows/card_function_tagger.yml
+
 # IDE
 .vscode/
 .idea/
