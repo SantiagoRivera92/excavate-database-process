@@ -15,6 +15,12 @@ from pymongo import UpdateOne
 DEFAULT_FILE = GENESYS_MANUAL_UPDATES_FILE
 
 
+def _is_banned_type(typeline):
+    if not typeline:
+        return False
+    return "Pendulum" in typeline or "Link" in typeline
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Apply manual Genesys point changes to MongoDB by card name."
@@ -53,11 +59,18 @@ def main():
     updates = []
     not_found = []
     for name, old, new in changes:
-        docs = list(cards_collection.find({"name.en": name}, {"_id": 1, "genesys_points": 1}))
+        docs = list(cards_collection.find(
+            {"name.en": name},
+            {"_id": 1, "genesys_points": 1, "typeline": 1},
+        ))
         if not docs:
             not_found.append(name)
             continue
         for doc in docs:
+            if _is_banned_type(doc.get("typeline")):
+                print(f"  {name}: Genesys bans Pendulum/Link — forcing -1", flush=True)
+                updates.append(UpdateOne({"_id": doc["_id"]}, {"$set": {"genesys_points": -1}}))
+                continue
             current = doc.get("genesys_points", 0)
             marker = "" if current == old else f"  (expected old {old})"
             print(f"  {name}: {current} => {new}{marker}", flush=True)

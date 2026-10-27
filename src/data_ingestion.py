@@ -13,7 +13,7 @@ from meta_dump import dump_all
 from mediawiki_api import get_card_gallery
 import pymongo
 import re
-from common import fetch_genesys_points_json, fetch_currently_pointed_cards
+from common import fetch_genesys_points_json, fetch_currently_pointed_cards, apply_genesys_type_ban
 
 
 def time_function(func):
@@ -1198,7 +1198,10 @@ def process_single_card(raw_card_data, loaded_data, existing_genesys_points, s3_
     elif transformed_card.get("card_id") == FUSION_ID:
         gallery_card_name = "Polymerization (alternate password)"
 
-    transformed_card["genesys_points"] = existing_genesys_points.get(konami_id, 0)
+    transformed_card["genesys_points"] = apply_genesys_type_ban(
+        existing_genesys_points.get(konami_id, 0),
+        transformed_card.get("typeline"),
+    )
 
     with StepTimer("get_card_gallery"):
         gallery_info = get_card_gallery(card_name=gallery_card_name, use_cache=USE_CACHE)
@@ -1354,6 +1357,16 @@ def main():
     with StepTimer("get_mongo_databases"):
         db_collections = get_mongo_databases()
 
+    if UPDATE_DATABASE:
+        with StepTimer("backfill_genesys_pendulum_link"):
+            for db_name, coll in db_collections.items():
+                result = coll.update_many(
+                    {"typeline": {"$regex": "(Pendulum|Link)", "$options": "i"},
+                     "genesys_points": {"$ne": -1}},
+                    {"$set": {"genesys_points": -1}},
+                )
+                print(f"{db_name}: backfilled {result.modified_count} Pendulum/Link cards to genesys_points=-1")
+
     with StepTimer("load_existing_genesys_points"):
         existing_genesys_points = {
             doc["_id"]: doc.get("genesys_points", 0)
@@ -1387,6 +1400,18 @@ def main():
 
     with StepTimer("process_all_cards"):
         processed_card_data = process_all_cards(raw_card_dataset, loaded_data, existing_genesys_points, s3_webp_files)
+
+    with StepTimer("verify_genesys_invariant"):
+        bad = [
+            c["name"]["en"] for c in processed_card_data
+            if c.get("genesys_points") != -1
+            and c.get("typeline")
+            and ("Pendulum" in c["typeline"] or "Link" in c["typeline"])
+        ]
+        if bad:
+            raise RuntimeError(
+                f"Genesys invariant violated for {len(bad)} cards: {bad[:10]}"
+            )
 
     with StepTimer("save_json_file"):
         save_json_file(processed_card_data, OUTPUT_PATH)

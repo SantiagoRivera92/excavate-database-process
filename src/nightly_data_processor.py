@@ -13,6 +13,7 @@ from common import (
     merge_dm_and_arkana, merge_poly_and_fusion,
     DATASET_URL, OUTPUT_PATH, ARKANA_DM_ID, FUSION_ID, CACHE_DIR,
     load_touched_map, save_touched_map,
+    apply_genesys_type_ban,
 )
 import pymongo
 
@@ -90,6 +91,14 @@ def main():
     with StepTimer("load_touched_map"):
         touched_map = load_touched_map()
         print(f"Loaded touched data for {len(touched_map)} gallery pages")
+
+    with StepTimer("backfill_genesys_pendulum_link"):
+        result = cards_collection.update_many(
+            {"typeline": {"$regex": "(Pendulum|Link)", "$options": "i"},
+             "genesys_points": {"$ne": -1}},
+            {"$set": {"genesys_points": -1}},
+        )
+        print(f"Backfilled {result.modified_count} Pendulum/Link cards to genesys_points=-1")
 
     with StepTimer("load_existing_konami_ids"):
         existing_ids = set()
@@ -188,7 +197,10 @@ def main():
 
         add_banlist_history(transformed_card, loaded_data)
         add_md_banlist_history(transformed_card, loaded_data)
-        transformed_card["genesys_points"] = existing_genesys_points.get(konami_id, 0)
+        transformed_card["genesys_points"] = apply_genesys_type_ban(
+            existing_genesys_points.get(konami_id, 0),
+            transformed_card.get("typeline"),
+        )
 
         processed_cards.append(transformed_card)
 
@@ -199,6 +211,18 @@ def main():
         processed_cards = merge_dm_and_arkana(processed_cards)
         processed_cards = merge_poly_and_fusion(processed_cards)
         processed_cards.sort(key=lambda c: c.get("name", {}).get("en", ""))
+
+    with StepTimer("verify_genesys_invariant"):
+        bad = [
+            c["name"]["en"] for c in processed_cards
+            if c.get("genesys_points") != -1
+            and c.get("typeline")
+            and ("Pendulum" in c["typeline"] or "Link" in c["typeline"])
+        ]
+        if bad:
+            raise RuntimeError(
+                f"Genesys invariant violated for {len(bad)} cards: {bad[:10]}"
+            )
 
     with StepTimer("save_json"):
         save_json_file(processed_cards, OUTPUT_PATH)

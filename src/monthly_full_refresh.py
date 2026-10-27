@@ -14,6 +14,7 @@ from common import (
     merge_dm_and_arkana, merge_poly_and_fusion,
     DATASET_URL, OUTPUT_PATH, CACHE_DIR, ARKANA_DM_ID, FUSION_ID,
     load_touched_map, save_touched_map, batch_get_gallery_touched,
+    apply_genesys_type_ban,
 )
 import pymongo
 
@@ -47,7 +48,10 @@ def _process_single_card(raw_card, name_to_gallery, cards_needing_refresh, loade
 
     gallery_card_name = name_to_gallery[card_name_en]
 
-    transformed_card["genesys_points"] = existing_genesys_points.get(konami_id, 0)
+    transformed_card["genesys_points"] = apply_genesys_type_ban(
+        existing_genesys_points.get(konami_id, 0),
+        transformed_card.get("typeline"),
+    )
 
     if card_name_en in cards_needing_refresh:
         gallery_info, gallery_touched = get_card_gallery(gallery_card_name, use_cache=True)
@@ -81,6 +85,14 @@ def main():
         client = get_mongo_client()
         cards_collection = client["Cards"].Cards
         card_print_images_collection = get_card_print_images_collection(client)
+
+    with StepTimer("backfill_genesys_pendulum_link"):
+        result = cards_collection.update_many(
+            {"typeline": {"$regex": "(Pendulum|Link)", "$options": "i"},
+             "genesys_points": {"$ne": -1}},
+            {"$set": {"genesys_points": -1}},
+        )
+        print(f"Backfilled {result.modified_count} Pendulum/Link cards to genesys_points=-1")
 
     with StepTimer("load_existing_genesys_points"):
         existing_genesys_points = {
@@ -154,6 +166,18 @@ def main():
         processed_cards = merge_dm_and_arkana(processed_cards)
         processed_cards = merge_poly_and_fusion(processed_cards)
         processed_cards.sort(key=lambda c: c.get("name", {}).get("en", ""))
+
+    with StepTimer("verify_genesys_invariant"):
+        bad = [
+            c["name"]["en"] for c in processed_cards
+            if c.get("genesys_points") != -1
+            and c.get("typeline")
+            and ("Pendulum" in c["typeline"] or "Link" in c["typeline"])
+        ]
+        if bad:
+            raise RuntimeError(
+                f"Genesys invariant violated for {len(bad)} cards: {bad[:10]}"
+            )
 
     with StepTimer("save_touched_map"):
         save_touched_map(touched_map)
