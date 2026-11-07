@@ -450,6 +450,12 @@ def parse_genesys_manual_updates(path=None):
     return changes, errors
 
 
+def apply_genesys_type_ban(genesys_points, typeline):
+    """Genesys bans every Pendulum and Link monster, so they are stored with -1 points."""
+    if typeline and ("Pendulum" in typeline or "Link" in typeline):
+        return -1
+    return genesys_points
+
 def fetch_currently_pointed_cards(mongo_databases):
     try:
         pointed_cards = mongo_databases["spellbook_dev_db"].find(
