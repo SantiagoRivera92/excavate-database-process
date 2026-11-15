@@ -711,13 +711,22 @@ GALLERY_SET_EQUIVALENCES = {
 
 
 def _transform_image_url(url):
-    if "//thumb" not in url:
+    if "/thumb/" not in url:
         return url
-    url = url.replace("//thumb/", "//")
+    url = url.replace("//thumb/", "//").replace("/thumb/", "/")
     last_slash_index = url.rfind("/")
     if last_slash_index != -1:
         url = url[:last_slash_index]
     return url
+
+
+def _normalize_gallery_image_urls(gallery):
+    for prints in gallery.values():
+        for printing in prints:
+            image_url = printing.get("image_url")
+            if image_url:
+                printing["image_url"] = _transform_image_url(image_url)
+    return gallery
 
 
 def get_card_gallery(card_name, use_cache=True):
@@ -731,8 +740,8 @@ def get_card_gallery(card_name, use_cache=True):
                     cached = json.load(cache_file)
                     # Support both old format (data directly) and new (data + _touched)
                     if "data" in cached:
-                        return cached["data"], cached.get("_touched", "")
-                    return cached, ""
+                        return _normalize_gallery_image_urls(cached["data"]), cached.get("_touched", "")
+                    return _normalize_gallery_image_urls(cached), ""
                 except json.decoder.JSONDecodeError:
                     print("Faulty cache, downloading again")
 

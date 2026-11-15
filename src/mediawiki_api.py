@@ -41,14 +41,23 @@ DIAGNOSTIC_LOGGING = False
 RETRIES = 300
 
 def transform_image_url(url):
-    if ("//thumb") not in url:
+    if "/thumb/" not in url:
         return url
-    url = url.replace("//thumb/", "//")
+    url = url.replace("//thumb/", "//").replace("/thumb/", "/")
     last_slash_index = url.rfind("/")
     if last_slash_index != -1:
         url = url[:last_slash_index]
 
     return url
+
+
+def normalize_gallery_image_urls(gallery):
+    for prints in gallery.values():
+        for printing in prints:
+            image_url = printing.get("image_url")
+            if image_url:
+                printing["image_url"] = transform_image_url(image_url)
+    return gallery
 
 
 def get_card_gallery(card_name: str, use_cache:bool):
@@ -67,7 +76,10 @@ def get_card_gallery(card_name: str, use_cache:bool):
         if cache_age < 1209600 and use_cache:  # 1209600 seconds = 2 weeks
             with open(cache_file_path, 'r', encoding="utf-8") as cache_file:
                 try:
-                    return json.load(cache_file)
+                    cached = json.load(cache_file)
+                    if "data" in cached:
+                        return normalize_gallery_image_urls(cached["data"])
+                    return normalize_gallery_image_urls(cached)
                 except json.decoder.JSONDecodeError:
                     print("Faulty cache, downloading again")
 
