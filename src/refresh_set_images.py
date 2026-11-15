@@ -245,7 +245,7 @@ def main():
         raise SystemExit(1)
 
     with StepTimer("collect_images"):
-        jobs, _ = collect_image_jobs(cards, set_code)
+        jobs = collect_image_jobs(cards, set_code)
         print(f"Found {len(jobs)} images for set code {set_code}", flush=True)
 
     if not jobs:
